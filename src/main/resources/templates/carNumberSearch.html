@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1> car Number Search</h1>
+    <form method="POST" action="getCarInfo">
+        차량번호 조회 : <input type="text" name="carNumber" th:if="${carBeans}" th:value="${carBeans.VhlNbr}">
+                      <input type="text" name="carNumber" th:unless="${carBeans}" value="">
+
+        <input type="submit">
+    </form>
+    <table>
+        차량 정보 조회
+        <tr>
+            <td>차량번호<input type="text"></td>
+        </tr>
+        <tr>
+            <td>입차날짜<input type="text"></td>
+        </tr>
+        <tr>
+            <td>주차기간<input type="text"></td>
+        </tr>
+    </table>
+
+</body>
+</html>

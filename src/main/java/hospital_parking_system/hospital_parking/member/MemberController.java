@@ -22,13 +22,13 @@ public class MemberController {
     @Autowired
     SessionBean sessionBean;
 
-    @GetMapping("/")
+    @GetMapping("")
     public String main(Model model) {
         model.addAttribute("loginForm", new loginForm());
         return "main";
     }
 
-    @PostMapping("/info")
+    @PostMapping("")
     public String main_login(loginForm form, Model model, BindingResult result) {
         MemberBean member = new MemberBean();
         member.setClID(form.getName());
