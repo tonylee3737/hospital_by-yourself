@@ -53,15 +53,5 @@ public class MemberController {
         }
     }
 
-    @PostMapping("/getInfo")
-    public String getCar(Model model) {
-        model.addAttribute("data", "hello");
-        return "test2";
-    }
 
-    @PostMapping("test")
-    public String test(Model model) {
-        model.addAttribute("data", "hello");
-        return "test2";
-    }
 }
