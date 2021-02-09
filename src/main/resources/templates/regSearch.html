@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1> reg Search</h1>
+
+<form action="regSearch" method="post">
+    차량번호검색:<input type="text" name="carNumber"/>
+    <input type="submit">
+</form>
+<Table>
+    <tr>
+        <td>번호</td>
+        <td>차량번호</td>
+        <td>할인명</td>
+        <td>할인처</td>
+        <td>시간할인(분)</td>
+        <td>시간할인(%)</td>
+        <td>비고</td>
+        <td>등록일시</td>
+        <td>사용</td>
+    </tr>
+    <tr th:if="${discountedCarInfo}" th:each="car: ${discountedCarInfo}">
+        <td><input th:value="번호" style="width:50px"></td>
+        <td><input th:value="${car.getCarNumber()}" style="width:100px"></td>
+        <td><input th:value="${car.getDCName()}" style="width:100px"></td>
+        <td><input th:value="${car.getClName()}" style="width:100px"></td>
+        <td><input th:value="${car.getDCTime()}" style="width:50px"></td>
+        <td><input th:value="${car.getDCRate()}" style="width:50px"></td>
+        <td><input th:value="비고" style="width:50px"></td>
+        <td><input th:value="${car.getInsDayTime()}" style="width:150px"></td>
+        <td><input th:value="${car.getClDCUse()}" style="width:50px"></td>
+    </tr>
+</Table>
+
+</body>
+</html>

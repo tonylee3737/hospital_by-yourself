@@ -1,26 +1,22 @@
 package hospital_parking_system.hospital_parking.member;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
+@RequiredArgsConstructor
 public class MemberController {
 
-    private MemberService memberService;
+    private final MemberService memberService;
+    private final SessionBean sessionBean;
 
-
-    @Autowired
-    MemberController(MemberService memberService) {
-        this.memberService = memberService;
-    }
-
-    @Autowired
-    SessionBean sessionBean;
 
     @GetMapping("")
     public String main(Model model) {
@@ -29,7 +25,8 @@ public class MemberController {
     }
 
     @PostMapping("")
-    public String main_login(loginForm form, Model model, BindingResult result) {
+    public String main_login(loginForm form, Model model, BindingResult result, HttpServletRequest request) {
+
         MemberBean member = new MemberBean();
         member.setClID(form.getName());
         member.setClPW(form.getPass());
@@ -38,10 +35,11 @@ public class MemberController {
         admin.setAdmID(form.getName());
         admin.setAdmPW(form.getPass());
 
-        MemberBean getMember = memberService.loginMember(member);
-
-        if (getMember != null) {
+        if (memberService.loginMember(member) != null) {
 //            return "로그인 후 일반 회원 차량 조회 페이지로 이동";
+            MemberBean memberBean = memberService.loginMember(member);
+            sessionBean.setBean(memberBean);
+            MemberBean bean = sessionBean.getBean();
             return "carNumberSearch";
         } else if (memberService.loginAdmin(admin) != null) {
 //            return "로그인 후 관리자 페이지로 이동";

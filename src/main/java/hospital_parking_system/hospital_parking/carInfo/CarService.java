@@ -4,4 +4,7 @@ import java.util.List;
 
 public interface CarService {
     List<CarBean> selectCarInfo(CarBean bean);
+
+
+    List<DiscountedCarInfo> selectDiscountedCarInfo(CarBean bean);
 }

@@ -10,4 +10,5 @@ public class CarBean {
     private String VHIdx;
     private String ImgPth;
     private String InsDyTe;
+
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CarServiceImpl implements CarService{
+public class CarServiceImpl implements CarService {
 
     private CarMapper carMapper;
 
@@ -19,5 +19,12 @@ public class CarServiceImpl implements CarService{
     public List<CarBean> selectCarInfo(CarBean bean) {
         return carMapper.selectCarInfo(bean);
     }
+
+
+    @Override
+    public List<DiscountedCarInfo> selectDiscountedCarInfo(CarBean bean) {
+        return carMapper.selectDiscountedCarInfo(bean);
+    }
+
 
 }

@@ -9,4 +9,7 @@ import java.util.List;
 @Mapper
 public interface CarMapper {
     List<CarBean> selectCarInfo(CarBean bean);
+
+
+    List<DiscountedCarInfo> selectDiscountedCarInfo(CarBean bean);
 }
