@@ -1,10 +1,10 @@
-package hospital_parking_system.hospital_parking.member;
+package hospital_parking_system.hospital_parking.adminPage;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class MemberBean {
+public class MemberForm {
     private String ClID;
     private String ClPW;
     private String ClName;
@@ -29,9 +29,7 @@ public class MemberBean {
     private String ClDCName6;
     private String ClDCTime6;
     private String ClDCRate6;
-    private String ClDCUse;
     private String ClMemo;
+    private String ClDCUse;
     private String ClGrpiDx;
-
-
 }

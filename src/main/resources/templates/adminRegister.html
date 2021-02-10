@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head th:replace="adminController :: header">    <title>Title</title>
+</head>
+<body>
+
+<h1> admin Register</h1>
+
+<form action = "adminRegister" method = "POST" th:object="${memberForm}" th:border="1">
+<table>
+    <tr>
+        <td>아이디<input type="text" th:field="*{ClID}"></td>
+    </tr>
+    <tr>
+        <td>패스워드<input type="text" th:field="*{ClPW}"></td>
+    </tr>
+    <tr>
+        <td>할인처<input type="text" th:field="*{ClName}"></td>
+    </tr>
+    <tr>
+        <td>담당자<input type="text" th:field="*{ClUser}"></td>
+    </tr>
+    <tr>
+        <td>연락처<input type="text" th:field="*{ClTel}"></td>
+    </tr>
+    <tr>
+        <td>전자메일<input type="text" th:field="*{ClEmail}"></td>
+    </tr>
+    <tr>
+        <td>할인1<input type="text" th:field="*{ClDCName1}">시간</td><td><input type="text" th:field="*{ClDCTime1}"></td><td>분<input type="text" th:field="*{ClDCRate1}">%</td>
+    </tr>
+    <tr>
+        <td>할인2<input type="text" th:field="*{ClDCName2}">시간</td><td><input type="text" th:field="*{ClDCTime2}"></td><td>분<input type="text" th:field="*{ClDCRate2}">%</td>
+    </tr>
+    <tr>
+        <td>할인3<input type="text" th:field="*{ClDCName3}">시간</td><td><input type="text" th:field="*{ClDCTime3}"></td><td>분<input type="text" th:field="*{ClDCRate3}">%</td>
+    </tr>
+    <tr>
+        <td>할인4<input type="text" th:field="*{ClDCName4}">시간</td><td><input type="text" th:field="*{ClDCTime4}"></td><td>분<input type="text" th:field="*{ClDCRate4}">%</td>
+    </tr>
+    <tr>
+        <td>할인5<input type="text" th:field="*{ClDCName5}">시간</td><td><input type="text" th:field="*{ClDCTime5}"></td><td>분<input type="text" th:field="*{ClDCRate5}">%</td>
+    </tr>
+    <tr>
+        <td>할인6<input type="text" th:field="*{ClDCName6}">시간</td><td><input type="text" th:field="*{ClDCTime6}"></td><td>분<input type="text" th:field="*{ClDCRate6}">%</td>
+    </tr>
+    <tr>
+        <td>비고<input type="text" th:field="*{ClMemo}"></td>
+    </tr>
+    <tr>
+        <td>사용유무
+        <select th:field="*{ClDCUse}">
+                <option th:value="1">사용</option>
+                <option th:value="0">미사용</option>
+        </select>
+        </td>
+    </tr>
+    <tr>
+        <td>그룹
+        <select th:field="*{ClGrpiDx}" >
+            <option th:each="group:${groupList}"
+                    th:value="${group.getGrpiDx()}" th:utext="${group.getGrpName()}"></option>
+        </select>
+    </tr>
+    <tr>
+        <td><input type="submit"></td>
+    </tr>
+</table>
+</form>
+
+</body>
+</html>

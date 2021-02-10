@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hospital_parking_system.hospital_parking.adminPage.AdminMapper">
+
+    <select id="selectAdminManager"  resultType="hospital_parking_system.hospital_parking.adminPage.AdminManagerBean">
+        select * from parking_class inner join parking_class_group on parking_class.ClGrpiDx = parking_class_group.GrpiDx order by CliDx
+    </select>
+
+    <select id="selectGroupList" resultType="hospital_parking_system.hospital_parking.adminPage.GroupBean">
+        SELECT * FROM parking_class_group
+    </select>
+
+    <insert id="insertMember" parameterType="hospital_parking_system.hospital_parking.member.MemberBean">
+        INSERT INTO parking_class (ClId, ClPW, ClName, ClUser, ClTel, ClEmail, ClDCName1, ClDCTime1, ClDCRate1,ClDCName2, ClDCTime2, ClDCRate2,ClDCName3, ClDCTime3, ClDCRate3,ClDCName4, ClDCTime4, ClDCRate4,ClDCName5, ClDCTime5, ClDCRate5,ClDCName6, ClDCTime6, ClDCRate6,ClDCUse, ClMemo, ClGrpiDx)
+         VALUES(#{ClID}, #{ClPW}, #{ClName}, #{ClUser} #{ClTel},#{ClEmail},#{ClDCName1},#{ClDCTime1},#{ClDCRate1},#{ClDCName2},#{ClDCTime2},#{ClDCRate2},,#{ClDCName3},#{ClDCTime3},#{ClDCRate3},,#{ClDCName4},#{ClDCTime4},#{ClDCRate4},,#{ClDCName5},#{ClDCTime5},#{ClDCRate5},,#{ClDCName6},#{ClDCTime6},#{ClDCRate6},#{ClDCUse},#{ClMemo},#{ClGrpiDx});
+    </insert>
+</mapper>
+
