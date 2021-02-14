@@ -80,8 +80,8 @@ public class AdminController {
         member.setClMemo(form.getClMemo());
         member.setClDCUse(form.getClDCUse());
         member.setClGrpiDx(form.getClGrpiDx());
-
-        return "adminRegister";
+        adminService.insertMember(member);
+        return "redirect:/adminRegister";
     }
 
 }

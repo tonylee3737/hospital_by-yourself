@@ -12,10 +12,6 @@
         SELECT * FROM parking_class WHERE ClID = #{ClID} and ClPW = #{ClPW}
     </select>
 
-    <select id="selectMember" parameterType="hospital_parking_system.hospital_parking.member.MemberBean" resultType="hospital_parking_system.hospital_parking.member.MemberBean">
-            SELECT * FROM parking_class WHERE ClID = #{ClID}
-    </select>
-
     <delete id="deleteMember" parameterType="String">
             DELETE FROM parking_class WHERE ClID = #{ClId}
     </delete>

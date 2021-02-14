@@ -16,19 +16,6 @@ public class MemberServiceImpl implements MemberService {
         this.memberMapper = memberMapper;
     }
 
-    @Override
-    public void insertMember(MemberBean bean) {
-        if (memberMapper.selectMember(bean)!=null) {
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
-        }else {
-            memberMapper.insertMember(bean);
-        }
-    }
-
-    @Override
-    public MemberBean selectMember(MemberBean bean) {
-        return memberMapper.selectMember(bean);
-    }
 
     @Override
     public MemberBean loginMember(MemberBean bean) {

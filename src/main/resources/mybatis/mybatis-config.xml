@@ -5,5 +5,7 @@
 <!--        <mapper resource=".xml"/>-->
         <mapper resource="memberMapper.xml"/>
         <mapper resource="carMapper.xml"/>
+        <mapper resource="adminMapper.xml"/>
+
     </mappers>
 </configuration>

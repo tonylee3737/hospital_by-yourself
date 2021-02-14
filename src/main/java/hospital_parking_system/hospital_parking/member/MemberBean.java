@@ -29,8 +29,8 @@ public class MemberBean {
     private String ClDCName6;
     private String ClDCTime6;
     private String ClDCRate6;
-    private String ClDCUse;
     private String ClMemo;
+    private String ClDCUse;
     private String ClGrpiDx;
 
 

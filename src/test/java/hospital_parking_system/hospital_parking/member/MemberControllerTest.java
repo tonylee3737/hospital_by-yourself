@@ -1,5 +1,6 @@
 package hospital_parking_system.hospital_parking.member;
 
+import hospital_parking_system.hospital_parking.adminPage.AdminService;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,22 +28,29 @@ public class MemberControllerTest {
     @Autowired
     MemberService memberService;
 
+    @Autowired
+    AdminService adminService;
 
     @Test
-//    @Rollback(value = false)
+    @Rollback(value = false)
     public void 회원가입테스트() {
         //given
-        MemberBean bean = new MemberBean();
-        bean.setClID("gwanho");
-        bean.setClPW("gwanho");
+//        MemberBean bean = new MemberBean();
+//        bean.setClID("gwanho");
+//        bean.setClPW("gwanho");
 
         //when
-        memberService.insertMember(bean);
+//        adminService.insertMember(bean);
 
-        MemberBean memberBean = memberService.selectMember(bean);
-//        memberService.deleteMember("test12345");
+//        MemberBean memberBean = memberService.loginMember(bean);
+        memberService.deleteMember("teset1");
+        memberService.deleteMember("test123");
+        memberService.deleteMember("test123123");
+        memberService.deleteMember("123123");
+        memberService.deleteMember("sadf");
+        memberService.deleteMember("asdfsdf");
         //then
-        Assertions.assertThat(bean.getClID()).isEqualTo(memberBean.getClID());
+//        Assertions.assertThat(bean.getClID()).isEqualTo(memberBean.getClID());
     }
 
     @Test(expected = IllegalStateException.class)
@@ -56,8 +64,9 @@ public class MemberControllerTest {
         bean2.setClPW("tony");
 
      //when
-        memberService.insertMember(bean1);
-        memberService.insertMember(bean2);
+        adminService.insertMember(bean1);
+        adminService.insertMember(bean2);
+
      //then
         fail("에외가 발생해야한다.");
     }
