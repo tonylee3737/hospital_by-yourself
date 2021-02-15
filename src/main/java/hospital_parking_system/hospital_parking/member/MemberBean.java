@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class MemberBean {
+    private String CliDx;
     private String ClID;
     private String ClPW;
     private String ClName;

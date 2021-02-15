@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>adminRegister_group</h1>
+
+<form action="adminRegister_group" method="post" th:object="${adminForm}">
+<table>
+    <tr>
+        <td>그룹명</td>
+        <td>비고</td>
+    </tr>
+    <tr>
+        <td><input type="text" th:field="*{GrpName}"></td>
+        <td><input type="text" th:field="*{GrpMemo}"></td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="입력"></td>
+    </tr>
+</table>
+</form>
+
+</body>
+</html>

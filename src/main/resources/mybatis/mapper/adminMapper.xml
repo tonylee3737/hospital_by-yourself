@@ -5,17 +5,97 @@
 <mapper namespace="hospital_parking_system.hospital_parking.adminPage.AdminMapper">
 
     <select id="selectAdminManager"  resultType="hospital_parking_system.hospital_parking.adminPage.AdminManagerBean">
-        select * from parking_class inner join parking_class_group on parking_class.ClGrpiDx = parking_class_group.GrpiDx order by CliDx
+        select *
+        from parking_class
+                 inner join parking_class_group on parking_class.ClGrpiDx = parking_class_group.GrpiDx
+        order by CliDx;
+
     </select>
 
     <select id="selectGroupList" resultType="hospital_parking_system.hospital_parking.adminPage.GroupBean">
-        SELECT * FROM parking_class_group
+        SELECT *
+        FROM parking_class_group;
     </select>
 
+    <select id="selectOneGroup" parameterType="hospital_parking_system.hospital_parking.adminPage.GroupBean" resultType="hospital_parking_system.hospital_parking.adminPage.GroupBean">
+        SELECT *
+        FROM parking_class_group
+        WHERE GrpiDx = #{GrpiDx};
+    </select>
+
+    <delete id="deleteOneGroup" parameterType="hospital_parking_system.hospital_parking.adminPage.GroupBean">
+        DELETE
+        FROM parking_class_group
+        WHERE GrpiDx = #{GrpiDx};
+    </delete>
+
     <insert id="insertMember" parameterType="hospital_parking_system.hospital_parking.member.MemberBean">
-        INSERT INTO parking_class (ClID, ClPW, ClName, ClUser, ClTel, ClEmail, ClDCName1, ClDCTime1, ClDCRate1,ClDCName2, ClDCTime2, ClDCRate2,ClDCName3, ClDCTime3, ClDCRate3,ClDCName4, ClDCTime4, ClDCRate4, ClDCName5, ClDCTime5, ClDCRate5, ClDCName6, ClDCTime6, ClDCRate6,ClDCUse, ClMemo, ClGrpiDx)
-        VALUES(#{ClID}, #{ClPW}, #{ClName}, #{ClUser}, #{ClTel},#{ClEmail},#{ClDCName1},#{ClDCTime1},#{ClDCRate1},#{ClDCName2},#{ClDCTime2},#{ClDCRate2},#{ClDCName3},#{ClDCTime3},#{ClDCRate3},#{ClDCName4},#{ClDCTime4},#{ClDCRate4},#{ClDCName5},#{ClDCTime5},#{ClDCRate5},#{ClDCName6},#{ClDCTime6},#{ClDCRate6},#{ClDCUse},#{ClMemo},#{ClGrpiDx})
+        INSERT INTO parking_class (ClID, ClPW, ClName, ClUser, ClTel, ClEmail, ClDCName1, ClDCTime1, ClDCRate1,
+                                   ClDCName2, ClDCTime2, ClDCRate2, ClDCName3, ClDCTime3, ClDCRate3, ClDCName4,
+                                   ClDCTime4, ClDCRate4, ClDCName5, ClDCTime5, ClDCRate5, ClDCName6, ClDCTime6,
+                                   ClDCRate6, ClDCUse, ClMemo, ClGrpiDx)
+        VALUES (#{ClID}, #{ClPW}, #{ClName}, #{ClUser}, #{ClTel}, #{ClEmail}, #{ClDCName1}, #{ClDCTime1}, #{ClDCRate1},
+                #{ClDCName2}, #{ClDCTime2}, #{ClDCRate2}, #{ClDCName3}, #{ClDCTime3}, #{ClDCRate3}, #{ClDCName4},
+                #{ClDCTime4}, #{ClDCRate4}, #{ClDCName5}, #{ClDCTime5}, #{ClDCRate5}, #{ClDCName6}, #{ClDCTime6},
+                #{ClDCRate6}, #{ClDCUse}, #{ClMemo}, #{ClGrpiDx});
     </insert>
+
+    <update id="updateMember" parameterType="hospital_parking_system.hospital_parking.member.MemberBean">
+        UPDATE parking_class
+        SET ClID=#{ClID},
+            ClPW=#{ClPW},
+            ClName=#{ClName},
+            ClUser=#{ClUser},
+            ClTel=#{ClTel},
+            ClEmail=#{ClEmail},
+            ClDCName1=#{ClDCName1},
+            ClDCTime1=#{ClDCTime1},
+            ClDCRate1=#{ClDCRate1},
+            ClDCName2=#{ClDCName2},
+            ClDCTime2=#{ClDCTime2},
+            ClDCRate2=#{ClDCRate2},
+            ClDCName3=#{ClDCName3},
+            ClDCTime3=#{ClDCTime3},
+            ClDCRate3=#{ClDCRate3},
+            ClDCName4=#{ClDCName4},
+            ClDCTime4=#{ClDCTime4},
+            ClDCRate4=#{ClDCRate4},
+            ClDCName5=#{ClDCName5},
+            ClDCTime5=#{ClDCTime5},
+            ClDCRate5=#{ClDCRate5},
+            ClDCName6=#{ClDCName6},
+            ClDCTime6=#{ClDCTime6},
+            ClDCRate6=#{ClDCRate6},
+            ClDCUse=#{ClDCUse},
+            ClMemo=#{ClMemo},
+            ClGrpiDx=#{ClGrpiDx}
+        where CliDx = #{CliDx};
+
+    </update>
+
+    <select id="selectOneParking_class" parameterType="hospital_parking_system.hospital_parking.member.MemberBean" resultType="hospital_parking_system.hospital_parking.member.MemberBean">
+        SELECT *
+        FROM parking_class
+        WHERE CliDx = #{CliDx};
+    </select>
+
+
+    <delete id="deleteOneManager" parameterType="hospital_parking_system.hospital_parking.member.MemberBean">
+        delete
+        from parking_class
+        where CliDx = #{CliDx};
+
+    </delete>
+
+    <insert id="insertGroup" parameterType="hospital_parking_system.hospital_parking.adminPage.GroupBean">
+        INSERT INTO parking_class_group (GrpiDx, GrpName, GrpMemo)
+        VALUES (#{GrpiDx}, #{GrpName}, #{GrpMemo});
+    </insert>
+    <!--insert-->
+<!--    insert into parking_class_group (GrpName,GrpMemo) value ('$GrpName','$GrpMemo')";-->
+
+<!-- update-->
+<!--    $up_sql = "update parking_class_group set GrpName='$GrpName', GrpMemo='$GrpMemo' where GrpiDx='$GrpiDx'";-->
 </mapper>
 
 

@@ -26,5 +26,10 @@ public class CarServiceImpl implements CarService {
         return carMapper.selectDiscountedCarInfo(bean);
     }
 
+    @Override
+    public List<DiscountedCarInfo> selectDiscountedCarInfoList() {
+        return carMapper.selectDiscountedCarInfoList();
+    }
+
 
 }

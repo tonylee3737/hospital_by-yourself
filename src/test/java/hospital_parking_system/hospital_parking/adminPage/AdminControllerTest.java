@@ -7,13 +7,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 //먼저 관리자 그룹 테이블에서 그룹inx와 이름을 가져온다(빈으로가져오자), 폼에 데이터 뿌리기, name: idx값 value: GrpName, 사용미사용은 0, 1 -> post로 폼 받고 insert parking_clss하기.
 @RunWith(SpringRunner.class)
@@ -68,4 +65,51 @@ public class AdminControllerTest {
         //then
         Assertions.assertThat(memberBean1.getClID()).isEqualTo("tony");
      }
+     @Test
+      public void 멤버가져오기테스트() {
+      //given
+         MemberBean memberBean = new MemberBean();
+         memberBean.setCliDx("1");
+
+      //when
+         MemberBean memberBean1 = adminService.selectOneParking_class(memberBean);
+         //then
+         Assertions.assertThat(memberBean1.getClID()).isEqualTo("ton");
+      }
+      @Test
+     public void 업데이트멤버테스트(){
+     //given
+     MemberBean memberBean = new MemberBean();
+     //when
+        memberBean.setClID("tonyTest");
+        memberBean.setCliDx("1");
+        memberBean.setClPW("1");
+        adminService.updateMember(memberBean);
+        MemberBean memberBean1 = adminService.selectOneParking_class(memberBean);
+        //then
+        Assertions.assertThat(memberBean.getClID()).isEqualTo(memberBean1.getClID());
+     }
+     @Test
+      public void 매니져삭제() {
+      //given
+         MemberBean memberBean = new MemberBean();
+         memberBean.setCliDx("1");
+         adminService.deleteOneManager(memberBean);
+      //when
+
+      //then
+      }
+      @Test
+       public void  insert그룹() {
+       //given
+          GroupBean groupBean = new GroupBean();
+          groupBean.setGrpName("관호테스트");
+          groupBean.setGrpMemo("관호테스트");
+       //when
+          adminService.insertGroup(groupBean);
+          List<GroupBean> groupBeans = adminService.selectGroupList();
+          GroupBean groupBean1 = groupBeans.get(groupBeans.size()-1);
+       //then
+          Assertions.assertThat(groupBean1.getGrpName()).isEqualTo("관호테스트");
+    }
 }

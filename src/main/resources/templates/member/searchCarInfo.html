@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head th:replace="member/memberController :: header">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+<h1> car Number Search</h1>
+    <form method="POST" action="searchCarInfo">
+        차량번호 조회 : <input type="text" name="carNumber" th:if="${carNumber}" th:value="${carNumber}">
+                      <input type="text" name="carNumber" th:unless="${carNumber}" value="">
+
+        <input type="submit">
+    </form>
+<hr>
+    <div>
+        검색된 차량 번호:
+        <ul th:if="${carBeans}" th:each="car : ${carBeans}">
+            <a th:href="@{getCarInfo(carNumber=${car.VhlNbr})}"><li th:text="${car.VhlNbr}"></li></a>
+        </ul>
+    </div>
+
+
+<!--검색된 번호 중 하나를 선택하였을 시 나오는 정보-->
+<table th:if="${carInfo}">
+        차량 정보 조회
+        <tr>
+            <td>차량번호<input type="text" th:value="${carInfo.getVhlNbr()}"></td>
+        </tr>
+        <tr>
+            <td>입차일시<input type="text" th:value="${carInfo.getEntDyTe()}"></td>
+        </tr>
+        <tr>
+            <td>주차시간<input type="text" ></td>
+        </tr>
+        <tr>
+            <div>
+                <td>할인시간</td>
+                <td th:if="${member.getClDCName1()}" th:text="${member.getClDCName1()}" style="width: 90px"></td>
+                <td th:if="${member.getClDCName2()}" th:text="${member.getClDCName2()}" style="width: 90px"></td>
+                <td th:if="${member.getClDCName3()}" th:text="${member.getClDCName3()}" style="width: 90px"></td>
+                <td th:if="${member.getClDCName4()}" th:text="${member.getClDCName4()}" style="width: 90px"></td>
+                <td th:if="${member.getClDCName5()}" th:text="${member.getClDCName5()}" style="width: 90px"></td>
+                <td th:if="${member.getClDCName6()}" th:text="${member.getClDCName6()}" style="width: 90px"></td>
+            </div>
+        </tr>
+    </table>
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class GroupBean {
+public class AdminForm {
     private String GrpiDx;
     private String GrpName;
     private String GrpMemo;

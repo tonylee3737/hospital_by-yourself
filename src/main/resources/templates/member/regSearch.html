@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
-<head>
+<head th:replace="member/memberController :: header">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title></title>
 </head>
 <body>
 <h1> reg Search</h1>
@@ -25,7 +25,7 @@
         <td>사용</td>
     </tr>
     <tr th:if="${discountedCarInfo}" th:each="car: ${discountedCarInfo}">
-        <td><input th:value="번호" style="width:50px"></td>
+        <td><input th:value="${car.getDCiDx()}" style="width:50px"></td>
         <td><input th:value="${car.getCarNumber()}" style="width:100px"></td>
         <td><input th:value="${car.getDCName()}" style="width:100px"></td>
         <td><input th:value="${car.getClName()}" style="width:100px"></td>

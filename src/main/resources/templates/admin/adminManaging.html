@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head th:replace="admin/adminController :: header">
+    <meta charset="UTF-8">
+</head>
+<body>
+<a href="#"><h1>admin Managing</h1></a>
+
+<table border="1">
+    <tr>
+        <td>번호</td>
+        <td>그룹명</td>
+        <td>할인처</td>
+        <td>담당자</td>
+        <td>연락처</td>
+        <td>할인1</td>
+        <td>할인2</td>
+        <td>할인3</td>
+        <td>할인4</td>
+        <td>할인5</td>
+        <td>할인6</td>
+        <td>비고</td>
+        <td>사용</td>
+    </tr>
+    <tr th:each="admin:${adminList}">
+        <td th:text="${admin.getCliDx()}" style="width:10px"/></td>
+        <td><a th:href="@{adminRegister_edit(id=${admin.getCliDx()})}"><p th:text="${admin.getGrpName()}" style="width:50px"/></a></td>
+        <td th:text="${admin.getClName()}" style="width:60px" />
+        <td th:text="${admin.getClUser()}" style="width:100px"/>
+        <td th:text="${admin.getClTel()}" style="width:90px"/>
+        <td th:text="${admin.getClDCName1()}+'('+${admin.getClDCTime1()}+'분/'+ ${admin.getClDCRate1()} + '%)'" style="width:150px"/>
+        <td th:text="${admin.getClDCName2()}+'('+${admin.getClDCTime2()}+'분/'+ ${admin.getClDCRate2()} + '%)'" style="width:150px"/>
+        <td th:text="${admin.getClDCName3()}+'('+${admin.getClDCTime3()}+'분/'+ ${admin.getClDCRate3()} + '%)'" style="width:150px"/>
+        <td th:text="${admin.getClDCName4()}+'('+${admin.getClDCTime4()}+'분/'+ ${admin.getClDCRate4()} + '%)'" style="width:150px"/>
+        <td th:text="${admin.getClDCName5()}+'('+${admin.getClDCTime5()}+'분/'+ ${admin.getClDCRate5()} + '%)'" style="width:30px"/>
+        <td th:text="${admin.getClDCName6()}+'('+${admin.getClDCTime6()}+'분/'+ ${admin.getClDCRate6()} + '%)'" style="width:30px"/>
+        <td th:text="${admin.getClMemo()}" style="width:30px"/>
+        <td th:text="${admin.getClDCUse()}" style="width:30px"/>
+    </tr>
+</table>
+<a href = "adminRegister">등록하기</a>
+
+</body>
+</html>

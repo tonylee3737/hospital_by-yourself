@@ -10,6 +10,7 @@ import java.util.List;
 public interface CarMapper {
     List<CarBean> selectCarInfo(CarBean bean);
 
+    List<DiscountedCarInfo> selectDiscountedCarInfoList();
 
     List<DiscountedCarInfo> selectDiscountedCarInfo(CarBean bean);
 }

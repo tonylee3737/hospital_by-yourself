@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1> Admin Group Managing</h1>
+<table border="1">
+    <tr>
+        <td>번호</td>
+        <td>그룹명</td>
+        <td>비고</td>
+    </tr>
+    <tr th:each="admin:${groupList}">
+        <td><a th:href="@{adminRegister_group_edit(id=${admin.getGrpiDx()})}"><p th:text="${admin.getGrpiDx()}"/></a></td>
+        <td th:text="${admin.getGrpName()}"></td>
+        <td th:text="${admin.getGrpMemo()}"></td>
+    </tr>
+</table>
+<a href = "/adminRegister_group"> 그룹 등록 </a>
+</body>
+</html>

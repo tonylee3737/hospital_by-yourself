@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class MemberForm {
+    private String CliDx;
     private String ClID;
     private String ClPW;
     private String ClName;

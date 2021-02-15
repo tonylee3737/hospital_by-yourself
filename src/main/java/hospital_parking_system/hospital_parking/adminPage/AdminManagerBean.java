@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class AdminManagerBean {
+    private String CliDx;
     private String GrpName;
     private String ClName;
     private String ClUser;

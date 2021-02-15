@@ -4,7 +4,6 @@ package hospital_parking_system.hospital_parking.adminPage;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 import hospital_parking_system.hospital_parking.member.MemberMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +14,6 @@ public class AdminServiceImpl implements AdminService{
 
     final private AdminMapper adminMapper;
     final private MemberMapper memberMapper;
-//
-//    @Autowired
-//    AdminServiceImpl(AdminMapper adminMapper) {
-//        this.adminMapper = adminMapper;
-//
-//    }
 
     @Override
     public List<AdminManagerBean> selectAdminManager() {
@@ -41,4 +34,36 @@ public class AdminServiceImpl implements AdminService{
 
         }
     }
+
+    @Override
+    public MemberBean selectOneParking_class(MemberBean bean) {
+        return adminMapper.selectOneParking_class(bean);
+    }
+
+    @Override
+    public void updateMember(MemberBean bean) {
+        adminMapper.updateMember(bean);
+    }
+
+    @Override
+    public void deleteOneManager(MemberBean bean) {
+        adminMapper.deleteOneManager(bean);
+    }
+
+    @Override
+    public void insertGroup(GroupBean groupBean) {
+        adminMapper.insertGroup(groupBean);
+
+    }
+
+    @Override
+    public GroupBean selectOneGroup(GroupBean groupBean) {
+        return adminMapper.selectOneGroup(groupBean);
+    }
+
+    @Override
+    public void deleteOneGroup(GroupBean groupBean) {
+        adminMapper.deleteOneGroup(groupBean);
+    }
+
 }
