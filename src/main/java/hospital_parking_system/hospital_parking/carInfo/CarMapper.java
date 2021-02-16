@@ -13,4 +13,12 @@ public interface CarMapper {
     List<DiscountedCarInfo> selectDiscountedCarInfoList();
 
     List<DiscountedCarInfo> selectDiscountedCarInfo(CarBean bean);
+
+    ControllDiscountCar selectControllDiscountCar(CarBean bean);
+
+    void insertDiscountCarTime(ControllDiscountCar discountCar);
+
+    ControllDiscountCar selectDiscountCarTime(ControllDiscountCar discountCar);
+
+    void updateDiscountCarTime(ControllDiscountCar discountCar);
 }

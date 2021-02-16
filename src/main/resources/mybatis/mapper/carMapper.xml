@@ -8,6 +8,11 @@
         SELECT * FROM parking_entvhl_list WHERE VhlNbr like CONCAT('%', #{VhlNbr}, '%') order by VHiDx desc limit 4
     </select>
 
+    <select id="selectControllDiscountCar" parameterType="hospital_parking_system.hospital_parking.carInfo.ControllDiscountCar" resultType="hospital_parking_system.hospital_parking.carInfo.ControllDiscountCar">
+        select *
+        from parking_class_discount
+        where VhliDx = #{VHIdx};
+    </select>
 
     <select id="selectDiscountedCarInfo" parameterType="hospital_parking_system.hospital_parking.carInfo.CarBean" resultType="hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo">
         select parking_class_discount.*, parking_class.*, parking_vehicle_history.CarNumber from parking_class_discount inner join parking_class on parking_class_discount.CliDx=parking_class.CliDx inner join parking_vehicle_history on parking_class_discount.VhliDx = parking_vehicle_history.VHiDx WHERE CarNumber like CONCAT('%', #{VhlNbr}, '%')
@@ -17,6 +22,24 @@
     <select id="selectDiscountedCarInfoList" resultType="hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo">
         select parking_class_discount.*, parking_class.*, parking_vehicle_history.CarNumber from parking_class_discount inner join parking_class on parking_class_discount.CliDx=parking_class.CliDx inner join parking_vehicle_history on parking_class_discount.VhliDx = parking_vehicle_history.VHiDx
     </select>
+
+    <insert id="insertDiscountCarTime" parameterType="hospital_parking_system.hospital_parking.carInfo.ControllDiscountCar">
+        INSERT INTO parking_class_discount (VhliDx, DCName, DCRate, DCTime, DCMemo, CliDx, UseDiv) VALUES (#{VhliDx}, #{DCName}, #{DCRate}, #{DCTime}, #{DCMemo}, #{CliDx}, #{UseDiv})
+    </insert>
+<!--    차 idx 번호를 통해 쿼리를 가져온 후 있다면 update 없다면 insert-->
+    <select id="selectDiscountCarTime" parameterType="hospital_parking_system.hospital_parking.carInfo.ControllDiscountCar" resultType="hospital_parking_system.hospital_parking.carInfo.ControllDiscountCar">
+            SELECT * FROM parking_class_discount WHERE VhliDx = #{VhliDx}
+    </select>
+
+    <update id="updateDiscountCarTime" parameterType="hospital_parking_system.hospital_parking.carInfo.ControllDiscountCar">
+        UPDATE parking_class_discount
+        SET DCName=#{DCName},
+            DCRate=#{DCRate},
+            DCTime=#{DCTime}
+        where VhliDx = #{VhliDx};
+
+    </update>
+
 
 </mapper>
 

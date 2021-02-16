@@ -34,18 +34,31 @@
             <td>입차일시<input type="text" th:value="${carInfo.getEntDyTe()}"></td>
         </tr>
         <tr>
-            <td>주차시간<input type="text" ></td>
+            <td>주차시간<input type="text" th:value="${carEnt}"></td>
+        </tr>
+        <tr>
+            <td th:if ="${controllDiscountCar}" th:text="${controllDiscountCar.getDCName() + '적용'}"></td>
         </tr>
         <tr>
             <div>
-                <td>할인시간</td>
-                <td th:if="${member.getClDCName1()}" th:text="${member.getClDCName1()}" style="width: 90px"></td>
-                <td th:if="${member.getClDCName2()}" th:text="${member.getClDCName2()}" style="width: 90px"></td>
-                <td th:if="${member.getClDCName3()}" th:text="${member.getClDCName3()}" style="width: 90px"></td>
-                <td th:if="${member.getClDCName4()}" th:text="${member.getClDCName4()}" style="width: 90px"></td>
-                <td th:if="${member.getClDCName5()}" th:text="${member.getClDCName5()}" style="width: 90px"></td>
-                <td th:if="${member.getClDCName6()}" th:text="${member.getClDCName6()}" style="width: 90px"></td>
+
+                <form action = "registerDiscountTime" method="POST">
+                    <input type="hidden" th:value="${carInfo.getVHIdx()}" name="idx"/>
+                    <input type="hidden" th:value="${carInfo.getVhlNbr()}" name="carNumber"/>
+                <td th:if="${member.getClDCName1()}">할인시간
+                    <select name="discountTime">
+                        <option th:value="${member.getClDCName1()}" th:utext="${member.getClDCName1()}"></option>
+                        <option th:value="${member.getClDCName2()}" th:utext="${member.getClDCName2()}"></option>
+                        <option th:value="${member.getClDCName3()}" th:utext="${member.getClDCName3()}"></option>
+                        <option th:value="${member.getClDCName4()}" th:utext="${member.getClDCName4()}"></option>
+                        <option th:value="${member.getClDCName5()}" th:utext="${member.getClDCName5()}"></option>
+                        <option th:value="${member.getClDCName6()}" th:utext="${member.getClDCName6()}"></option>
+                </select>
+                </td>
+                    <td><input type="submit" value="적용"></td>
+                </form>
             </div>
+
         </tr>
     </table>
 

@@ -4,9 +4,9 @@ spring:
     username: webdc
     password: itro
     driver-class-name: org.mariadb.jdbc.Driver
-
 spring.thymeleaf.cache: false
 spring.devtools.remote.restart.enabled: false
+
 
 mybatis:
   type-aliases-package: hospital_parking_system.hospital_parking.mapper
@@ -21,3 +21,12 @@ mybatis:
 logging.level:
   org.hibernate.SQL: debug
   org.hibernate.type: trace
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8

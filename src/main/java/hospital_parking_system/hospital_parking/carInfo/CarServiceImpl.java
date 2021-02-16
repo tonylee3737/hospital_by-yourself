@@ -31,5 +31,25 @@ public class CarServiceImpl implements CarService {
         return carMapper.selectDiscountedCarInfoList();
     }
 
+    @Override
+    public ControllDiscountCar selectControllDiscountCar(CarBean bean) {
+        return carMapper.selectControllDiscountCar(bean);
+    }
+
+    @Override
+    public void insertDiscountCarTime(ControllDiscountCar discountCar) {
+        carMapper.insertDiscountCarTime(discountCar);
+    }
+
+    @Override
+    public ControllDiscountCar selectDiscountCarTime(ControllDiscountCar discountCar) {
+        return carMapper.selectDiscountCarTime(discountCar);
+    }
+
+    @Override
+    public void updateDiscountCarTime(ControllDiscountCar discountCar) {
+        carMapper.updateDiscountCarTime(discountCar);
+    }
+
 
 }

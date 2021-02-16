@@ -9,4 +9,11 @@ public interface CarService {
 
     List<DiscountedCarInfo> selectDiscountedCarInfoList();
 
+    ControllDiscountCar selectControllDiscountCar(CarBean bean);
+
+    void insertDiscountCarTime(ControllDiscountCar discountCar);
+
+    ControllDiscountCar selectDiscountCarTime(ControllDiscountCar discountCar);
+
+    void updateDiscountCarTime(ControllDiscountCar discountCar);
 }
