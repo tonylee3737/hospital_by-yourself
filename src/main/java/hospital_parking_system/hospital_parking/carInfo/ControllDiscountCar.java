@@ -15,5 +15,7 @@ public class ControllDiscountCar {
     private String CliDx;
     private String UseDiv;
     private String InsDayTime;
+    private String ActDiv;
+    private int Result;
 
 }

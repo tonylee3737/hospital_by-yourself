@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+//0으로 하면 등록, 그외는 수정
 //먼저 관리자 그룹 테이블에서 그룹inx와 이름을 가져온다(빈으로가져오자), 폼에 데이터 뿌리기, name: idx값 value: GrpName, 사용미사용은 0, 1 -> post로 폼 받고 insert parking_clss하기.
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -112,4 +112,49 @@ public class AdminControllerTest {
        //then
           Assertions.assertThat(groupBean1.getGrpName()).isEqualTo("관호테스트");
     }
+    @Test
+     public void 멤버프로시져테스트() {
+     //given
+        MemberBean bean = new MemberBean();
+        bean.setCliDx("1");
+        bean.setClID("1");
+        bean.setClPW("1");
+        bean.setClName("1");
+        bean.setClUser("1");
+        bean.setClTel("1");
+        bean.setClDCName1("1");
+        bean.setClDCCount1("1");
+        bean.setClDCRate1("1");
+        bean.setClDCTime1("1");
+        bean.setClDCName2("1");
+        bean.setClDCCount2("1");
+        bean.setClDCRate2("1");
+        bean.setClDCTime2("1");
+        bean.setClDCName3("1");
+        bean.setClDCCount3("1");
+        bean.setClDCRate3("1");
+        bean.setClDCTime3("1");
+        bean.setClDCName4("1");
+        bean.setClDCCount4("1");
+        bean.setClDCRate4("1");
+        bean.setClDCTime4("1");
+        bean.setClDCName5("1");
+        bean.setClDCCount5("1");
+        bean.setClDCRate5("1");
+        bean.setClDCTime5("1");
+        bean.setClDCName6("1");
+        bean.setClDCCount6("1");
+        bean.setClDCRate6("1");
+        bean.setClDCTime6("1");
+        bean.setClDCUse("1");
+        bean.setClGrpiDx("1");
+        bean.setClMemo("1");
+
+        adminService.Procedure_registerManager(bean);
+     //when
+
+        System.out.println(bean.getResult());
+
+     //then
+     }
 }

@@ -21,4 +21,6 @@ public interface CarMapper {
     ControllDiscountCar selectDiscountCarTime(ControllDiscountCar discountCar);
 
     void updateDiscountCarTime(ControllDiscountCar discountCar);
+
+    ControllDiscountCar Procedure_DiscountCarTime(ControllDiscountCar discountCar);
 }

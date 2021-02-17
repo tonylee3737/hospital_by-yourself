@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -121,7 +122,7 @@ public class CarController {
     @PostMapping("registerDiscountTime")
     public String discountTime(@RequestParam(value = "discountTime") String time,
                                @RequestParam(value = "idx") String idx,
-                               @RequestParam(value = "carNumber") String carNumber,Model model) {
+                               @RequestParam(value = "carNumber") String encarNumber,Model model) throws UnsupportedEncodingException {
         ControllDiscountCar discountCar = new ControllDiscountCar();
         MemberBean memberBean = sessionBean.getBean();
         String discountTime = time.trim();
@@ -154,11 +155,15 @@ public class CarController {
         discountCar.setVhliDx(idx);
         discountCar.setCliDx(memberBean.getCliDx());
         discountCar.setUseDiv("0");
-        if(carService.selectDiscountCarTime(discountCar)!=null){
-            carService.updateDiscountCarTime(discountCar);
-        }else{
-            carService.insertDiscountCarTime(discountCar);
-        }
+        discountCar.setActDiv("1");
+//        if(carService.selectDiscountCarTime(discountCar)!=null){
+//            carService.updateDiscountCarTime(discountCar);
+//        }else{
+//            carService.insertDiscountCarTime(discountCar);
+//        }
+        carService.Procedure_DiscountCarTime(discountCar);
+        System.out.println(discountCar.getResult());
+        String carNumber = URLEncoder.encode(encarNumber, "utf-8");
         return "redirect:/getCarInfo?carNumber="+carNumber;
     }
 

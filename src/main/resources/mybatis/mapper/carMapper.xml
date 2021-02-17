@@ -41,5 +41,21 @@
     </update>
 
 
+
+    <select id="Procedure_DiscountCarTime" statementType="CALLABLE" parameterType="hospital_parking_system.hospital_parking.carInfo.ControllDiscountCar">
+        { CALL sp_parking_class_discount(
+            #{DCiDx},
+            #{VhliDx},
+            #{DCName},
+            #{DCRate},
+            #{DCTime},
+            #{DCMemo},
+            #{CliDx},
+            #{UseDiv},
+            #{ActDiv},
+            #{Result, mode=OUT, jdbcType=INTEGER, javaType=int})
+            }
+    </select>
+
 </mapper>
 

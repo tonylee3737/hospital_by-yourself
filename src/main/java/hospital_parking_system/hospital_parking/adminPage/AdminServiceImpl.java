@@ -66,4 +66,9 @@ public class AdminServiceImpl implements AdminService{
         adminMapper.deleteOneGroup(groupBean);
     }
 
+    @Override
+    public MemberBean Procedure_registerManager(MemberBean bean) {
+        return adminMapper.Procedure_registerManager(bean);
+    }
+
 }

@@ -51,5 +51,10 @@ public class CarServiceImpl implements CarService {
         carMapper.updateDiscountCarTime(discountCar);
     }
 
+    @Override
+    public  ControllDiscountCar Procedure_DiscountCarTime(ControllDiscountCar discountCar) {
+        return carMapper.Procedure_DiscountCarTime(discountCar);
+    }
+
 
 }

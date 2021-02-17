@@ -26,4 +26,6 @@ public interface AdminMapper {
     GroupBean selectOneGroup(GroupBean groupBean);
 
     void deleteOneGroup(GroupBean groupBean);
+
+    MemberBean Procedure_registerManager(MemberBean bean);
 }

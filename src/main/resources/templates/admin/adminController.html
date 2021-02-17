@@ -1,17 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
+<div th:fragment="header">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>: :근로복지공단대구병원: :</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="Tony Lee" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <!-- user-scalable 을 사용하지 않는 디바이스를 위해, maximun-scale/minimum-scale 설정을 하는 것입니다-->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- CSS Reset(1), 아이콘 폰트, 웹페이지 사용폰트, main.css -->
+    <link rel="stylesheet" href="/css/nomalize.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+
 </head>
+<header>
+    <div class="inner">
+        <div class="head-container">
+            <div class="head-brand"></div>
+            <div class="head-blog"><a href="logout">로그아웃</a></div>
+        </div>
+    </div>
+</header>
+
 <body>
-<h1> Admin Controller Page</h1>
-<div th:fragment="header">
-<a href = "adminRegSearch">할인 차량 조회</a>
-<a href = "adminManaging">할인 부서 조회</a>
-<a href = "adminGroupManaging">그룹 관리 </a>
+
+<div class="maintitle"><a href = "adminRegSearch">할인 차량 조회</a></div>
+<div class="maintitle"><a href = "adminManaging">할인 부서 조회</a></div>
+<div class="subtitle"> <a href = "adminGroupManaging">그룹 관리 </a></div>
+
 </div>
+
+
+
+
+
 
 </body>
 </html>

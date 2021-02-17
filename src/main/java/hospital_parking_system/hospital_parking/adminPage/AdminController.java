@@ -66,21 +66,27 @@ public class AdminController {
         form.setClTel(member.getClTel());
         form.setClEmail(member.getClEmail());
         form.setClDCName1(member.getClDCName1());
+        form.setClDCCount1(member.getClDCCount1());
         form.setClDCTime1(member.getClDCTime1());
         form.setClDCRate1(member.getClDCRate1());
         form.setClDCName2(member.getClDCName2());
+        form.setClDCCount2(member.getClDCCount2());
         form.setClDCTime2(member.getClDCTime2());
         form.setClDCRate2(member.getClDCRate2());
         form.setClDCName3(member.getClDCName3());
+        form.setClDCCount3(member.getClDCCount3());
         form.setClDCTime3(member.getClDCTime3());
         form.setClDCRate3(member.getClDCRate3());
         form.setClDCName4(member.getClDCName4());
+        form.setClDCCount4(member.getClDCCount4());
         form.setClDCTime4(member.getClDCTime4());
         form.setClDCRate4(member.getClDCRate4());
         form.setClDCName5(member.getClDCName5());
+        form.setClDCCount5(member.getClDCCount5());
         form.setClDCTime5(member.getClDCTime5());
         form.setClDCRate5(member.getClDCRate5());
         form.setClDCName6(member.getClDCName6());
+        form.setClDCCount6(member.getClDCCount6());
         form.setClDCTime6(member.getClDCTime6());
         form.setClDCRate6(member.getClDCRate6());
         form.setClMemo(member.getClMemo());
@@ -102,27 +108,35 @@ public class AdminController {
         member.setClTel(form.getClTel());
         member.setClEmail(form.getClEmail());
         member.setClDCName1(form.getClDCName1());
+        member.setClDCCount1(form.getClDCCount1());
         member.setClDCTime1(form.getClDCTime1());
         member.setClDCRate1(form.getClDCRate1());
         member.setClDCName2(form.getClDCName2());
+        member.setClDCCount2(form.getClDCCount2());
         member.setClDCTime2(form.getClDCTime2());
         member.setClDCRate2(form.getClDCRate2());
         member.setClDCName3(form.getClDCName3());
+        member.setClDCCount3(form.getClDCCount3());
         member.setClDCTime3(form.getClDCTime3());
         member.setClDCRate3(form.getClDCRate3());
         member.setClDCName4(form.getClDCName4());
+        member.setClDCCount4(form.getClDCCount4());
         member.setClDCTime4(form.getClDCTime4());
         member.setClDCRate4(form.getClDCRate4());
         member.setClDCName5(form.getClDCName5());
+        member.setClDCCount5(form.getClDCCount5());
         member.setClDCTime5(form.getClDCTime5());
         member.setClDCRate5(form.getClDCRate5());
         member.setClDCName6(form.getClDCName6());
+        member.setClDCCount6(form.getClDCCount6());
         member.setClDCTime6(form.getClDCTime6());
         member.setClDCRate6(form.getClDCRate6());
         member.setClMemo(form.getClMemo());
         member.setClDCUse(form.getClDCUse());
         member.setClGrpiDx(form.getClGrpiDx());
-        adminService.updateMember(member);
+
+        adminService.Procedure_registerManager(member);
+//        adminService.updateMember(member);
 
         return "redirect:/adminManaging";
     }
@@ -138,6 +152,7 @@ public class AdminController {
     @PostMapping("/adminRegister")
     public String adminRegister_post(MemberForm form, Model model) {
         MemberBean member = new MemberBean();
+        member.setCliDx("0");
         member.setClID(form.getClID());
         member.setClPW(form.getClPW());
         member.setClName(form.getClName());
@@ -145,27 +160,34 @@ public class AdminController {
         member.setClTel(form.getClTel());
         member.setClEmail(form.getClEmail());
         member.setClDCName1(form.getClDCName1());
+        member.setClDCCount1(form.getClDCCount1());
         member.setClDCTime1(form.getClDCTime1());
         member.setClDCRate1(form.getClDCRate1());
         member.setClDCName2(form.getClDCName2());
+        member.setClDCCount2(form.getClDCCount2());
         member.setClDCTime2(form.getClDCTime2());
         member.setClDCRate2(form.getClDCRate2());
         member.setClDCName3(form.getClDCName3());
+        member.setClDCCount3(form.getClDCCount3());
         member.setClDCTime3(form.getClDCTime3());
         member.setClDCRate3(form.getClDCRate3());
         member.setClDCName4(form.getClDCName4());
+        member.setClDCCount4(form.getClDCCount4());
         member.setClDCTime4(form.getClDCTime4());
         member.setClDCRate4(form.getClDCRate4());
         member.setClDCName5(form.getClDCName5());
+        member.setClDCCount5(form.getClDCCount5());
         member.setClDCTime5(form.getClDCTime5());
         member.setClDCRate5(form.getClDCRate5());
         member.setClDCName6(form.getClDCName6());
+        member.setClDCCount6(form.getClDCCount6());
         member.setClDCTime6(form.getClDCTime6());
         member.setClDCRate6(form.getClDCRate6());
         member.setClMemo(form.getClMemo());
         member.setClDCUse(form.getClDCUse());
         member.setClGrpiDx(form.getClGrpiDx());
-        adminService.insertMember(member);
+
+        adminService.Procedure_registerManager(member);
         return "redirect:/adminManaging";
     }
 

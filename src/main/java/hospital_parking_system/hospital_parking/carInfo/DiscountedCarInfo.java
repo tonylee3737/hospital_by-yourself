@@ -13,5 +13,5 @@ public class DiscountedCarInfo {
     private String DCRate;
     private String DCMemo;
     private String InsDayTime;
-    private String ClDCUse;
+    private String UseDiv;
 }

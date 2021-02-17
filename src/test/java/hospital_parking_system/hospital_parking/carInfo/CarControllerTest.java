@@ -135,4 +135,24 @@ public class CarControllerTest {
              //then
              Assertions.assertThat(discountCar1.getDCName()).isEqualTo("test시간할인");
           }
+          @Test
+           public void 프로시져테스트() {
+           //given
+              ControllDiscountCar car = new ControllDiscountCar();
+              car.setDCiDx("1");
+              car.setVhliDx("1");
+              car.setDCName("1시간");
+              car.setDCRate("10");
+              car.setDCTime("10");
+              car.setDCMemo("메모");
+              car.setCliDx("1");
+              car.setUseDiv("1");
+              car.setActDiv("1");
+              car.setResult(1);
+              carService.Procedure_DiscountCarTime(car);
+              //when
+              System.out.println(car.getResult());
+           //then
+           }
+
 }

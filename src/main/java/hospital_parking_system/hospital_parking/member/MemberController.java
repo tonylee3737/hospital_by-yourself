@@ -43,7 +43,7 @@ public class MemberController {
             return "member/searchCarInfo";
         } else if (memberService.loginAdmin(admin) != null) {
 //            return "로그인 후 관리자 페이지로 이동";
-            return "admin/adminController";
+            return "redirect:/adminRegSearch";
         } else {
 //            return "로그인 처리 안됨 다시 메인페이지로 이동";
             model.addAttribute("alert", "아이디와 비밀번호를 확인해주세요");
