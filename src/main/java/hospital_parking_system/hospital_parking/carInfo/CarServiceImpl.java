@@ -56,5 +56,20 @@ public class CarServiceImpl implements CarService {
         return carMapper.Procedure_DiscountCarTime(discountCar);
     }
 
+    @Override
+    public List<DiscountedCarInfo> selectDiscountedCarInfoListWithDate(CarBean bean) {
+        return carMapper.selectDiscountedCarInfoListWithDate(bean);
+    }
+
+    @Override
+    public List<DiscountedCarInfo> selectDiscountedCarInfoListWithDate_Member(CarBean bean) {
+        return carMapper.selectDiscountedCarInfoListWithDate_Member(bean);
+    }
+
+    @Override
+    public List<ClNameBean> selectClNameFromClidx() {
+        return carMapper.selectClNameFromClidx();
+    }
+
 
 }

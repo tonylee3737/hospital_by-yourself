@@ -101,14 +101,33 @@ public class CarController {
     }
 
     @PostMapping("regSearch")
-    public String regSearch_post(@RequestParam(value = "carNumber") String carNumber, Model model) {
+    public String regSearch_post(@RequestParam(value = "carNumber") String carNumber,
+                                 @RequestParam(value = "startDate") String startDate,
+                                 @RequestParam(value = "endDate") String endDate,
+                                 @RequestParam(value = "checkDivUse") String checkDivUse,
+                                 Model model) {
         MemberBean member = sessionBean.getBean();
         if (member == null) {
             return "redirect:/";
         }
+        String[] start = startDate.split("-");
+        String s_year = start[0];
+        String s_month = start[1];
+        String s_day = start[2];
+        String s_date = s_year + s_month + s_day + "000000";
+        String[] end = endDate.split("-");
+        String e_year = end[0];
+        String e_month = end[1];
+        String e_day = end[2];
+        String e_date = e_year + e_month + e_day + "235959";
+
         CarBean car = new CarBean();
         car.setVhlNbr(carNumber);
-        List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfo(car);
+        car.setStartDate(s_date);
+        car.setEndDate(e_date);
+        car.setUseDiv(checkDivUse);
+//        List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfo(car);
+        List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoListWithDate_Member(car);
         model.addAttribute("discountedCarInfo", discountedCarInfos);
         return "member/regSearch";
     }

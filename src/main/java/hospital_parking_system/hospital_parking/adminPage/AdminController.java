@@ -3,6 +3,7 @@ package hospital_parking_system.hospital_parking.adminPage;
 
 import hospital_parking_system.hospital_parking.carInfo.CarBean;
 import hospital_parking_system.hospital_parking.carInfo.CarService;
+import hospital_parking_system.hospital_parking.carInfo.ClNameBean;
 import hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 import lombok.RequiredArgsConstructor;
@@ -24,16 +25,40 @@ public class AdminController {
     @GetMapping("/adminRegSearch")
     public String adminRegSearch(Model model) {
         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoList();
+        List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
+        model.addAttribute("clNames", clNameBeans);
         model.addAttribute("discountedCarInfo", discountedCarInfos);
         return "admin/adminRegSearch";
     }
 
     @PostMapping("/adminRegSearch")
-    public String adminRegSearch_Post(@RequestParam(value = "carNumber") String carNumber, Model model) {
+    public String adminRegSearch_Post(@RequestParam(value = "carNumber") String carNumber,
+                                      @RequestParam(value = "startDate") String startDate,
+                                      @RequestParam(value = "endDate") String endDate,
+                                      @RequestParam(value = "clName") String clName,
+                                      Model model) {
+
+        String[] start = startDate.split("-");
+        String s_year = start[0];
+        String s_month = start[1];
+        String s_day = start[2];
+        String s_date = s_year + s_month + s_day + "000000";
+        String[] end = endDate.split("-");
+        String e_year = end[0];
+        String e_month = end[1];
+        String e_day = end[2];
+        String e_date = e_year + e_month + e_day + "235959";
+
         CarBean car = new CarBean();
+        car.setStartDate(s_date);
+        car.setEndDate(e_date);
         car.setVhlNbr(carNumber);
-        List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfo(car);
-        model.addAttribute("discountedCarInfo", discountedCarInfos);
+        car.setClName(clName);
+        List<DiscountedCarInfo> discountedCarInfos1 = carService.selectDiscountedCarInfoListWithDate(car);
+        List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
+        model.addAttribute("clNames", clNameBeans);
+        model.addAttribute("carNumber", carNumber);
+        model.addAttribute("discountedCarInfo", discountedCarInfos1);
         return "admin/adminRegSearch";
     }
 

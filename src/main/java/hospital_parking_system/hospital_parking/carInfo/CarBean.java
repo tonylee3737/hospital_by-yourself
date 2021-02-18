@@ -10,5 +10,8 @@ public class CarBean {
     private String VHIdx;
     private String ImgPth;
     private String InsDyTe;
-
+    private String startDate;
+    private String endDate;
+    private String ClName;
+    private String UseDiv;
 }

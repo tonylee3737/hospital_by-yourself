@@ -154,5 +154,27 @@ public class CarControllerTest {
               System.out.println(car.getResult());
            //then
            }
+           @Test
+            public void 날짜로할인차량조회() {
+            //given
+               CarBean car = new CarBean();
+//               car.setStartDate("202102150000");
+//               car.setEndDate("20210218235959");
+                car.setVhlNbr("1234");
+               //when
+               List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoListWithDate(car);
+               System.out.println("값출력:"+discountedCarInfos.get(0).getCarNumber());
+               //then
+           }
+
+           @Test
+            public void idxnameTest() {
+            //given
+               List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
+               //when
+               ClNameBean clNameBean = clNameBeans.get(0);
+               //then
+               System.out.println(clNameBean.getClName());
+            }
 
 }

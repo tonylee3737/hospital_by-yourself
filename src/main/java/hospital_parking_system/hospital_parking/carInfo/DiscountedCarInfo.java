@@ -8,10 +8,10 @@ public class DiscountedCarInfo {
     private String DCiDx;
     private String CarNumber;
     private String DCName;
-    private String ClName;
-    private String DCTime;
     private String DCRate;
+    private String DCTime;
     private String DCMemo;
+    private String ClName;
     private String InsDayTime;
     private String UseDiv;
 }

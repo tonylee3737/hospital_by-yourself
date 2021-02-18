@@ -156,7 +156,7 @@ label {
 
 input {
   font: 1em sans-serif;
-  border: 1px solid #3f464d;
+  border: 1px solid darkseagreen;
   border-radius: .5em;
 }
 input:focus{
@@ -168,4 +168,12 @@ input:focus{
 }
 button {
   margin-left: .5em;
+}
+
+input[type="text"]{
+  outline: none;
+}
+
+input[type="password"]{
+  outline: none;
 }

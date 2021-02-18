@@ -47,18 +47,83 @@ header {
     font-weight: bold;
     font-size: 1.2em;
     color: antiquewhite;
-    margin-right: 1.5%;
+    margin-right: 1.8%;
 }
 
 .head-container .head-blog a:hover {
     color: #2186c4;
     cursor: pointer;
 }
-
+.head-blog a {
+    text-decoration: none;
+}
 @media only screen and (min-width: 1200px) {
     .inner {
         max-width: 100%;
     }
+}
+section {
+    width: 100%;
+    background-color: #fff;
+    position: relative;
+}
+
+section {
+    padding-top: 70px;
+}
+.title-container{
+
+}
+.maintitle1{
+    font-weight: bold;
+    font-size: 1.4em;
+    color: antiquewhite;
+    display: inline-flex;
+    margin-left: 14%;
+
+}
+.maintitle1 a:hover {
+    color: #2186c4;
+    cursor: pointer;
+}
+
+.maintitle2{
+    font-weight: bold;
+    font-size: 1.4em;
+    color: antiquewhite;
+    display: inline-flex;
+    margin-left: 14%;
+}
+.maintitle2 a:hover {
+    color: #2186c4;
+    cursor: pointer;
+}
+
+.maintitle3{
+    font-weight: bold;
+    font-size: 1.4em;
+    color: antiquewhite;
+    display: inline-flex;
+    margin-left: 14%;
+}
+
+.maintitle3 a:hover {
+    color: #2186c4;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.title-mark{
+    color: #2186c4;
+}
+.maintitle3 a  {
+    text-decoration: none;
+}
+.maintitle2 a {
+    text-decoration: none;
+}
+.maintitle1 a {
+    text-decoration: none;
 }
 
 

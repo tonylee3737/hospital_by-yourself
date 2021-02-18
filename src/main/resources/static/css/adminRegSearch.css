@@ -1,0 +1,67 @@
+.reg_title{
+    color: #2186c4;
+}
+
+.table {
+    border-collapse: collapse;
+    border-top: 3px solid #168;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 3%;
+}
+.table th {
+    color: #168;
+    background: #f0f6f9;
+    text-align: center;
+}
+.table th, .table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+.table th:first-child, .table td:first-child {
+    border-left: 0;
+}
+.table th:last-child, .table td:last-child {
+    border-right: 0;
+}
+.table tr td:first-child{
+    text-align: center;
+}
+.table caption{caption-side: bottom; display: none;}
+
+.reg_date {
+    width: 100px;
+}
+.reg_input {
+    width: 150px;
+    heigth: 50px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 3px solid darkseagreen;
+    text-decoration: none;
+}
+#reg_submit {
+    width: 80px;
+    height: 25px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 10%;
+    border-bottom: 3px solid darkseagreen;
+}
+.reg_form_location {
+    margin-top: 5%;
+    margin-left: 35%;
+    /*display: ;*/
+
+}
+input[type="text"]{
+    font-size: 1.21em;
+    outline: none;
+}
+input::placeholder{
+    size: 30px;
+    font-size: 1.21em;
+}
+

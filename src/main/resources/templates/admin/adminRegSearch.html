@@ -3,39 +3,50 @@
 <html lang="en">
 <head th:replace="admin/adminController :: header">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>: :근로복지공단대구병원: :</title>
 </head>
 <body>
-<h1> Admin Reg Search</h1>
 
-<form action="adminRegSearch" method="post">
-    차량번호조회: <input type="text" name = "carNumber" value="">
-        <input type="submit">
+
+<form class="reg_form_location" action="adminRegSearch" method="post">
+    날짜:<input class="reg_date" type="text" name="startDate" id="startDate">
+    <input class="reg_date" type="text" name="endDate" id="endDate">
+    <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:if="${carNumber}" th:value="${carNumber}">
+    <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:unless="${carNumber}" value="">
+    <select name ="clName">
+        <option value ="">전체</option>
+        <option th:each = "clname:${clNames}"
+                th:value="${clname.getClName()}" th:utext="${clname.getClName()}"></option>
+    </select>
+    <input id="reg_submit" type="submit" value="확인">
 </form>
-<Table>
+<div class="table-location">
+<Table class="table">
     <tr>
-        <td>번호</td>
-        <td>차량번호</td>
-        <td>할인명</td>
-        <td>할인처</td>
-        <td>시간할인(분)</td>
-        <td>시간할인(%)</td>
-        <td>비고</td>
-        <td>등록일시</td>
-        <td>사용</td>
+        <th>번호</th>
+        <th>차량번호</th>
+        <th>할인명</th>
+        <th>할인처</th>
+        <th>시간할인</th>
+        <th>할인률</th>
+        <th>비고</th>
+        <th>등록일시</th>
+        <th>사용</th>
     </tr>
     <tr th:if="${discountedCarInfo}" th:each="car: ${discountedCarInfo}">
-        <td><input th:value="번호" style="width:50px"></td>
-        <td><input th:value="${car.getCarNumber()}" style="width:100px"></td>
-        <td><input th:value="${car.getDCName()}" style="width:100px"></td>
-        <td><input th:value="${car.getClName()}" style="width:100px"></td>
-        <td><input th:value="${car.getDCTime()}" style="width:50px"></td>
-        <td><input th:value="${car.getDCRate()}" style="width:50px"></td>
-        <td><input th:value="비고" style="width:50px"></td>
-        <td><input th:value="${car.getInsDayTime()}" style="width:150px"></td>
-        <td><input th:value="${car.getUseDiv()}" style="width:50px"></td>
+        <td th:text="${car.getDCiDx()}" ></td>
+        <td th:text="${car.getCarNumber()}" ></td>
+        <td th:text="${car.getDCName()}" ></td>
+        <td th:text="${car.getClName()}" ></td>
+        <td th:text="${car.getDCTime()}+'분'" ></td>
+        <td th:text="${car.getDCRate()}+'%'" ></td>
+        <td th:text="${car.getDCMemo()}"></td>
+        <td th:text="${car.getInsDayTime()}" ></td>
+        <td th:if="${car.getUseDiv()} =='0'" th:text="미사용"></td>
+        <td th:if="${car.getUseDiv()} =='1'" th:text="미용"></td>
     </tr>
 </Table>
+</div>
 
 
 </body>

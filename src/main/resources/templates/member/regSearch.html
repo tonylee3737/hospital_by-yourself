@@ -3,13 +3,19 @@
 <html lang="en">
 <head th:replace="member/memberController :: header">
     <meta charset="UTF-8">
-    <title></title>
+    <title>: :근로복지공단대구병원: </title>
 </head>
 <body>
 <h1> reg Search</h1>
 
 <form action="regSearch" method="post">
+    날짜:<input class="reg_date" type="text" name="startDate" id="startDate">
+    <input class="reg_date" type="text" name="endDate" id="endDate">
     차량번호검색:<input type="text" name="carNumber"/>
+    <select name="checkDivUse">
+        <option value="0">미사용</option>
+        <option value="">사용포함</option>
+    </select>
     <input type="submit">
 </form>
 <Table>
@@ -33,7 +39,8 @@
         <td><input th:value="${car.getDCRate()}" style="width:50px"></td>
         <td><input th:value="비고" style="width:50px"></td>
         <td><input th:value="${car.getInsDayTime()}" style="width:150px"></td>
-        <td><input th:value="${car.getUseDiv()}" style="width:50px"></td>
+        <td><input th:if="${car.getUseDiv}=='0'" value="미사용"></td>
+        <td><input th:if="${car.getUseDiv}=='1'" value="사용"></td>
     </tr>
 </Table>
 

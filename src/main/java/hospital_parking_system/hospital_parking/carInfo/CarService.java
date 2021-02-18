@@ -18,4 +18,10 @@ public interface CarService {
     void updateDiscountCarTime(ControllDiscountCar discountCar);
 
     ControllDiscountCar Procedure_DiscountCarTime(ControllDiscountCar discountCar);
+
+    List<DiscountedCarInfo> selectDiscountedCarInfoListWithDate(CarBean bean);
+
+    List<DiscountedCarInfo> selectDiscountedCarInfoListWithDate_Member(CarBean bean);
+
+    List<ClNameBean> selectClNameFromClidx();
 }
