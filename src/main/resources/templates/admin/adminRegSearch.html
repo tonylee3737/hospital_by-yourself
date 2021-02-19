@@ -65,14 +65,13 @@
     <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:if="${carNumber}" th:value="${carNumber}">
     <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:unless="${carNumber}" value="">
     <select name ="clName">
-        <option value="">전체</option>
-        <option th:if="${return_clName}" th:value="${return_clName}" th:utext="${return_clName}" selected>전체</option>
-        <option th:if="${return_clName}==null" th:utext="${return_clName}" selected>전체</option>
+        <option th:if="${return_clName}" th:value="${return_clName}" th:utext="${return_clName}"></option>
         <option th:each = "clname:${clNames}"
                 th:if="${return_clName}!=${clname.getClName()}" th:value="${clname.getClName()}" th:utext="${clname.getClName()}"></option>
     </select>
     <input type="submit" name="action" value="액셀다운">
     <input id="reg_submit" type="submit" name="action" value="확인">
+    <input type="button" value="인쇄하기" id="print" onclick="window.print()"/>
 </form>
 <div class="table-location">
 <Table class="table">

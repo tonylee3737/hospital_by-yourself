@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -35,6 +36,12 @@ public class AdminController {
     public String adminRegSearch(Model model) {
         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoList();
         List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
+
+
+        ClNameBean re_clName = new ClNameBean();
+        re_clName.setClName("전체");
+        clNameBeans.add(re_clName);
+        Collections.reverse(clNameBeans);
         model.addAttribute("clNames", clNameBeans);
         model.addAttribute("discountedCarInfo", discountedCarInfos);
         return "admin/adminRegSearch";
@@ -64,7 +71,11 @@ public class AdminController {
         car.setStartDate(s_date);
         car.setEndDate(e_date);
         car.setVhlNbr(carNumber);
-        car.setClName(clName);
+        if(clName.equals("전체")){
+            car.setClName("");
+        }else {
+            car.setClName(clName);
+        }
         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoListWithDate(car);
 
         //       액셀 다운로드
@@ -135,13 +146,15 @@ public class AdminController {
             xssfWb.write(fileOut);
             fileOut.close();
         }
-        String return_clName = clName;
         List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
+        ClNameBean re_clName = new ClNameBean();
+        re_clName.setClName("전체");
+        clNameBeans.add(re_clName);
         model.addAttribute("startDate",startDate);
         model.addAttribute("endDate",endDate);
         model.addAttribute("clNames", clNameBeans);
         model.addAttribute("carNumber", carNumber);
-        model.addAttribute("return_clName", return_clName);
+        model.addAttribute("return_clName", clName);
         model.addAttribute("discountedCarInfo", discountedCarInfos);
         return "admin/adminRegSearch";
     }
