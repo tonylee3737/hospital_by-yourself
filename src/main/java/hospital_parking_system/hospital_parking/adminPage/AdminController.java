@@ -7,12 +7,21 @@ import hospital_parking_system.hospital_parking.carInfo.ClNameBean;
 import hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -36,7 +45,9 @@ public class AdminController {
                                       @RequestParam(value = "startDate") String startDate,
                                       @RequestParam(value = "endDate") String endDate,
                                       @RequestParam(value = "clName") String clName,
-                                      Model model) {
+                                      @RequestParam(value = "action") String action,
+                                      Model model,HttpServletResponse response) throws IOException {
+
 
         String[] start = startDate.split("-");
         String s_year = start[0];
@@ -54,11 +65,84 @@ public class AdminController {
         car.setEndDate(e_date);
         car.setVhlNbr(carNumber);
         car.setClName(clName);
-        List<DiscountedCarInfo> discountedCarInfos1 = carService.selectDiscountedCarInfoListWithDate(car);
+        List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoListWithDate(car);
+
+        //       액셀 다운로드
+
+        if(action.equals("액셀다운")){
+            Workbook book = null;
+            XSSFWorkbook xssfWb = null;
+            XSSFSheet xssfSheet = null;
+            XSSFRow xssfRow = null;
+            XSSFCell xssfCell = null;
+                int rowNo = 1;
+                xssfWb = new XSSFWorkbook();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월dd일 HH시 mm분ss초");
+                String format_time = format.format(System.currentTimeMillis());
+                xssfSheet = xssfWb.createSheet("할인차량목록_" + format_time);
+                xssfSheet.setColumnWidth(1, (xssfSheet.getColumnWidth(1))+(short)2048);
+                xssfSheet.setColumnWidth(2, (xssfSheet.getColumnWidth(2))+(short)2048);
+                xssfSheet.setColumnWidth(3, (xssfSheet.getColumnWidth(3))+(short)2048);
+                xssfSheet.setColumnWidth(6, (xssfSheet.getColumnWidth(6))+(short)2048);
+                xssfSheet.setColumnWidth(7, (xssfSheet.getColumnWidth(7))+(short)3072);
+                xssfRow = xssfSheet.createRow(0);
+                xssfCell = xssfRow.createCell((short) 0);
+                xssfCell.setCellValue("번호");
+                xssfCell = xssfRow.createCell((short) 1);
+                xssfCell.setCellValue("차량번호");
+                xssfCell = xssfRow.createCell((short) 2);
+                xssfCell.setCellValue("할인명");
+                xssfCell = xssfRow.createCell((short) 3);
+                xssfCell.setCellValue("할인처");
+                xssfCell = xssfRow.createCell((short) 4);
+                xssfCell.setCellValue("할인(분)");
+                xssfCell = xssfRow.createCell((short) 5);
+                xssfCell.setCellValue("할인률(%)");
+                xssfCell = xssfRow.createCell((short) 6);
+                xssfCell.setCellValue("비고");
+                xssfCell = xssfRow.createCell((short) 7);
+                xssfCell.setCellValue("등록일시");
+                xssfCell = xssfRow.createCell((short) 8);
+                xssfCell.setCellValue("사용여부");
+                xssfCell = xssfRow.createCell((short) 9);
+                for(int i=0; i<discountedCarInfos.size(); i++) {
+                    xssfRow = xssfSheet.createRow(rowNo++);
+                    xssfCell = xssfRow.createCell((short) 0);
+                    xssfCell.setCellValue(i+1);
+                    xssfCell = xssfRow.createCell((short) 1);
+                    xssfCell.setCellValue(discountedCarInfos.get(i).getCarNumber());
+                    xssfCell = xssfRow.createCell((short) 2);
+                    xssfCell.setCellValue(discountedCarInfos.get(i).getDCName());
+                    xssfCell = xssfRow.createCell((short) 3);
+                    xssfCell.setCellValue(discountedCarInfos.get(i).getClName());
+                    xssfCell = xssfRow.createCell((short) 4);
+                    xssfCell.setCellValue(discountedCarInfos.get(i).getDCTime());
+                    xssfCell = xssfRow.createCell((short) 5);
+                    xssfCell.setCellValue(discountedCarInfos.get(i).getDCRate());
+                    xssfCell = xssfRow.createCell((short) 6);
+                    xssfCell.setCellValue(discountedCarInfos.get(i).getDCMemo());
+                    xssfCell = xssfRow.createCell((short) 7);
+                    xssfCell.setCellValue(discountedCarInfos.get(i).getInsDayTime());
+                    xssfCell = xssfRow.createCell((short) 8);
+                    String result_Of_DivUse = (discountedCarInfos.get(i).getUseDiv().equals("0")) ? "미사용" :"사용";
+                    xssfCell.setCellValue(result_Of_DivUse);
+                    xssfCell = xssfRow.createCell((short) 9);
+                }
+                String filename_time = "할인차량목록_" + format_time;
+                response.setContentType("ms-vnd/excel");
+                response.setHeader("Content-Disposition", "attachment; filename="+new String((filename_time).getBytes("EUC-KR"),"8859_1")+".xlsx");
+            OutputStream fileOut = response.getOutputStream();
+            xssfWb.write(fileOut);
+            fileOut.close();
+        }
+        String return_clName = clName;
         List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
+        model.addAttribute("startDate",startDate);
+        model.addAttribute("endDate",endDate);
         model.addAttribute("clNames", clNameBeans);
         model.addAttribute("carNumber", carNumber);
-        model.addAttribute("discountedCarInfo", discountedCarInfos1);
+        model.addAttribute("return_clName", return_clName);
+        model.addAttribute("discountedCarInfo", discountedCarInfos);
         return "admin/adminRegSearch";
     }
 

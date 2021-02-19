@@ -29,6 +29,7 @@ public class CarControllerTest {
 
     @Autowired
     AdminService adminService;
+
     @Test
     public void 차량번호테스트() {
 
@@ -42,139 +43,147 @@ public class CarControllerTest {
         Assertions.assertThat(carBeans.get(0).getVhlNbr()).isEqualTo("10다5491");
     }
 
-     @Test
-      public void 히스토리차량넘버idx로조회() {
-      //given
-         CarBean car = new CarBean();
-         car.setVhlNbr("1234");
-         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfo(car);
-         //then
-         Assertions.assertThat(discountedCarInfos.get(0).getDCTime()).isEqualTo("60");
-    }
     @Test
-     public void 할인차량리스트조회테스트() {
-     //given
+    public void 히스토리차량넘버idx로조회() {
+        //given
+        CarBean car = new CarBean();
+        car.setVhlNbr("1234");
+        List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfo(car);
+        //then
+        Assertions.assertThat(discountedCarInfos.get(0).getDCTime()).isEqualTo("60");
+    }
+
+    @Test
+    public void 할인차량리스트조회테스트() {
+        //given
         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoList();
-    //when
+        //when
         String carNumber = discountedCarInfos.get(0).getCarNumber();
-    //then
+        //then
         Assertions.assertThat(carNumber).isEqualTo("10다1234");
 
-     }
-     @Test
-      public void 시간계산하기() {
-      //given
-         CarBean car = new CarBean();
-         car.setVhlNbr("1");
-         List<CarBean> carBeans = carService.selectCarInfo(car);
-         CarBean carBean = carBeans.get(0);
-      }
-      @Test
-       public void 컨트롤할인차량() {
-       //given
-          CarBean car = new CarBean();
-          //when
-          car.setVHIdx("34");
-          ControllDiscountCar controllDiscountCar = carService.selectControllDiscountCar(car);
+    }
 
-       //then
-          Assertions.assertThat(controllDiscountCar.getVhliDx()).isEqualTo("34");
-       }
-       @Test//셀렉트 옵션에서 가져온 값과 멤버에 있는 값을 비교 -> 해당 rate, time을 control빈에 대입 -> insert, update 쿼리 날리기.
-        public void discountTime시간비교() {
+    @Test
+    public void 시간계산하기() {
         //given
-           MemberBean member = new MemberBean();
-           member.setClID("tony");
-           member.setClPW("1");
-           MemberBean memberBean = memberService.loginMember(member);
+        CarBean car = new CarBean();
+        car.setVhlNbr("1");
+        List<CarBean> carBeans = carService.selectCarInfo(car);
+        CarBean carBean = carBeans.get(0);
+    }
 
+    @Test
+    public void 컨트롤할인차량() {
+        //given
+        CarBean car = new CarBean();
         //when
-           String clDCName1 = memberBean.getClDCName1();
-           String time = "1시간할인";
+        car.setVHIdx("34");
+        ControllDiscountCar controllDiscountCar = carService.selectControllDiscountCar(car);
 
         //then
-           Assertions.assertThat(clDCName1).isEqualTo(time);
+        Assertions.assertThat(controllDiscountCar.getVhliDx()).isEqualTo("34");
+    }
+
+    @Test//셀렉트 옵션에서 가져온 값과 멤버에 있는 값을 비교 -> 해당 rate, time을 control빈에 대입 -> insert, update 쿼리 날리기.
+    public void discountTime시간비교() {
+        //given
+        MemberBean member = new MemberBean();
+        member.setClID("tony");
+        member.setClPW("1");
+        MemberBean memberBean = memberService.loginMember(member);
+
+        //when
+        String clDCName1 = memberBean.getClDCName1();
+        String time = "1시간할인";
+
+        //then
+        Assertions.assertThat(clDCName1).isEqualTo(time);
+    }
+
+    @Test //
+    public void 할인등록하기() {
+        //given
+        ControllDiscountCar discount = new ControllDiscountCar();
+        discount.setVhliDx("35");
+        discount.setDCName("1시간할인");
+        discount.setDCRate("10");
+        discount.setDCTime("60");
+        discount.setCliDx("1");
+        discount.setUseDiv("0");
+        carService.insertDiscountCarTime(discount);
+        CarBean car = new CarBean();
+
+        //when
+        car.setVHIdx("35");
+        ControllDiscountCar discountCar = carService.selectControllDiscountCar(car);
+
+        //then
+        Assertions.assertThat(discountCar.getVhliDx()).isEqualTo(discount.getVhliDx());
+    }
+
+    @Test
+    public void 등록되었다면업데이트하기() {
+        //given
+        ControllDiscountCar car = new ControllDiscountCar();
+        car.setVhliDx("34");
+        car.setDCName("test시간할인");
+        car.setUseDiv("0");
+        car.setDCRate("10");
+        car.setDCTime("10");
+        ControllDiscountCar discountCar = carService.selectDiscountCarTime(car);
+        //when
+        if (discountCar != null) {
+            carService.updateDiscountCarTime(car);
+        } else {
+            carService.insertDiscountCarTime(car);
         }
-        @Test //
-         public void 할인등록하기() {
-         //given
-            ControllDiscountCar discount = new ControllDiscountCar();
-            discount.setVhliDx("35");
-            discount.setDCName("1시간할인");
-            discount.setDCRate("10");
-            discount.setDCTime("60");
-            discount.setCliDx("1");
-            discount.setUseDiv("0");
-            carService.insertDiscountCarTime(discount);
-            CarBean car = new CarBean();
+        ControllDiscountCar discountCar1 = carService.selectDiscountCarTime(car);
+        //then
+        Assertions.assertThat(discountCar1.getDCName()).isEqualTo("test시간할인");
+    }
 
-            //when
-            car.setVHIdx("35");
-            ControllDiscountCar discountCar = carService.selectControllDiscountCar(car);
+    @Test
+    public void 프로시져테스트() {
+        //given
+        ControllDiscountCar car = new ControllDiscountCar();
+        car.setDCiDx("1");
+        car.setVhliDx("1");
+        car.setDCName("1시간");
+        car.setDCRate("10");
+        car.setDCTime("10");
+        car.setDCMemo("메모");
+        car.setCliDx("1");
+        car.setUseDiv("1");
+        car.setActDiv("1");
+        car.setResult(1);
+        carService.Procedure_DiscountCarTime(car);
+        //when
+        System.out.println(car.getResult());
+        //then
+    }
 
-            //then
-            Assertions.assertThat(discountCar.getVhliDx()).isEqualTo(discount.getVhliDx());
-         }
-         @Test
-          public void 등록되었다면업데이트하기() {
-          //given
-             ControllDiscountCar car = new ControllDiscountCar();
-             car.setVhliDx("34");
-             car.setDCName("test시간할인");
-             car.setUseDiv("0");
-             car.setDCRate("10");
-             car.setDCTime("10");
-             ControllDiscountCar discountCar = carService.selectDiscountCarTime(car);
-             //when
-             if(discountCar!=null){
-                 carService.updateDiscountCarTime(car);
-             }else{
-                 carService.insertDiscountCarTime(car);
-             }
-             ControllDiscountCar discountCar1 = carService.selectDiscountCarTime(car);
-             //then
-             Assertions.assertThat(discountCar1.getDCName()).isEqualTo("test시간할인");
-          }
-          @Test
-           public void 프로시져테스트() {
-           //given
-              ControllDiscountCar car = new ControllDiscountCar();
-              car.setDCiDx("1");
-              car.setVhliDx("1");
-              car.setDCName("1시간");
-              car.setDCRate("10");
-              car.setDCTime("10");
-              car.setDCMemo("메모");
-              car.setCliDx("1");
-              car.setUseDiv("1");
-              car.setActDiv("1");
-              car.setResult(1);
-              carService.Procedure_DiscountCarTime(car);
-              //when
-              System.out.println(car.getResult());
-           //then
-           }
-           @Test
-            public void 날짜로할인차량조회() {
-            //given
-               CarBean car = new CarBean();
+    @Test
+    public void 날짜로할인차량조회() {
+        //given
+        CarBean car = new CarBean();
 //               car.setStartDate("202102150000");
 //               car.setEndDate("20210218235959");
-                car.setVhlNbr("1234");
-               //when
-               List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoListWithDate(car);
-               System.out.println("값출력:"+discountedCarInfos.get(0).getCarNumber());
-               //then
-           }
+        car.setVhlNbr("1234");
+        //when
+        List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoListWithDate(car);
+        System.out.println("값출력:" + discountedCarInfos.get(0).getCarNumber());
+        //then
+    }
 
-           @Test
-            public void idxnameTest() {
-            //given
-               List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
-               //when
-               ClNameBean clNameBean = clNameBeans.get(0);
-               //then
-               System.out.println(clNameBean.getClName());
-            }
+    @Test
+    public void idxnameTest() {
+        //given
+        List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
+        //when
+        ClNameBean clNameBean = clNameBeans.get(0);
+        //then
+        System.out.println(clNameBean.getClName());
+    }
 
 }

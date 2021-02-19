@@ -4,6 +4,13 @@ spring:
     username: webdc
     password: itro
     driver-class-name: org.mariadb.jdbc.Driver
+  mvc:
+    contentnegotiation:
+      favor-parameter: true
+      favor-path-extension: true
+      media-types:
+        xls: application/vnd.ms-ecel
+
 spring.thymeleaf.cache: false
 spring.devtools.remote.restart.enabled: false
 

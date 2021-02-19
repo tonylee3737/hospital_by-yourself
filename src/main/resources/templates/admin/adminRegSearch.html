@@ -4,7 +4,58 @@
 <head th:replace="admin/adminController :: header">
     <meta charset="UTF-8">
     <title>: :근로복지공단대구병원: :</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 </head>
+    <script th:inline="javascript">
+
+        $( function() {
+            $( "#startDate" ).datepicker({ closeText: '닫기',
+                prevText: '이전달',
+                nextText: '다음달',
+                currentText: '오늘',
+                monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+                    '7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+                monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+                    '7월','8월','9월','10월','11월','12월'],
+                dayNames: ['일','월','화','수','목','금','토'],
+                dayNamesShort: ['일','월','화','수','목','금','토'],
+                dayNamesMin: ['일','월','화','수','목','금','토'],
+                weekHeader: 'Wk',
+                dateFormat: 'yy-mm-dd'});
+            var startDate = [[${startDate}]]
+            if(startDate==null){
+                startDate = "-30D";
+            }
+            $('#startDate').datepicker('setDate', startDate);
+        });
+
+        $( function() {
+            $( "#endDate" ).datepicker({ closeText: '닫기',
+                prevText: '이전달',
+                nextText: '다음달',
+                currentText: '오늘',
+                monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+                    '7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+                monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+                    '7월','8월','9월','10월','11월','12월'],
+                dayNames: ['일','월','화','수','목','금','토'],
+                dayNamesShort: ['일','월','화','수','목','금','토'],
+                dayNamesMin: ['일','월','화','수','목','금','토'],
+                weekHeader: 'Wk',
+                dateFormat: 'yy-mm-dd',
+            });
+            var endDate = [[${endDate}]]
+            if(endDate==null){
+                endDate = "today";
+            }
+            $('#endDate').datepicker('setDate', endDate);
+        } );
+
+    </script>
 <body>
 
 
@@ -14,11 +65,14 @@
     <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:if="${carNumber}" th:value="${carNumber}">
     <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:unless="${carNumber}" value="">
     <select name ="clName">
-        <option value ="">전체</option>
+        <option value="">전체</option>
+        <option th:if="${return_clName}" th:value="${return_clName}" th:utext="${return_clName}" selected>전체</option>
+        <option th:if="${return_clName}==null" th:utext="${return_clName}" selected>전체</option>
         <option th:each = "clname:${clNames}"
-                th:value="${clname.getClName()}" th:utext="${clname.getClName()}"></option>
+                th:if="${return_clName}!=${clname.getClName()}" th:value="${clname.getClName()}" th:utext="${clname.getClName()}"></option>
     </select>
-    <input id="reg_submit" type="submit" value="확인">
+    <input type="submit" name="action" value="액셀다운">
+    <input id="reg_submit" type="submit" name="action" value="확인">
 </form>
 <div class="table-location">
 <Table class="table">
@@ -43,7 +97,7 @@
         <td th:text="${car.getDCMemo()}"></td>
         <td th:text="${car.getInsDayTime()}" ></td>
         <td th:if="${car.getUseDiv()} =='0'" th:text="미사용"></td>
-        <td th:if="${car.getUseDiv()} =='1'" th:text="미용"></td>
+        <td th:if="${car.getUseDiv()} =='1'" th:text="사용"></td>
     </tr>
 </Table>
 </div>
