@@ -5,7 +5,10 @@ import hospital_parking_system.hospital_parking.carInfo.CarBean;
 import hospital_parking_system.hospital_parking.carInfo.CarService;
 import hospital_parking_system.hospital_parking.carInfo.ClNameBean;
 import hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo;
+import hospital_parking_system.hospital_parking.member.AdminBean;
 import hospital_parking_system.hospital_parking.member.MemberBean;
+import hospital_parking_system.hospital_parking.member.MemberService;
+import hospital_parking_system.hospital_parking.member.SessionBean;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -14,11 +17,13 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -31,9 +36,14 @@ public class AdminController {
 
     private final AdminService adminService;
     private final CarService carService;
-
+    private final SessionBean sessionBean;
+    private final MemberService memberService;
     @GetMapping("/adminRegSearch")
     public String adminRegSearch(Model model) {
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoList();
         List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
 
@@ -55,7 +65,10 @@ public class AdminController {
                                       @RequestParam(value = "action") String action,
                                       Model model,HttpServletResponse response) throws IOException {
 
-
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
         String[] start = startDate.split("-");
         String s_year = start[0];
         String s_month = start[1];
@@ -80,7 +93,7 @@ public class AdminController {
 
         //       액셀 다운로드
 
-        if(action.equals("액셀다운")){
+        if(action.equals("액셀")){
             Workbook book = null;
             XSSFWorkbook xssfWb = null;
             XSSFSheet xssfSheet = null;
@@ -161,6 +174,10 @@ public class AdminController {
 
     @GetMapping("/adminManaging")
     public String adminManaging(Model model) {
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
         List<AdminManagerBean> adminManagerBeans = adminService.selectAdminManager();
         model.addAttribute("adminList", adminManagerBeans);
         return "admin/adminManaging";
@@ -168,6 +185,10 @@ public class AdminController {
 
     @GetMapping("/adminGroupManaging")
     public String adminGroupList(Model model) {
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
         List<GroupBean> groupBeans = adminService.selectGroupList();
         model.addAttribute("groupList", groupBeans);
         return "admin/adminGroupManaging";
@@ -175,6 +196,10 @@ public class AdminController {
 
     @GetMapping("/adminRegister_edit")
     public String adminRegister_edit(@RequestParam(value = "id") String idx, Model model) {
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
         List<GroupBean> groupBeans = adminService.selectGroupList();
         MemberBean memberBean = new MemberBean();
         memberBean.setCliDx(idx);
@@ -220,39 +245,106 @@ public class AdminController {
     }
 
     @PostMapping("/adminRegister_edit")
-    public String adminRegister_edit_post(MemberForm form, Model model) {
+    public String adminRegister_edit_post(@Valid MemberForm form, BindingResult result,Model model) {
+
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
+
+        List<GroupBean> groupBeans = adminService.selectGroupList();
+//        수정 중 아이디값과 비밀번호가 값 유효성 검사
+        if(result.hasErrors()){
+            model.addAttribute("groupList", groupBeans);
+            return "admin/adminRegister_edit";
+        }
         MemberBean member = new MemberBean();
         member.setCliDx(form.getCliDx());
         member.setClID(form.getClID());
         member.setClPW(form.getClPW());
+        MemberBean memberBean = memberService.loginMember(member);
+//        수정 중 비밀번호 유효성 검사
+        if(memberBean==null){
+            model.addAttribute("groupList", groupBeans);
+            model.addAttribute("alert_password_not_match", "비밀번호가 일치하지 않습니다.");
+            return "admin/adminRegister_edit";
+        }
         member.setClName(form.getClName());
         member.setClUser(form.getClUser());
         member.setClTel(form.getClTel());
         member.setClEmail(form.getClEmail());
         member.setClDCName1(form.getClDCName1());
         member.setClDCCount1(form.getClDCCount1());
-        member.setClDCTime1(form.getClDCTime1());
-        member.setClDCRate1(form.getClDCRate1());
+        if(form.getClDCTime1().equals("")){
+            member.setClDCTime1("0");
+        }else{
+            member.setClDCTime1(form.getClDCTime1());
+        }
+        if(form.getClDCRate1().equals("")){
+            member.setClDCRate1("0");
+        }else{
+            member.setClDCRate1(form.getClDCRate1());
+        }
         member.setClDCName2(form.getClDCName2());
         member.setClDCCount2(form.getClDCCount2());
-        member.setClDCTime2(form.getClDCTime2());
-        member.setClDCRate2(form.getClDCRate2());
+        if(form.getClDCTime2().equals("")){
+            member.setClDCTime2("0");
+        }else{
+            member.setClDCTime2(form.getClDCTime2());
+        }
+        if(form.getClDCRate2().equals("")){
+            member.setClDCRate2("0");
+        }else{
+            member.setClDCRate2(form.getClDCRate2());
+        }
         member.setClDCName3(form.getClDCName3());
         member.setClDCCount3(form.getClDCCount3());
-        member.setClDCTime3(form.getClDCTime3());
-        member.setClDCRate3(form.getClDCRate3());
+        if(form.getClDCTime3().equals("")){
+            member.setClDCTime3("0");
+        }else{
+            member.setClDCTime3(form.getClDCTime3());
+        }
+        if(form.getClDCRate3().equals("")){
+            member.setClDCRate3("0");
+        }else{
+            member.setClDCRate3(form.getClDCRate3());
+        }
         member.setClDCName4(form.getClDCName4());
         member.setClDCCount4(form.getClDCCount4());
-        member.setClDCTime4(form.getClDCTime4());
-        member.setClDCRate4(form.getClDCRate4());
+        if(form.getClDCTime4().equals("")){
+            member.setClDCTime4("0");
+        }else{
+            member.setClDCTime4(form.getClDCTime4());
+        }
+        if(form.getClDCRate4().equals("")){
+            member.setClDCRate4("0");
+        }else{
+            member.setClDCRate4(form.getClDCRate4());
+        }
         member.setClDCName5(form.getClDCName5());
         member.setClDCCount5(form.getClDCCount5());
-        member.setClDCTime5(form.getClDCTime5());
-        member.setClDCRate5(form.getClDCRate5());
+        if(form.getClDCTime5().equals("")){
+            member.setClDCTime5("0");
+        }else{
+            member.setClDCTime5(form.getClDCTime5());
+        }
+        if(form.getClDCRate5().equals("")){
+            member.setClDCRate5("0");
+        }else{
+            member.setClDCRate5(form.getClDCRate5());
+        }
         member.setClDCName6(form.getClDCName6());
         member.setClDCCount6(form.getClDCCount6());
-        member.setClDCTime6(form.getClDCTime6());
-        member.setClDCRate6(form.getClDCRate6());
+        if(form.getClDCTime6().equals("")){
+            member.setClDCTime6("0");
+        }else{
+            member.setClDCTime6(form.getClDCTime6());
+        }
+        if(form.getClDCRate6().equals("")){
+            member.setClDCRate6("0");
+        }else{
+            member.setClDCRate6(form.getClDCRate6());
+        }
         member.setClMemo(form.getClMemo());
         member.setClDCUse(form.getClDCUse());
         member.setClGrpiDx(form.getClGrpiDx());
@@ -265,6 +357,10 @@ public class AdminController {
 
     @GetMapping("/adminRegister")
     public String adminRegister(Model model) {
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
         model.addAttribute("memberForm", new MemberForm());
         List<GroupBean> groupBeans = adminService.selectGroupList();
         model.addAttribute("groupList", groupBeans);
@@ -272,7 +368,14 @@ public class AdminController {
     }
 
     @PostMapping("/adminRegister")
-    public String adminRegister_post(MemberForm form, Model model) {
+    public String adminRegister_post(@Valid MemberForm form, BindingResult result, Model model) {
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
+        if(result.hasErrors()){
+            return "admin/adminRegister";
+        }
         MemberBean member = new MemberBean();
         member.setCliDx("0");
         member.setClID(form.getClID());
@@ -315,6 +418,10 @@ public class AdminController {
 
     @GetMapping("adminDeleteManager")
     public String adminDeleteManager(@RequestParam(value = "id") String idx, Model model) {
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
         MemberBean memberBean = new MemberBean();
         memberBean.setCliDx(idx);
         adminService.deleteOneManager(memberBean);
@@ -323,12 +430,20 @@ public class AdminController {
 
     @GetMapping("/adminRegister_group")
     public String adminRegister_group(Model model) {
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
         model.addAttribute("adminForm", new AdminForm());
         return "admin/adminRegister_group";
     }
 
     @PostMapping("/adminRegister_group")
     public String adminRegister_group_post(AdminForm form, Model model) {
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
         GroupBean groupBean = new GroupBean();
         groupBean.setGrpName(form.getGrpName());
         groupBean.setGrpMemo(form.getGrpMemo());
@@ -338,6 +453,10 @@ public class AdminController {
 
     @GetMapping("adminRegister_group_edit")
     public String adminRegister_group_edit(@RequestParam(value = "id") String idx, Model model) {
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
         AdminForm form = new AdminForm();
         GroupBean groupBean = new GroupBean();
         groupBean.setGrpiDx(idx);
@@ -351,6 +470,10 @@ public class AdminController {
 
     @GetMapping("adminDeleteGroup")
     public String adminDeleteGroup(@RequestParam(value = "id") String idx) {
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
         GroupBean groupBean = new GroupBean();
         groupBean.setGrpiDx(idx);
         adminService.deleteOneGroup(groupBean);

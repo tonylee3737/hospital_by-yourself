@@ -3,10 +3,14 @@ package hospital_parking_system.hospital_parking.adminPage;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+
 @Getter @Setter
 public class MemberForm {
     private String CliDx;
+    @NotEmpty(message = "아이디는 필수로 입력하셔야 합니다.")
     private String ClID;
+    @NotEmpty(message = "비밀번호는 필수로 입력하셔야 합니다.")
     private String ClPW;
     private String ClName;
     private String ClUser;

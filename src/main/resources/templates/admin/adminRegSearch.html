@@ -58,22 +58,25 @@
     </script>
 <body>
 
+<div class ="body-align-with-table">
 
 <form class="reg_form_location" action="adminRegSearch" method="post">
-    날짜:<input class="reg_date" type="text" name="startDate" id="startDate">
+    <input type="button" value="날짜:">
+    <input class="reg_date" type="text" name="startDate" id="startDate">
     <input class="reg_date" type="text" name="endDate" id="endDate">
     <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:if="${carNumber}" th:value="${carNumber}">
     <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:unless="${carNumber}" value="">
+
+    <input class="reg_dc_button" type="button" value="할인처:">
     <select name ="clName">
         <option th:if="${return_clName}" th:value="${return_clName}" th:utext="${return_clName}"></option>
         <option th:each = "clname:${clNames}"
                 th:if="${return_clName}!=${clname.getClName()}" th:value="${clname.getClName()}" th:utext="${clname.getClName()}"></option>
     </select>
-    <input type="submit" name="action" value="액셀다운">
-    <input id="reg_submit" type="submit" name="action" value="확인">
-    <input type="button" value="인쇄하기" id="print" onclick="window.print()"/>
+    <input id="reg_submit" type="submit" name="action" value="검색">
+    <input class="reg_excel_down" type="submit" name="action" value="액셀">
+    <input class="reg_print" type="button" value="인쇄" id="print" onclick="window.print()"/>
 </form>
-<div class="table-location">
 <Table class="table">
     <tr>
         <th>번호</th>

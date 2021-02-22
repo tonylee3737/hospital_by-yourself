@@ -27,7 +27,7 @@ public class CarController {
 
     @GetMapping("getCarInfo")
     public String getCarInfo(@RequestParam(value = "carNumber") String carNumber, Model model) throws ParseException, UnsupportedEncodingException {
-        MemberBean member = sessionBean.getBean();
+        MemberBean member = sessionBean.getMemberbean();
         if (member == null) {
             return "redirect:/";
         }
@@ -68,7 +68,7 @@ public class CarController {
 
     @GetMapping("searchCarInfo")
     public String searchCarInfo(Model model) {
-        MemberBean member = sessionBean.getBean();
+        MemberBean member = sessionBean.getMemberbean();
         if (member == null) {
             return "redirect:/";
         }
@@ -77,7 +77,7 @@ public class CarController {
 
     @PostMapping("searchCarInfo")
     public String getCarInfo_Post(@RequestParam(value = "carNumber") String carNumber, Model model) {
-        MemberBean member = sessionBean.getBean();
+        MemberBean member = sessionBean.getMemberbean();
         if (member == null) {
             return "redirect:/";
         }
@@ -91,7 +91,7 @@ public class CarController {
 
     @GetMapping("regSearch")
     public String regSearch(Model model) {
-        MemberBean member = sessionBean.getBean();
+        MemberBean member = sessionBean.getMemberbean();
         if (member == null) {
             return "redirect:/";
         }
@@ -106,7 +106,7 @@ public class CarController {
                                  @RequestParam(value = "endDate") String endDate,
                                  @RequestParam(value = "checkDivUse") String checkDivUse,
                                  Model model) {
-        MemberBean member = sessionBean.getBean();
+        MemberBean member = sessionBean.getMemberbean();
         if (member == null) {
             return "redirect:/";
         }
@@ -134,7 +134,7 @@ public class CarController {
 
     @GetMapping("logout")
     public String logout(){
-        sessionBean.setBean(null);
+        sessionBean.setMemberbean(null);
         return "redirect:/";
     }
 
@@ -143,7 +143,10 @@ public class CarController {
                                @RequestParam(value = "idx") String idx,
                                @RequestParam(value = "carNumber") String encarNumber,Model model) throws UnsupportedEncodingException {
         ControllDiscountCar discountCar = new ControllDiscountCar();
-        MemberBean memberBean = sessionBean.getBean();
+        MemberBean memberBean = sessionBean.getMemberbean();
+        if(memberBean==null){
+            return "redirect:/";
+        }
         String discountTime = time.trim();
         String memberDiscountTime = memberBean.getClDCName1().trim();
         if (time.equals(memberBean.getClDCName1())){

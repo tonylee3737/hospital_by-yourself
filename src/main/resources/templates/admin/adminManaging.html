@@ -5,41 +5,41 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<a href="#"><h1>admin Managing</h1></a>
-
-<table border="1">
+<div clsss ="body-align-with-table">
+<table class = "table-adminManaging" border="1">
     <tr>
-        <td>번호</td>
-        <td>그룹명</td>
-        <td>할인처</td>
-        <td>담당자</td>
-        <td>연락처</td>
-        <td>할인1</td>
-        <td>할인2</td>
-        <td>할인3</td>
-        <td>할인4</td>
-        <td>할인5</td>
-        <td>할인6</td>
-        <td>비고</td>
-        <td>사용</td>
+        <th>번호</th>
+        <th>그룹명</th>
+        <th>할인처</th>
+        <th>담당자</th>
+        <th>연락처</th>
+        <th>할인1</th>
+        <th>할인2</th>
+        <th>할인3</th>
+        <th>할인4</th>
+        <th>할인5</th>
+        <th>할인6</th>
+        <th>비고</th>
+        <th>사용</th>
     </tr>
     <tr th:each="admin:${adminList}">
-        <td th:text="${admin.getCliDx()}" style="width:10px"/></td>
-        <td><a th:href="@{adminRegister_edit(id=${admin.getCliDx()})}"><p th:text="${admin.getGrpName()}" style="width:50px"/></a></td>
-        <td th:text="${admin.getClName()}" style="width:60px" />
-        <td th:text="${admin.getClUser()}" style="width:100px"/>
-        <td th:text="${admin.getClTel()}" style="width:90px"/>
-        <td th:text="${admin.getClDCName1()}+'('+${admin.getClDCTime1()}+'분/'+ ${admin.getClDCRate1()} + '%)'" style="width:150px"/>
-        <td th:text="${admin.getClDCName2()}+'('+${admin.getClDCTime2()}+'분/'+ ${admin.getClDCRate2()} + '%)'" style="width:150px"/>
-        <td th:text="${admin.getClDCName3()}+'('+${admin.getClDCTime3()}+'분/'+ ${admin.getClDCRate3()} + '%)'" style="width:150px"/>
-        <td th:text="${admin.getClDCName4()}+'('+${admin.getClDCTime4()}+'분/'+ ${admin.getClDCRate4()} + '%)'" style="width:150px"/>
-        <td th:text="${admin.getClDCName5()}+'('+${admin.getClDCTime5()}+'분/'+ ${admin.getClDCRate5()} + '%)'" style="width:30px"/>
-        <td th:text="${admin.getClDCName6()}+'('+${admin.getClDCTime6()}+'분/'+ ${admin.getClDCRate6()} + '%)'" style="width:30px"/>
-        <td th:text="${admin.getClMemo()}" style="width:30px"/>
-        <td th:text="${admin.getClDCUse()}" style="width:30px"/>
+        <td th:text="${admin.getCliDx()}"/></td>
+        <td><a th:href="@{adminRegister_edit(id=${admin.getCliDx()})}"><p th:text="${admin.getGrpName()}" /></a></td>
+        <td th:text="${admin.getClName()}"  />
+        <td th:text="${admin.getClUser()}" />
+        <td th:text="${admin.getClTel()}" >
+        <td th:text="${admin.getClDCName1()}+'('+${admin.getClDCTime1()}+'분/'+ ${admin.getClDCRate1()} + '%)'" />
+        <td th:text="${admin.getClDCName2()}+'('+${admin.getClDCTime2()}+'분/'+ ${admin.getClDCRate2()} + '%)'" />
+        <td th:text="${admin.getClDCName3()}+'('+${admin.getClDCTime3()}+'분/'+ ${admin.getClDCRate3()} + '%)'" />
+        <td th:text="${admin.getClDCName4()}+'('+${admin.getClDCTime4()}+'분/'+ ${admin.getClDCRate4()} + '%)'" />
+        <td th:text="${admin.getClDCName5()}+'('+${admin.getClDCTime5()}+'분/'+ ${admin.getClDCRate5()} + '%)'" />
+        <td th:text="${admin.getClDCName6()}+'('+${admin.getClDCTime6()}+'분/'+ ${admin.getClDCRate6()} + '%)'" />
+        <td th:text="${admin.getClMemo()}" />
+        <td th:if="${admin.getClDCUse()}==1">사용</td>
+        <td th:if="${admin.getClDCUse()}==0">미사용</td>
     </tr>
 </table>
-<a href = "adminRegister">등록하기</a>
-
+<button class= "admin-register-button" type="button" onclick="location.href='adminRegister'">관리자 등록하기</button>
+</div>
 </body>
 </html>

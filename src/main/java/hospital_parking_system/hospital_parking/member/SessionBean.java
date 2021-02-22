@@ -10,5 +10,6 @@ import org.springframework.web.context.annotation.SessionScope;
 @Component
 @Getter @Setter
 public class SessionBean {
-    private MemberBean bean;
+    private MemberBean memberbean;
+    private AdminBean adminbean;
 }

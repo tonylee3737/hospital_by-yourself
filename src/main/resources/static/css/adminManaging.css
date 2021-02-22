@@ -1,0 +1,116 @@
+.table-adminManaging {
+    border-collapse: collapse;
+    border-top: 3px solid #168;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 3%;
+    text-align: center;
+}
+.table-adminManaging th {
+    color: #168;
+    background: #f0f6f9;
+    text-align: center;
+}
+.table-adminManaging th{
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+.table-adminManaging td {
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+
+.body-align-with-table{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.table-adminManaging th:first-child, .table-adminManaging td:first-child {
+    border-left: 0;
+}
+
+.table-adminManaging th:last-child, .table-adminManaging td:last-child {
+    border-right: 0;
+}
+.table-adminManaging tr td:first-child{
+    text-align: center;
+}
+.table-adminManaging caption{caption-side: bottom; display: none;}
+
+.admin-register-button{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    margin-top: 3%;
+    border-radius: 10%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 10%;
+    border-bottom: 3px solid darkseagreen;
+}
+.admin-register-button:hover{
+    background-color: wheat;
+
+}
+.register-title{
+    color: darkseagreen;
+    margin-top: 3%;
+    text-align: center;
+}
+
+.register-table{
+    margin-top: 1%;
+    margin-right: auto;
+    margin-left: auto;
+    /*display: inline-block;*/
+}
+.register-form {
+    margin-left: auto;
+    margin-right: auto;
+}
+.register-alert{
+    font-style: italic;
+    color: red;
+    margin-top: 0%;
+    height: 0px;
+}
+
+.register-table td{
+    display: inline-block;
+    font-size: 17px;
+    height: 45px;
+}
+.register-td {
+    font-size: 13px;
+    width: 140px;
+    heigth: 50px;
+    margin-bottom: 5%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid darkseagreen;
+    text-align: center;
+}
+
+.register-dc {
+    text-align: center;
+    width: 45px;
+    border-top: darkseagreen;
+    border-left:  darkseagreen;
+    border-right:  darkseagreen;
+    border-bottom: 1px solid darkseagreen;
+}
+.register-button{
+    size: 80px;
+    border-top: 2px solid darkseagreen;
+    border-left: 2px solid darkseagreen;
+    border-right: 2px solid darkseagreen;
+    border-bottom: 2px solid darkseagreen;
+
+}
+.register-button:hover{
+    background-color: darkseagreen;
+}
+

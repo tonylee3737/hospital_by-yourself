@@ -72,14 +72,19 @@ section {
     padding-top: 70px;
 }
 .title-container{
+    text-align: center;
+    text-align: justify-all;
+    justify-content: space-between;
+    display: flex;
+    margin-right: 25%;
+    margin-left: 25%;
 
 }
 .maintitle1{
+    margin-left: 7%;
     font-weight: bold;
     font-size: 1.4em;
     color: antiquewhite;
-    display: inline-flex;
-    margin-left: 14%;
 
 }
 .maintitle1 a:hover {
@@ -88,11 +93,10 @@ section {
 }
 
 .maintitle2{
+    margin-left: 7%;
     font-weight: bold;
     font-size: 1.4em;
     color: antiquewhite;
-    display: inline-flex;
-    margin-left: 14%;
 }
 .maintitle2 a:hover {
     color: #2186c4;
@@ -100,11 +104,10 @@ section {
 }
 
 .maintitle3{
+    margin-left: 7%;
     font-weight: bold;
     font-size: 1.4em;
     color: antiquewhite;
-    display: inline-flex;
-    margin-left: 14%;
 }
 
 .maintitle3 a:hover {
@@ -114,6 +117,7 @@ section {
 }
 
 .title-mark{
+    /*justify-content: space-between;*/
     color: #2186c4;
 }
 .maintitle3 a  {
