@@ -13,6 +13,11 @@ public interface AdminMapper {
 
     List<GroupBean> selectGroupList();
 
+    GroupBean selectOneGroup(GroupBean groupBean);
+
+    void deleteOneGroup(GroupBean groupBean);
+
+    GroupBean selectOneGroupFromName(GroupBean bean);
     void insertMember(MemberBean bean);
 
     MemberBean selectOneParking_class(MemberBean bean);
@@ -23,9 +28,8 @@ public interface AdminMapper {
 
     void insertGroup(GroupBean groupBean);
 
-    GroupBean selectOneGroup(GroupBean groupBean);
+    void updateGroup(GroupBean groupBean);
 
-    void deleteOneGroup(GroupBean groupBean);
 
     MemberBean Procedure_registerManager(MemberBean bean);
 }

@@ -4,10 +4,6 @@
 <head th:replace="admin/adminController :: header">
     <meta charset="UTF-8">
     <title>: :근로복지공단대구병원: :</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 </head>
     <script th:inline="javascript">
@@ -34,8 +30,8 @@
         });
 
         $( function() {
-            $( "#endDate" ).datepicker({ closeText: '닫기',
-                prevText: '이전달',
+            $( "#endDate" ).datepicker({ prevText: '이전달',
+                closeText: '닫기',
                 nextText: '다음달',
                 currentText: '오늘',
                 monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
@@ -61,7 +57,7 @@
 <div class ="body-align-with-table">
 
 <form class="reg_form_location" action="adminRegSearch" method="post">
-    <input type="button" value="날짜:">
+    <input type="button" value="날짜">
     <input class="reg_date" type="text" name="startDate" id="startDate">
     <input class="reg_date" type="text" name="endDate" id="endDate">
     <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:if="${carNumber}" th:value="${carNumber}">
@@ -77,6 +73,7 @@
     <input class="reg_excel_down" type="submit" name="action" value="액셀">
     <input class="reg_print" type="button" value="인쇄" id="print" onclick="window.print()"/>
 </form>
+
 <Table class="table">
     <tr>
         <th>번호</th>

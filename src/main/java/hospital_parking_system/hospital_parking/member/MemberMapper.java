@@ -10,6 +10,8 @@ public interface MemberMapper {
 
     MemberBean loginMember(MemberBean bean);
 
+    MemberBean checkMemberId(MemberBean bean);
+
     AdminBean loginAdmin(AdminBean bean);
 
     void deleteMember(String ClID);

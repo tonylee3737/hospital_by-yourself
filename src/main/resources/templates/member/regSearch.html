@@ -4,45 +4,103 @@
 <head th:replace="member/memberController :: header">
     <meta charset="UTF-8">
     <title>: :근로복지공단대구병원: </title>
-</head>
-<body>
-<h1> reg Search</h1>
 
-<form action="regSearch" method="post">
-    날짜:<input class="reg_date" type="text" name="startDate" id="startDate">
+</head>
+        <script th:inline="javascript">
+
+            $( function() {
+                $( "#startDate" ).datepicker({ closeText: '닫기',
+                    prevText: '이전달',
+                    nextText: '다음달',
+                    currentText: '오늘',
+                    monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+                        '7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+                    monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+                        '7월','8월','9월','10월','11월','12월'],
+                    dayNames: ['일','월','화','수','목','금','토'],
+                    dayNamesShort: ['일','월','화','수','목','금','토'],
+                    dayNamesMin: ['일','월','화','수','목','금','토'],
+                    weekHeader: 'Wk',
+                    dateFormat: 'yy-mm-dd'});
+                var startDate = [[${startDate}]]
+                if(startDate==null){
+                    startDate = "-30D";
+                }
+                $('#startDate').datepicker('setDate', startDate);
+            });
+
+            $( function() {
+                $( "#endDate" ).datepicker({ closeText: '닫기',
+                    prevText: '이전달',
+                    nextText: '다음달',
+                    currentText: '오늘',
+                    monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+                        '7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+                    monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+                        '7월','8월','9월','10월','11월','12월'],
+                    dayNames: ['일','월','화','수','목','금','토'],
+                    dayNamesShort: ['일','월','화','수','목','금','토'],
+                    dayNamesMin: ['일','월','화','수','목','금','토'],
+                    weekHeader: 'Wk',
+                    dateFormat: 'yy-mm-dd',
+                });
+                var endDate = [[${endDate}]]
+                if(endDate==null){
+                    endDate = "today";
+                }
+                $('#endDate').datepicker('setDate', endDate);
+            } );
+
+    </script>
+
+<body>
+
+<div class ="body-align-with-table">
+
+<form class="reg_form_location" action="regSearch" method="post">
+    <input type="button" value="날짜">
+    <input class="reg_date" type="text" name="startDate" id="startDate">
     <input class="reg_date" type="text" name="endDate" id="endDate">
-    차량번호검색:<input type="text" name="carNumber"/>
+    <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:if="${carNumber}" th:value="${carNumber}">
+    <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:unless="${carNumber}" value="">
+
     <select name="checkDivUse">
-        <option value="0">미사용</option>
-        <option value="">사용포함</option>
+        <option th:if="${DivUse}" th:value="${checkDivUse}" th:utext="${DivUse}"></option>
+
+        <option th:if="${checkDivUse}!='0'" value="0">미사용</option>
+        <option th:if="${checkDivUse}!=''" value="">사용포함</option>
     </select>
-    <input type="submit">
+    <input id="reg_submit" type="submit" value="검색">
 </form>
-<Table>
+</div>
+
+<Table class="table">
     <tr>
-        <td>번호</td>
-        <td>차량번호</td>
-        <td>할인명</td>
-        <td>할인처</td>
-        <td>시간할인(분)</td>
-        <td>시간할인(%)</td>
-        <td>비고</td>
-        <td>등록일시</td>
-        <td>사용</td>
+        <th>번호</th>
+        <th>차량번호</th>
+        <th>할인명</th>
+        <th>할인처</th>
+        <th>시간할인</th>
+        <th>할인률</th>
+        <th>비고</th>
+        <th>등록일시</th>
+        <th>사용</th>
     </tr>
     <tr th:if="${discountedCarInfo}" th:each="car: ${discountedCarInfo}">
-        <td><input th:value="${car.getDCiDx()}" style="width:50px"></td>
-        <td><input th:value="${car.getCarNumber()}" style="width:100px"></td>
-        <td><input th:value="${car.getDCName()}" style="width:100px"></td>
-        <td><input th:value="${car.getClName()}" style="width:100px"></td>
-        <td><input th:value="${car.getDCTime()}" style="width:50px"></td>
-        <td><input th:value="${car.getDCRate()}" style="width:50px"></td>
-        <td><input th:value="비고" style="width:50px"></td>
-        <td><input th:value="${car.getInsDayTime()}" style="width:150px"></td>
-        <td><input th:if="${car.getUseDiv}=='0'" value="미사용"></td>
-        <td><input th:if="${car.getUseDiv}=='1'" value="사용"></td>
+        <td th:text="${car.getDCiDx()}" ></td>
+        <td th:text="${car.getCarNumber()}" ></td>
+        <td th:text="${car.getDCName()}" ></td>
+        <td th:text="${car.getClName()}" ></td>
+        <td th:text="${car.getDCTime()}+'분'" ></td>
+        <td th:text="${car.getDCRate()}+'%'" ></td>
+        <td th:text="${car.getDCMemo()}"></td>
+        <td th:text="${car.getInsDayTime()}" ></td>
+        <td th:if="${car.getUseDiv()} =='0'" th:text="미사용"></td>
+        <td th:if="${car.getUseDiv()} =='1'" th:text="사용"></td>
     </tr>
 </Table>
+</div>
+
 
 </body>
 </html>

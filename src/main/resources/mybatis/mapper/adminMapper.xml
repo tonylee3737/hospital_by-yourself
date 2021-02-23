@@ -23,6 +23,14 @@
         WHERE GrpiDx = #{GrpiDx};
     </select>
 
+    <select id="selectOneGroupFromName" parameterType="hospital_parking_system.hospital_parking.adminPage.GroupBean" resultType="hospital_parking_system.hospital_parking.adminPage.GroupBean">
+        SELECT *
+        FROM parking_class_group
+        WHERE GrpName = #{GrpName};
+    </select>
+
+
+
     <delete id="deleteOneGroup" parameterType="hospital_parking_system.hospital_parking.adminPage.GroupBean">
         DELETE
         FROM parking_class_group
@@ -87,6 +95,11 @@
         INSERT INTO parking_class_group (GrpiDx, GrpName, GrpMemo)
         VALUES (#{GrpiDx}, #{GrpName}, #{GrpMemo});
     </insert>
+
+    <update id="updateGroup" parameterType="hospital_parking_system.hospital_parking.adminPage.GroupBean">
+        UPDATE parking_class_group SET GrpName=#{GrpName}, GrpMemo=#{GrpMemo}
+        WHERE GrpiDx = #{GrpiDx};
+    </update>
 
 </mapper>
 

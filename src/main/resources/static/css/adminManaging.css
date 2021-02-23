@@ -18,6 +18,30 @@
 .table-adminManaging td {
     padding: 5px;
     border: 1px solid #ddd;
+
+}
+
+.table-group {
+    border-collapse: collapse;
+    border-top: 3px solid #168;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 3%;
+    text-align: center;
+}
+.table-group th {
+    color: #168;
+    background: #f0f6f9;
+    text-align: center;
+}
+.table-group th{
+    padding: 10px;
+    border: 1px solid #ddd;
+
+}
+.table-group td {
+    padding: 5px;
+    border: 1px solid #ddd;
 }
 
 .body-align-with-table{
@@ -113,4 +137,3 @@
 .register-button:hover{
     background-color: darkseagreen;
 }
-

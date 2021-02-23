@@ -26,6 +26,11 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    public GroupBean selectOneGroupFromName(GroupBean bean) {
+        return adminMapper.selectOneGroupFromName(bean);
+    }
+
+    @Override
     public void insertMember(MemberBean bean) {
         if (memberMapper.loginMember(bean)!=null) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
@@ -54,6 +59,11 @@ public class AdminServiceImpl implements AdminService{
     public void insertGroup(GroupBean groupBean) {
         adminMapper.insertGroup(groupBean);
 
+    }
+
+    @Override
+    public void updateGroup(GroupBean groupBean) {
+        adminMapper.updateGroup(groupBean);
     }
 
     @Override

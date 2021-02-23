@@ -23,6 +23,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public MemberBean checkMemberId(MemberBean bean) {
+        return memberMapper.checkMemberId(bean);
+    }
+
+    @Override
     public AdminBean loginAdmin(AdminBean bean) {
         return memberMapper.loginAdmin(bean);
     }

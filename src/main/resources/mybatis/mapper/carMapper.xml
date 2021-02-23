@@ -70,7 +70,7 @@
                  inner join parking_class on parking_class_discount.CliDx = parking_class.CliDx
                  inner join parking_vehicle_history on parking_class_discount.VhliDx = parking_vehicle_history.VHiDx
                                         <![CDATA[
-        WHERE #{startDate} < parking_class_discount.InsDayTime
+            WHERE #{startDate} < parking_class_discount.InsDayTime
           AND parking_class_discount.InsDayTime < #{endDate}
           AND parking_vehicle_history.CarNumber like CONCAT('%', #{VhlNbr}, '%') AND parking_class_discount.UseDiv like CONCAT('%', #{UseDiv}, '%') ;
         ]]>
@@ -80,9 +80,8 @@
 
     <select id="selectClNameFromClidx" resultType="hospital_parking_system.hospital_parking.carInfo.ClNameBean">
         select ClName
-        from parking_class as A
-                 inner join parking_class_discount as B
-        where a.clidx = b.clidx;
+        from parking_class
+
     </select>
 </mapper>
 

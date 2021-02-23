@@ -1,30 +1,58 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 
 <head th:replace="member/memberController :: header">
     <meta charset="UTF-8">
-    <title></title>
+    <title>: :근로복지공단대구병원: </title>
 </head>
 
 <body>
-<h1> car Number Search</h1>
-    <form method="POST" action="searchCarInfo">
-        차량번호 조회 : <input type="text" name="carNumber" th:if="${carNumber}" th:value="${carNumber}">
-                      <input type="text" name="carNumber" th:unless="${carNumber}" value="">
 
-        <input type="submit">
-    </form>
-<hr>
+<aside class="main-aside">
+    <table class="table-main-Button">
+        <div class="container">
+            <tr>
+                <td><button class="cancel" data-Type="ac">리셋</button></td>
+                <td><button class="operation" data-Type="operator">취소</button></td>
+            </tr>
+            <tr>
+                <td><button class="number">7</button></td>
+                <td><button class="number">8</button></td>
+                <td><button class="number">9</button></td>
+            </tr>
+            <tr>
+                <td><button class="number">4</button></td>
+                <td><button class="number">5</button></td>
+                <td><button class="number">6</button></td>
+            </tr>
+            <tr>
+                <td><button class="number">1</button></td>
+                <td><button class="number">2</button></td>
+                <td><button class="number">3</button></td>
+            </tr>
+            <tr>
+                <td><button class="zero number">0</button></td>
+            </tr>
+        </div>
+    </table>
+            <form action="searchCarInfo" method="POST">
+                    <input type="text" class="show" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호조회">
+                  <input type="text" class="show" name="carNumber" th:unless="${carNumber}" value="" placeholder="차량번호조회">
+                    <input type="submit" value="검색">
+            </form>
     <div>
         검색된 차량 번호:
         <ul th:if="${carBeans}" th:each="car : ${carBeans}">
             <a th:href="@{getCarInfo(carNumber=${car.VhlNbr})}"><li th:text="${car.VhlNbr}"></li></a>
         </ul>
     </div>
+</aside>
 
 
 <!--검색된 번호 중 하나를 선택하였을 시 나오는 정보-->
+<section class="main-section">
+
 <table th:if="${carInfo}">
         차량 정보 조회
         <tr>
@@ -61,6 +89,7 @@
 
         </tr>
     </table>
+</section>
 
 
 </body>

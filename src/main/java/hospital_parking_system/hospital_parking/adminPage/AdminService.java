@@ -9,6 +9,8 @@ public interface AdminService {
 
     List<GroupBean> selectGroupList();
 
+    GroupBean selectOneGroupFromName(GroupBean bean);
+
     void insertMember(MemberBean bean);
 
     MemberBean selectOneParking_class(MemberBean bean);
@@ -18,6 +20,8 @@ public interface AdminService {
     void deleteOneManager(MemberBean bean);
 
     void insertGroup(GroupBean groupBean);
+
+    void updateGroup(GroupBean groupBean);
 
     GroupBean selectOneGroup(GroupBean groupBean);
 

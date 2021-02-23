@@ -7,22 +7,26 @@
     <title>Title</title>
 </head>
 <body>
-<h1>adminRegister_group</h1>
+<h2 class="register-title"><그룹 수정하기></h2>
+<form class = "register-form" action="adminRegister_group_edit" method="post" th:object="${adminForm}">
+<table class="register-table">
 
-<form action="adminRegister_group" method="post" th:object="${adminForm}">
-<table>
-    <tr>
-        <td>그룹명</td>
-        <td>비고</td>
+    <tr th:if="${#fields.hasErrors('GrpName')}">
+        <td class="register-alert" th:if="${#fields.hasErrors('GrpName')}" th:errors="*{GrpName}"></td><br>
     </tr>
+
+    <tr th:if="${alertExistName}">
+        <td class="register-alert" th:if="${alertExistName}" th:utext="${alertExistName}"></td><br>
+    </tr>
+
     <tr>
         <input type="hidden" th:field="*{GrpiDx}">
-        <td><input type="text" th:field="*{GrpName}"></td>
-        <td><input type="text" th:field="*{GrpMemo}"></td>
+        <td>그룹명<input class="register-td" type="text" th:field="*{GrpName}"></td>
+        <td>비고<input class="register-td" type="text" th:field="*{GrpMemo}"></td>
     </tr>
     <tr>
-        <td><input type="submit" value="수정"></td>
-        <a th:href = "@{adminDeleteGroup(id=*{GrpiDx})}">삭제하기</a>
+        <td><input class="register-button" type="submit" value="수정"></td>
+<!--        <a th:href = "@{adminDeleteGroup(id=*{GrpiDx})}">삭제하기</a>-->
     </tr>
 </table>
 </form>

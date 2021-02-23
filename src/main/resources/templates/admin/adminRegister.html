@@ -16,6 +16,11 @@
     <tr th:if="${#fields.hasErrors('ClID')}">
         <td class="register-alert" th:if="${#fields.hasErrors('ClID')}" th:errors="*{ClID}"></td><br>
     </tr>
+
+    <tr th:if="${alert_exist}">
+        <td class="register-alert" th:utext="${alert_exist}"></td><br>
+    </tr>
+
     <tr>
         <td>아이디<input class="register-td" type="text" th:field="*{ClID}" placeholder="아이디"></td>
         <td>패스워드<input class="register-td" type="password" th:field="*{ClPW}" placeholder="패스워드"></td>

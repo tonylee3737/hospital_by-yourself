@@ -7,20 +7,25 @@
     <title>Title</title>
 </head>
 <body>
-<h1>adminRegister_group</h1>
+<h2 class="register-title"><그룹 등록하기></h2>
+<form class="register-form" action="adminRegister_group" method="post" th:object="${adminForm}">
+<table class="register-table">
 
-<form action="adminRegister_group" method="post" th:object="${adminForm}">
-<table>
+    <tr th:if="${#fields.hasErrors('GrpName')}">
+        <td class="register-alert" th:if="${#fields.hasErrors('GrpName')}" th:errors="*{GrpName}"></td><br>
+    </tr>
+
+    <tr th:if="${alertExistName}">
+        <td class="register-alert" th:if="${alertExistName}" th:utext="${alertExistName}"></td><br>
+    </tr>
+
+
     <tr>
-        <td>그룹명</td>
-        <td>비고</td>
+        <td>그룹명<input class="register-td" type="text" th:field="*{GrpName}"></td>
+        <td>비고<input class="register-td" type="text" th:field="*{GrpMemo}"></td>
     </tr>
     <tr>
-        <td><input type="text" th:field="*{GrpName}"></td>
-        <td><input type="text" th:field="*{GrpMemo}"></td>
-    </tr>
-    <tr>
-        <td><input type="submit" value="입력"></td>
+        <td><input class="register-button" type="submit" value="입력"></td>
     </tr>
 </table>
 </form>

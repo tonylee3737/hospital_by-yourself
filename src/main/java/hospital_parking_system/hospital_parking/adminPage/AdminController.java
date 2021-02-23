@@ -41,12 +41,11 @@ public class AdminController {
     @GetMapping("/adminRegSearch")
     public String adminRegSearch(Model model) {
         AdminBean adminBean = sessionBean.getAdminbean();
-        if(adminBean==null){
-            return "redirect:/";
-        }
+//        if(adminBean==null){
+//            return "redirect:/";
+//        }
         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoList();
         List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
-
 
         ClNameBean re_clName = new ClNameBean();
         re_clName.setClName("전체");
@@ -262,6 +261,7 @@ public class AdminController {
         member.setCliDx(form.getCliDx());
         member.setClID(form.getClID());
         member.setClPW(form.getClPW());
+
         MemberBean memberBean = memberService.loginMember(member);
 //        수정 중 비밀번호 유효성 검사
         if(memberBean==null){
@@ -376,9 +376,16 @@ public class AdminController {
         if(result.hasErrors()){
             return "admin/adminRegister";
         }
+
         MemberBean member = new MemberBean();
         member.setCliDx("0");
+
         member.setClID(form.getClID());
+        MemberBean memberBean = memberService.checkMemberId(member);
+        if(memberBean!=null){
+            model.addAttribute("alert_exist", "이미 존재하는 관리자입니다.");
+            return "admin/adminRegister";
+        }
         member.setClPW(form.getClPW());
         member.setClName(form.getClName());
         member.setClUser(form.getClUser());
@@ -439,13 +446,23 @@ public class AdminController {
     }
 
     @PostMapping("/adminRegister_group")
-    public String adminRegister_group_post(AdminForm form, Model model) {
+    public String adminRegister_group_post(@Valid AdminForm form, BindingResult result,Model model) {
         AdminBean adminBean = sessionBean.getAdminbean();
         if(adminBean==null){
             return "redirect:/";
         }
+
+        if (result.hasErrors()) {
+            return "admin/adminRegister_group";
+        }
         GroupBean groupBean = new GroupBean();
         groupBean.setGrpName(form.getGrpName());
+        GroupBean groupBean1 = adminService.selectOneGroupFromName(groupBean);
+        if (groupBean1 != null) {
+            model.addAttribute("alertExistName", "이미 존재하는 그룹입니다.");
+            return "admin/adminRegister_group";
+        }
+
         groupBean.setGrpMemo(form.getGrpMemo());
         adminService.insertGroup(groupBean);
         return "redirect:/adminGroupManaging";
@@ -466,6 +483,26 @@ public class AdminController {
         form.setGrpMemo(groupBean.getGrpMemo());
         model.addAttribute("adminForm", form);
         return "admin/adminRegister_group_edit";
+    }
+
+    @PostMapping("adminRegister_group_edit")
+    public String adminRegister_group_edit_post(@Valid AdminForm form, BindingResult result,Model model) {
+
+        if (result.hasErrors()) {
+            return "admin/adminRegister_group_edit";
+        }
+
+        GroupBean group = new GroupBean();
+        group.setGrpiDx(form.getGrpiDx());
+        group.setGrpName(form.getGrpName());
+        GroupBean groupBean1 = adminService.selectOneGroupFromName(group);
+        if (groupBean1 != null) {
+            model.addAttribute("alertExistName", "이미 존재하는 그룹입니다.");
+            return "admin/adminRegister_group";
+        }
+        group.setGrpMemo(form.getGrpMemo());
+        adminService.updateGroup(group);
+        return "redirect:adminGroupManaging";
     }
 
     @GetMapping("adminDeleteGroup")
