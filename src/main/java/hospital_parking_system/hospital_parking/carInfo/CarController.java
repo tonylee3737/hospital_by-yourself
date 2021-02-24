@@ -25,9 +25,20 @@ public class CarController {
     private final MemberService memberService;
     private final SessionBean sessionBean;
 
+
+
+//    차량번호조회 페이지에서 번호를 검색한 후, 나열된 리스트 중 하나의 차량번호를 선택하였을 시 뜨는 페이지
     @GetMapping("getCarInfo")
-    public String getCarInfo(@RequestParam(value = "carNumber") String carNumber, Model model) throws ParseException, UnsupportedEncodingException {
+    public String getCarInfo(@RequestParam(value = "carNumber") String carNumber, @RequestParam(required = false, value = "result") String result,  Model model) throws ParseException, UnsupportedEncodingException {
+//        테스트 후 없애기
+        MemberBean memberbean = new MemberBean();
+        memberbean.setClID("tony");
+        memberbean.setClPW("1");
+        MemberBean member_ = memberService.loginMember(memberbean);
+        sessionBean.setMemberbean(member_);
+//        테스트 후 없애기
         MemberBean member = sessionBean.getMemberbean();
+        String clName = member.getClName();
 //        if (member == null) {
 //            return "redirect:/";
 //        }
@@ -44,6 +55,7 @@ public class CarController {
         String hour = carEntDyte.substring(8, 10);
         String min = carEntDyte.substring(10, 12);
         String sec = carEntDyte.substring(12, 14);
+        String formatDateShow = year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
         String formatDate = year + "-" + month + "-" + day + "-" + hour + "-" + min + "-" + sec;
         Calendar getToday = Calendar.getInstance();
         getToday.setTime(new Date());//현재시간
@@ -59,13 +71,66 @@ public class CarController {
         long diffSecond = (diffSec % 60);
         String carEnt = diffDays + "일" + diffHour + "시간" + diffMin + "분" + diffSecond + "초";
         ControllDiscountCar controllDiscountCar = carService.selectControllDiscountCar(carBean);
+        model.addAttribute("formatDateShow", formatDateShow);
+        model.addAttribute("clName", clName);
         model.addAttribute("carEnt", carEnt);
         model.addAttribute("controllDiscountCar", controllDiscountCar);
         model.addAttribute("member", member);
         model.addAttribute("carInfo", carBean);
+        model.addAttribute("carNumber", carNumber);
+        model.addAttribute("dcResult", result);
         return "member/searchCarInfo";
     }
+//  차량번호조회 페이지에서 번호를 검색한 후, 나열된 리스트 중 하나의 차량번호를 선택하였을 시 뜨는 페이지 그리고 그 차량의 할인시간을 등록시키는 페이지
+    @PostMapping("registerDiscountTime")
+    public String discountTime(@RequestParam(value = "discountTime") String time,
+                               @RequestParam(value = "idx") String idx,
+                               @RequestParam(value = "carNumber") String encarNumber, Model model) throws UnsupportedEncodingException {
+        ControllDiscountCar discountCar = new ControllDiscountCar();
+        MemberBean memberBean = sessionBean.getMemberbean();
+//        if(memberBean==null){
+//            return "redirect:/";
+//        }
+        if (time.equals(memberBean.getClDCName1())) {
+            discountCar.setDCName(memberBean.getClDCName1());
+            discountCar.setDCTime(memberBean.getClDCTime1());
+            discountCar.setDCRate(memberBean.getClDCRate1());
+        } else if (time.equals(memberBean.getClDCName2())) {
+            discountCar.setDCName(memberBean.getClDCName2());
+            discountCar.setDCTime(memberBean.getClDCTime2());
+            discountCar.setDCRate(memberBean.getClDCRate2());
+        } else if (time.equals(memberBean.getClDCName3())) {
+            discountCar.setDCName(memberBean.getClDCName3());
+            discountCar.setDCTime(memberBean.getClDCTime3());
+            discountCar.setDCRate(memberBean.getClDCRate3());
+        } else if (time.equals(memberBean.getClDCName4())) {
+            discountCar.setDCName(memberBean.getClDCName4());
+            discountCar.setDCTime(memberBean.getClDCTime4());
+            discountCar.setDCRate(memberBean.getClDCRate4());
+        } else if (time.equals(memberBean.getClDCName5())) {
+            discountCar.setDCName(memberBean.getClDCName5());
+            discountCar.setDCTime(memberBean.getClDCTime5());
+            discountCar.setDCRate(memberBean.getClDCRate5());
+        } else if (time.equals(memberBean.getClDCName6())) {
+            discountCar.setDCName(memberBean.getClDCName6());
+            discountCar.setDCTime(memberBean.getClDCTime6());
+            discountCar.setDCRate(memberBean.getClDCRate6());
+        }
+        discountCar.setVhliDx(idx);
+        discountCar.setCliDx(memberBean.getCliDx());
+// 쿠폰 사용 유무
+        discountCar.setUseDiv("0");
+//        - - ?
+        discountCar.setActDiv("1");
+        carService.Procedure_DiscountCarTime(discountCar);
+        System.out.println(discountCar.getResult());
+        String carNumber = URLEncoder.encode(encarNumber, "utf-8");
+        return "redirect:/getCarInfo?carNumber=" + carNumber + "&&result=" +discountCar.getResult();
+    }
 
+
+
+    //차량 번호 조회 페이지, 차량번호 입력 번호판
     @GetMapping("searchCarInfo")
     public String searchCarInfo(Model model) {
         MemberBean member = sessionBean.getMemberbean();
@@ -74,7 +139,7 @@ public class CarController {
 //        }
         return "member/searchCarInfo";
     }
-
+//차량 번호 조회 페이지, 차량 번호가 입력이 되면 POST
     @PostMapping("searchCarInfo")
     public String getCarInfo_Post(@RequestParam(value = "carNumber") String carNumber, Model model) {
         MemberBean member = sessionBean.getMemberbean();
@@ -89,6 +154,7 @@ public class CarController {
         return "member/searchCarInfo";
     }
 
+//등록내역 검색 페이지
     @GetMapping("regSearch")
     public String regSearch(Model model) {
         MemberBean member = sessionBean.getMemberbean();
@@ -100,6 +166,7 @@ public class CarController {
         return "member/regSearch";
     }
 
+//    등록내역 검색페이지에서 POST
     @PostMapping("regSearch")
     public String regSearch_post(@RequestParam(value = "carNumber") String carNumber,
                                  @RequestParam(value = "startDate") String startDate,
@@ -142,56 +209,6 @@ public class CarController {
     public String logout() {
         sessionBean.setMemberbean(null);
         return "redirect:/";
-    }
-
-    @PostMapping("registerDiscountTime")
-    public String discountTime(@RequestParam(value = "discountTime") String time,
-                               @RequestParam(value = "idx") String idx,
-                               @RequestParam(value = "carNumber") String encarNumber, Model model) throws UnsupportedEncodingException {
-        ControllDiscountCar discountCar = new ControllDiscountCar();
-        MemberBean memberBean = sessionBean.getMemberbean();
-//        if(memberBean==null){
-//            return "redirect:/";
-//        }
-        String discountTime = time.trim();
-        String memberDiscountTime = memberBean.getClDCName1().trim();
-        if (time.equals(memberBean.getClDCName1())) {
-            discountCar.setDCName(memberBean.getClDCName1());
-            discountCar.setDCTime(memberBean.getClDCTime1());
-            discountCar.setDCRate(memberBean.getClDCRate1());
-        } else if (time.equals(memberBean.getClDCName2())) {
-            discountCar.setDCName(memberBean.getClDCName2());
-            discountCar.setDCTime(memberBean.getClDCTime2());
-            discountCar.setDCRate(memberBean.getClDCRate2());
-        } else if (time.equals(memberBean.getClDCName3())) {
-            discountCar.setDCName(memberBean.getClDCName3());
-            discountCar.setDCTime(memberBean.getClDCTime3());
-            discountCar.setDCRate(memberBean.getClDCRate3());
-        } else if (time.equals(memberBean.getClDCName4())) {
-            discountCar.setDCName(memberBean.getClDCName4());
-            discountCar.setDCTime(memberBean.getClDCTime4());
-            discountCar.setDCRate(memberBean.getClDCRate4());
-        } else if (time.equals(memberBean.getClDCName5())) {
-            discountCar.setDCName(memberBean.getClDCName5());
-            discountCar.setDCTime(memberBean.getClDCTime5());
-            discountCar.setDCRate(memberBean.getClDCRate5());
-        } else if (time.equals(memberBean.getClDCName6())) {
-            discountCar.setDCName(memberBean.getClDCName6());
-            discountCar.setDCTime(memberBean.getClDCTime6());
-            discountCar.setDCRate(memberBean.getClDCRate6());
-        }
-        discountCar.setVhliDx(idx);
-        discountCar.setCliDx(memberBean.getCliDx());
-        discountCar.setUseDiv("0");
-        discountCar.setActDiv("1");
-//        if(carService.selectDiscountCarTime(discountCar)!=null){
-//            carService.updateDiscountCarTime(discountCar);
-//        }else{
-//            carService.insertDiscountCarTime(discountCar);
-//        }
-        carService.Procedure_DiscountCarTime(discountCar);
-        String carNumber = URLEncoder.encode(encarNumber, "utf-8");
-        return "redirect:/getCarInfo?carNumber=" + carNumber;
     }
 
 }

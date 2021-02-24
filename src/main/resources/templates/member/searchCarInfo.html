@@ -9,9 +9,70 @@
 
 <body>
 
+<!--검색된 번호 중 하나를 선택하였을 시 나오는 정보-->
+<section class="main-section">
+
+<table>
+<!--        차량 정보 조회-->
+        <tr>
+            <td th:if="${clName}">할인처<input type="text" th:value="${clName}"></td>
+            <td th:unless="${clName}">할인처<input type="text" value=""></td>
+        </tr>
+        <tr>
+            <td th:if="${carInfo}">차량번호<input type="text" th:value="${carInfo.getVhlNbr()}"></td>
+            <td th:unless="${carInfo}">차량번호<input type="text" value=""></td>
+        </tr>
+        <tr>
+            <td th:if="${carInfo}">입차일시<input type="text" th:value="${formatDateShow}"></td>
+            <td th:unless="${carInfo}">입차일시<input type="text" value=""></td>
+        </tr>
+        <tr>
+            <td th:if="${carEnt}">주차시간<input type="text" th:value="${carEnt}"></td>
+            <td th:unless="${carEnt}">주차시간<input type="text" value=""></td>
+        </tr>
+            <div>
+                <form name = "dcForm" onsubmit="return confirm('할인권을 등록하시겠습니까?');" action = "registerDiscountTime" method="POST">
+                    <input th:if="${carInfo}" type="hidden" th:value="${carInfo.getVHIdx()}" name="idx"/>
+                    <input th:if="${carInfo}" type="hidden" th:value="${carInfo.getVhlNbr()}" name="carNumber"/>
+
+                        <tr th:if="${member}">
+                            <td >할인시간
+                            <input onclick="dcForm()" type="submit"  th:if="${member.getClDCName1()}!=''" th:name="discountTime" th:value="${member.getClDCName1()}">
+                            <input type="submit" onclick="dcFormClick()" th:if="${member.getClDCName2()}!=''" th:name="discountTime" th:value="${member.getClDCName2()}">
+                            <input type="submit" onclick="dcFormClick()" th:if="${member.getClDCName3()}!=''" th:name="discountTime" th:value="${member.getClDCName3()}">
+                        </tr>
+                        <tr th:if="${member}">
+                            <input type="submit" onclick="dcFormClick()" th:if="${member.getClDCName4()}!=''" th:name="discountTime" th:value="${member.getClDCName4()}">
+                            <input type="submit" onclick="dcFormClick()" th:if="${member.getClDCName5()}!=''" th:name="discountTime" th:value="${member.getClDCName5()}">
+                            <input type="submit" onclick="dcFormClick()" th:if="${member.getClDCName6()}!=''" th:name="discountTime" th:value="${member.getClDCName6()}">
+                        </tr>
+
+                </td>
+<!--                    <td><input type="submit" value="적용"></td>-->
+                </form>
+            </div>
+    </table>
+    <script th:inline="javascript">
+        function dcFormClick(){
+            if(confirm()){
+                document.getElementById("dcForm").submit();
+                let result = [[${dcResult}]]
+                console.log(result);
+                alert(result);
+            }else{
+                alert("hiii");
+                return false;
+            }
+        }
+    </script>
+</section>
 <aside class="main-aside">
     <table class="table-main-Button">
         <div class="container">
+            <tr>
+            <input th:if="${controllDiscountCar}" type="text" th:value="${controllDiscountCar.getDCTimeSum()}+'분'" placeholder="할인적용시간">
+            <input th:unless="${controllDiscountCar}" type="text" value="" placeholder="할인적용시간">
+            </tr>
             <tr>
                 <td><button class="cancel" data-Type="ac">리셋</button></td>
                 <td><button class="operation" data-Type="operator">취소</button></td>
@@ -32,15 +93,16 @@
                 <td><button class="number">3</button></td>
             </tr>
             <tr>
-                <td><button class="zero number">0</button></td>
+                <td><button class="number">0</button></td>
             </tr>
         </div>
     </table>
-            <form action="searchCarInfo" method="POST">
-                    <input type="text" class="show" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호조회">
-                  <input type="text" class="show" name="carNumber" th:unless="${carNumber}" value="" placeholder="차량번호조회">
-                    <input type="submit" value="검색">
-            </form>
+    <form action="searchCarInfo" method="POST">
+
+        <input type="text" class="show" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호조회">
+        <input type="text" class="show" name="carNumber" th:unless="${carNumber}" value="" placeholder="차량번호조회">
+        <input type="submit" value="검색">
+    </form>
     <div>
         검색된 차량 번호:
         <ul th:if="${carBeans}" th:each="car : ${carBeans}">
@@ -48,49 +110,6 @@
         </ul>
     </div>
 </aside>
-
-
-<!--검색된 번호 중 하나를 선택하였을 시 나오는 정보-->
-<section class="main-section">
-
-<table th:if="${carInfo}">
-        차량 정보 조회
-        <tr>
-            <td>차량번호<input type="text" th:value="${carInfo.getVhlNbr()}"></td>
-        </tr>
-        <tr>
-            <td>입차일시<input type="text" th:value="${carInfo.getEntDyTe()}"></td>
-        </tr>
-        <tr>
-            <td>주차시간<input type="text" th:value="${carEnt}"></td>
-        </tr>
-        <tr>
-            <td th:if ="${controllDiscountCar}" th:text="${controllDiscountCar.getDCName() + '적용'}"></td>
-        </tr>
-        <tr>
-            <div>
-
-                <form action = "registerDiscountTime" method="POST">
-                    <input type="hidden" th:value="${carInfo.getVHIdx()}" name="idx"/>
-                    <input type="hidden" th:value="${carInfo.getVhlNbr()}" name="carNumber"/>
-                <td th:if="${member.getClDCName1()}">할인시간
-                    <select name="discountTime">
-                        <option th:value="${member.getClDCName1()}" th:utext="${member.getClDCName1()}"></option>
-                        <option th:value="${member.getClDCName2()}" th:utext="${member.getClDCName2()}"></option>
-                        <option th:value="${member.getClDCName3()}" th:utext="${member.getClDCName3()}"></option>
-                        <option th:value="${member.getClDCName4()}" th:utext="${member.getClDCName4()}"></option>
-                        <option th:value="${member.getClDCName5()}" th:utext="${member.getClDCName5()}"></option>
-                        <option th:value="${member.getClDCName6()}" th:utext="${member.getClDCName6()}"></option>
-                </select>
-                </td>
-                    <td><input type="submit" value="적용"></td>
-                </form>
-            </div>
-
-        </tr>
-    </table>
-</section>
-
 
 </body>
 </html>

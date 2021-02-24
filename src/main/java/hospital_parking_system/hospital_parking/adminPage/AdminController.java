@@ -38,6 +38,7 @@ public class AdminController {
     private final CarService carService;
     private final SessionBean sessionBean;
     private final MemberService memberService;
+//    관리자 페이지, 등록된 할인 차량 리스트 보여주는 페이지
     @GetMapping("/adminRegSearch")
     public String adminRegSearch(Model model) {
         AdminBean adminBean = sessionBean.getAdminbean();
@@ -55,7 +56,7 @@ public class AdminController {
         model.addAttribute("discountedCarInfo", discountedCarInfos);
         return "admin/adminRegSearch";
     }
-
+// 관리자 페이지, 등록된 할인 차량 리스트 중 특정 번호와 날짜와 할인처를 골라 원하는 데이터를 추림.
     @PostMapping("/adminRegSearch")
     public String adminRegSearch_Post(@RequestParam(value = "carNumber") String carNumber,
                                       @RequestParam(value = "startDate") String startDate,
@@ -171,6 +172,7 @@ public class AdminController {
         return "admin/adminRegSearch";
     }
 
+//    관리자 페이지 할인 부서 조회 및 등록
     @GetMapping("/adminManaging")
     public String adminManaging(Model model) {
         AdminBean adminBean = sessionBean.getAdminbean();
@@ -182,17 +184,8 @@ public class AdminController {
         return "admin/adminManaging";
     }
 
-    @GetMapping("/adminGroupManaging")
-    public String adminGroupList(Model model) {
-        AdminBean adminBean = sessionBean.getAdminbean();
-        if(adminBean==null){
-            return "redirect:/";
-        }
-        List<GroupBean> groupBeans = adminService.selectGroupList();
-        model.addAttribute("groupList", groupBeans);
-        return "admin/adminGroupManaging";
-    }
 
+// 관리자 페이지 할인부서 조회 및 등록 페이지에서 등록된 데이터를 수정.
     @GetMapping("/adminRegister_edit")
     public String adminRegister_edit(@RequestParam(value = "id") String idx, Model model) {
         AdminBean adminBean = sessionBean.getAdminbean();
@@ -243,6 +236,7 @@ public class AdminController {
         return "admin/adminRegister_edit";
     }
 
+// 관리자 페이지 할인부서 조회 및 등록 페이지에서 등록된 데이터를 수정 후 POST
     @PostMapping("/adminRegister_edit")
     public String adminRegister_edit_post(@Valid MemberForm form, BindingResult result,Model model) {
 
@@ -355,6 +349,7 @@ public class AdminController {
         return "redirect:/adminManaging";
     }
 
+//    관리자 페이지, 할인 부서 조회 및 등록에서 등록하는 페이지
     @GetMapping("/adminRegister")
     public String adminRegister(Model model) {
         AdminBean adminBean = sessionBean.getAdminbean();
@@ -366,7 +361,7 @@ public class AdminController {
         model.addAttribute("groupList", groupBeans);
         return "admin/adminRegister";
     }
-
+// 관리자 페이지, 할인 부서 조회 및 등록 후 POST
     @PostMapping("/adminRegister")
     public String adminRegister_post(@Valid MemberForm form, BindingResult result, Model model) {
         AdminBean adminBean = sessionBean.getAdminbean();
@@ -422,7 +417,7 @@ public class AdminController {
         adminService.Procedure_registerManager(member);
         return "redirect:/adminManaging";
     }
-
+// 등록된 관리자를 삭제하는 method인데 사용하진 않음//
     @GetMapping("adminDeleteManager")
     public String adminDeleteManager(@RequestParam(value = "id") String idx, Model model) {
         AdminBean adminBean = sessionBean.getAdminbean();
@@ -435,6 +430,19 @@ public class AdminController {
         return "redirect:/adminManaging";
     }
 
+//    관리자 페이지 그룹관리 및 등록
+    @GetMapping("/adminGroupManaging")
+    public String adminGroupList(Model model) {
+        AdminBean adminBean = sessionBean.getAdminbean();
+        if(adminBean==null){
+            return "redirect:/";
+        }
+        List<GroupBean> groupBeans = adminService.selectGroupList();
+        model.addAttribute("groupList", groupBeans);
+        return "admin/adminGroupManaging";
+    }
+
+//    관리자 페이지 그룹관리 및 등록페이지에서 그룹 등록하기.
     @GetMapping("/adminRegister_group")
     public String adminRegister_group(Model model) {
         AdminBean adminBean = sessionBean.getAdminbean();
@@ -444,7 +452,7 @@ public class AdminController {
         model.addAttribute("adminForm", new AdminForm());
         return "admin/adminRegister_group";
     }
-
+// 관리자 페이지 그룹 관리 및 등록페이지에서 그룹 등록 후 POST
     @PostMapping("/adminRegister_group")
     public String adminRegister_group_post(@Valid AdminForm form, BindingResult result,Model model) {
         AdminBean adminBean = sessionBean.getAdminbean();
@@ -467,7 +475,7 @@ public class AdminController {
         adminService.insertGroup(groupBean);
         return "redirect:/adminGroupManaging";
     }
-
+//그룹 관리 및 등록 페이지에서 수정
     @GetMapping("adminRegister_group_edit")
     public String adminRegister_group_edit(@RequestParam(value = "id") String idx, Model model) {
         AdminBean adminBean = sessionBean.getAdminbean();
@@ -484,7 +492,7 @@ public class AdminController {
         model.addAttribute("adminForm", form);
         return "admin/adminRegister_group_edit";
     }
-
+//그룹 관리 및 등록 페이지에서 수정 후 POST
     @PostMapping("adminRegister_group_edit")
     public String adminRegister_group_edit_post(@Valid AdminForm form, BindingResult result,Model model) {
 
@@ -505,6 +513,7 @@ public class AdminController {
         return "redirect:adminGroupManaging";
     }
 
+//    그룹 삭제 페이지인데 사용하진 않음.
     @GetMapping("adminDeleteGroup")
     public String adminDeleteGroup(@RequestParam(value = "id") String idx) {
         AdminBean adminBean = sessionBean.getAdminbean();

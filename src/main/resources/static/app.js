@@ -26,8 +26,13 @@ function init() {
 }
 
 function displayNumber(number) {
+
+    if(input.value.length > 3){
+        alert("4자리 이상은 입력하실 수 없습니다.");
+    }else if(input.value.length < 4){
     input.value = input.value + number;
     result += number;
+    }
 }
 function operator(oper) {
     result = result.slice(0, -1);

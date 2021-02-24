@@ -9,7 +9,7 @@
     </select>
 
     <select id="selectControllDiscountCar" parameterType="hospital_parking_system.hospital_parking.carInfo.ControllDiscountCar" resultType="hospital_parking_system.hospital_parking.carInfo.ControllDiscountCar">
-        select *
+        select *, sum(DCTime) as DCTimeSum
         from parking_class_discount
         where VhliDx = #{VHIdx};
     </select>

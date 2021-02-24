@@ -14,4 +14,5 @@ public class DiscountedCarInfo {
     private String ClName;
     private String InsDayTime;
     private String UseDiv;
+
 }

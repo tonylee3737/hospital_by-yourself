@@ -14,6 +14,7 @@ public class ControllDiscountCar {
     private String DCMemo;
     private String CliDx;
     private String UseDiv;
+    private String DCTimeSum;
     private String InsDayTime;
     private String ActDiv;
     private int Result;
