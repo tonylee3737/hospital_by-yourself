@@ -31,17 +31,17 @@ public class CarController {
     @GetMapping("getCarInfo")
     public String getCarInfo(@RequestParam(value = "carNumber") String carNumber, @RequestParam(required = false, value = "result") String result,  Model model) throws ParseException, UnsupportedEncodingException {
 //        테스트 후 없애기
-        MemberBean memberbean = new MemberBean();
-        memberbean.setClID("tony");
-        memberbean.setClPW("1");
-        MemberBean member_ = memberService.loginMember(memberbean);
-        sessionBean.setMemberbean(member_);
+//        MemberBean memberbean = new MemberBean();
+//        memberbean.setClID("tony");
+//        memberbean.setClPW("1");
+//        MemberBean member_ = memberService.loginMember(memberbean);
+//        sessionBean.setMemberbean(member_);
 //        테스트 후 없애기
         MemberBean member = sessionBean.getMemberbean();
         String clName = member.getClName();
-//        if (member == null) {
-//            return "redirect:/";
-//        }
+        if (member == null) {
+            return "redirect:/";
+        }
         CarBean car = new CarBean();
         car.setVhlNbr(carNumber);
 //        검색된 자동차 리스트 중 한개를 선택하여 차량 정보 출력 함, 이때 쿼리문은 이전과 같은 쿼리문을 사용한다.
@@ -123,11 +123,10 @@ public class CarController {
 //        - - ?
         discountCar.setActDiv("1");
         carService.Procedure_DiscountCarTime(discountCar);
-        System.out.println(discountCar.getResult());
+        int result = discountCar.getResult();
         String carNumber = URLEncoder.encode(encarNumber, "utf-8");
         return "redirect:/getCarInfo?carNumber=" + carNumber + "&&result=" +discountCar.getResult();
     }
-
 
 
     //차량 번호 조회 페이지, 차량번호 입력 번호판

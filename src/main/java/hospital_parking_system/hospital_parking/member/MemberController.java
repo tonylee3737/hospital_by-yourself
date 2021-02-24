@@ -22,12 +22,12 @@ public class MemberController {
     @GetMapping("")
     public String main(Model model) {
         model.addAttribute("loginForm", new loginForm());
-//        return "main";
-        MemberBean memberbean = new MemberBean();
-        memberbean.setClID("tony");
-        memberbean.setClPW("1");
-        sessionBean.setMemberbean(memberbean);
-        return "member/searchCarInfo";
+        return "main";
+//        MemberBean memberbean = new MemberBean();
+//        memberbean.setClID("tony");
+//        memberbean.setClPW("1");
+//        sessionBean.setMemberbean(memberbean);
+//        return "member/searchCarInfo";
     }
 
     @PostMapping("")
