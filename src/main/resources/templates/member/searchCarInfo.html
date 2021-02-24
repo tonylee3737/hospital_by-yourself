@@ -37,7 +37,7 @@
 
                         <tr th:if="${member}">
                             <td >할인시간
-                            <input onclick="dcForm()" type="submit"  th:if="${member.getClDCName1()}!=''" th:name="discountTime" th:value="${member.getClDCName1()}">
+                            <input type="submit" onclick="dcFormClick()" th:if="${member.getClDCName1()}!=''" th:name="discountTime" th:value="${member.getClDCName1()}">
                             <input type="submit" onclick="dcFormClick()" th:if="${member.getClDCName2()}!=''" th:name="discountTime" th:value="${member.getClDCName2()}">
                             <input type="submit" onclick="dcFormClick()" th:if="${member.getClDCName3()}!=''" th:name="discountTime" th:value="${member.getClDCName3()}">
                         </tr>
@@ -53,12 +53,13 @@
             </div>
     </table>
     <script th:inline="javascript">
+
         function dcFormClick(){
             if(confirm()){
-                document.getElementById("dcForm").submit();
                 let result = [[${dcResult}]]
-                console.log(result);
                 alert(result);
+                document.getElementById("dcForm").submit();
+                console.log(result);
             }else{
                 alert("hiii");
                 return false;
