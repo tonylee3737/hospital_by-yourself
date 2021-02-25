@@ -41,11 +41,10 @@ public class MemberController {
         admin.setAdmPW(form.getPass());
 
         if (memberService.loginMember(member) != null) {
-            System.out.println("null");
 //            return "로그인 후 일반 회원 차량 조회 페이지로 이동";
             MemberBean memberBean = memberService.loginMember(member);
             sessionBean.setMemberbean(memberBean);
-            return "member/searchCarInfo";
+            return "redirect:/searchCarInfo";
         } else if (memberService.loginAdmin(admin) != null) {
 //            return "로그인 후 관리자 페이지로 이동";
             AdminBean adminBean = memberService.loginAdmin(admin);

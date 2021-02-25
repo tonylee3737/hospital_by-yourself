@@ -2,8 +2,8 @@
 
 }
 .main-aside{
-    width: 300px;
-    margin-left: 70%;
+    margin-right: 20%;
+    float: right;
 }
 
 .table-main-Button td{
@@ -11,6 +11,75 @@
     width: 50px;
 }
 .table-main-Button button {
-    height:50px;
-    width: 50px ;
+    height:65px;
+    width: 65px ;
+}
+
+.search_button{
+    height:65px;
+    width: 65px ;
+}
+
+.show{
+    width: 150px;
+    heigth: 500px;
+    border-top: 1px solid darkseagreen;
+    border-left: 1px solid darkseagreen;
+    border-right: 1px solid darkseagreen;
+    border-bottom: 3px solid darkseagreen;
+    text-decoration: none;
+    text-align: center;
+}
+.reg_input2 {
+    width: 150px;
+    heigth: 300px;
+    border-top: 1px solid darkseagreen;
+    border-left: 1px solid darkseagreen;
+    border-right: 1px solid darkseagreen;
+    border-bottom: 3px solid darkseagreen;
+    text-decoration: none;
+    text-align: center;
+}
+#reg_submit2 {
+    width: 80px;
+    height: 25px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 10%;
+    border-bottom: 3px solid darkseagreen;
+}
+
+
+.main_table_with_button{
+    margin-right: auto;
+    margin-left: 15%;
+    display: inline-block;
+    float: left;
+}
+.main_table_with_button th{
+    font-size: 25px;
+    font-weight: bolder;
+    margin-right: 3%;
+}
+
+.dc_button{
+    margin: 1%;
+}
+
+.register-table td{
+    /*display: inline-block;*/
+    font-size: 50px;
+    height: 60px;
+}
+.register-td2 {
+    font-size: 25px;
+    width: 300px;
+    heigth: 70px;
+    margin-bottom: 5%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 3px solid darkseagreen;
+    text-align: center;
 }

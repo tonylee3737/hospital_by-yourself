@@ -6,75 +6,126 @@
     <meta charset="UTF-8">
     <title>: :근로복지공단대구병원: </title>
 </head>
-<script defer src="app.js"></script>
+<script src="app.js"></script>
 <body>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<!--<script th:inline="javascript">-->
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        init();
 
-<!--    var result = [[${dcResult}]]-->
-<!--    if(result){-->
-<!--        alert(result);-->
-<!--    }else{-->
+    });
+</script>
 
-<!--    }-->
-<!--</script>-->
 <!--검색된 번호 중 하나를 선택하였을 시 나오는 정보-->
 <section class="main-section">
 
-<table>
+<table class="main_table_with_button">
 <!--        차량 정보 조회-->
         <tr>
-            <td th:if="${clName}">할인처<input type="text" th:value="${clName}"></td>
-            <td th:unless="${clName}">할인처<input type="text" value=""></td>
+            <th>할인처</th><td><input type="text" class="register-td2" th:value="${member_ClName}" readonly></td>
+
         </tr>
         <tr>
-            <td th:if="${carInfo}">차량번호<input type="text" th:value="${carInfo.getVhlNbr()}"></td>
-            <td th:unless="${carInfo}">차량번호<input type="text" value=""></td>
+            <th >차량번호</th><td th:if="${carInfo}"><input class="register-td2" type="text" th:value="${carInfo.getVhlNbr()}" readonly></td>
+                            <td th:unless="${carInfo}"><input class="register-td2" type="text" value="" readonly></td>
         </tr>
         <tr>
-            <td th:if="${carInfo}">입차일시<input type="text" th:value="${formatDateShow}"></td>
-            <td th:unless="${carInfo}">입차일시<input type="text" value=""></td>
+            <th>입차일시</th><td th:if="${carInfo}"><input class="register-td2" type="text" th:value="${formatDateShow}" readonly></td>
+                            <td th:unless="${carInfo}"><input class="register-td2" type="text" value="" readonly></td>
         </tr>
         <tr>
-            <td th:if="${carEnt}">주차시간<input type="text" th:value="${carEnt}"></td>
-            <td th:unless="${carEnt}">주차시간<input type="text" value=""></td>
+            <th >주차시간</th><td th:if="${carEnt}"><input class="register-td2" type="text" th:value="${carEnt}" readonly></td>
+                            <td th:unless="${carEnt}"><input class="register-td2" type="text" value="" readonly></td>
+        </tr>
+        <tr th:if="${member_show}">
+                <th>시간할인</th>
+                <td><input class="dc_button" type="button" onclick="dcButton_Click();" th:if="${member_show.getClDCName1()}!=''" th:name="discountTime" th:value="${member_show.getClDCName1()}"readonly>
+                    <input class="dc_button" type="button" onclick="dcButton_Click();" th:if="${member_show.getClDCName2()}!=''" th:name="discountTime" th:value="${member_show.getClDCName2()}"readonly>
+                    <input class="dc_button" type="button" onclick="dcButton_Click();" th:if="${member_show.getClDCName3()}!=''" th:name="discountTime" th:value="${member_show.getClDCName3()}"readonly><br>
+                    <input class="dc_button" type="button" onclick="dcButton_Click();" th:if="${member_show.getClDCName4()}!=''" th:name="discountTime" th:value="${member_show.getClDCName4()}" readonly>
+                    <input class="dc_button" type="button" onclick="dcButton_Click();" th:if="${member_show.getClDCName5()}!=''" th:name="discountTime" th:value="${member_show.getClDCName5()}" readonly>
+                    <input class="dc_button" type="button" onclick="dcButton_Click();" th:if="${member_show.getClDCName6()}!=''" th:name="discountTime" th:value="${member_show.getClDCName6()}" readonly></td>
+        </tr>
+            <script>
+                function dcButton_Click(){
+                    alert("차량번호를 확인해주세요");
+                }
+            </script>
         </tr>
             <div>
                 <form name = "dcForm" onsubmit="return confirm('할인권을 등록하시겠습니까?');" action = "registerDiscountTime" method="POST">
                     <input th:if="${carInfo}" type="hidden" th:value="${carInfo.getVHIdx()}" name="idx"/>
                     <input th:if="${carInfo}" type="hidden" th:value="${carInfo.getVhlNbr()}" name="carNumber"/>
-
+                    <input type="hidden" th:value="${carNumber}" name="searchCarNumber">
                         <tr th:if="${member}">
-                            <td >할인시간
-                            <input type="submit" th:if="${member.getClDCName1()}!=''" th:name="discountTime" th:value="${member.getClDCName1()}">
-                            <input type="submit"  th:if="${member.getClDCName2()}!=''" th:name="discountTime" th:value="${member.getClDCName2()}">
-                            <input type="submit"  th:if="${member.getClDCName3()}!=''" th:name="discountTime" th:value="${member.getClDCName3()}">
-                        </tr>
-                        <tr th:if="${member}">
-                            <input type="submit"  th:if="${member.getClDCName4()}!=''" th:name="discountTime" th:value="${member.getClDCName4()}">
-                            <input type="submit"  th:if="${member.getClDCName5()}!=''" th:name="discountTime" th:value="${member.getClDCName5()}">
-                            <input type="submit"  th:if="${member.getClDCName6()}!=''" th:name="discountTime" th:value="${member.getClDCName6()}">
-                        </tr>
+                            <th>할인시간</th>
+                                <input class="dc_button" type="submit"  th:if="${member.getClDCName1()}!=''" th:name="discountTime" th:value="${member.getClDCName1()}" readonly>
+                                <input class="dc_button" type="submit"  th:if="${member.getClDCName2()}!=''" th:name="discountTime" th:value="${member.getClDCName2()}" readonly>
+                                <input class="dc_button" type="submit"  th:if="${member.getClDCName3()}!=''" th:name="discountTime" th:value="${member.getClDCName3()}" readonly><br>
+                                <input class="dc_button" type="submit"  th:if="${member.getClDCName4()}!=''" th:name="discountTime" th:value="${member.getClDCName4()}" readonly>
+                                <input class="dc_button" type="submit"  th:if="${member.getClDCName5()}!=''" th:name="discountTime" th:value="${member.getClDCName5()}" readonly>
+                                <input class="dc_button" type="submit"  th:if="${member.getClDCName6()}!=''" th:name="discountTime" th:value="${member.getClDCName6()}" readonly></tr>
 
-                </td>
-<!--                    <td><input type="submit" value="적용"></td>-->
                 </form>
             </div>
+            <tr>
+                <th>환자명</th><td><input class="register-td2" type="text" readonly></td>
+            </tr>
+            <tr>
+                <th>환자병동</th><td><input class="register-td2" type="text" readonly></td>
+            </tr>
+            <tr>
+                <th>전화번호</th><td><input class="register-td2" type="text" readonly></td>
+            </tr>
+
+    <script>
+
+        $( function() {
+            $( "#startDate" ).datepicker({ closeText: '닫기',
+                prevText: '이전달',
+                nextText: '다음달',
+                currentText: '오늘',
+                monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+                    '7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+                monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+                    '7월','8월','9월','10월','11월','12월'],
+                dayNames: ['일','월','화','수','목','금','토'],
+                dayNamesShort: ['일','월','화','수','목','금','토'],
+                dayNamesMin: ['일','월','화','수','목','금','토'],
+                weekHeader: 'Wk',
+                dateFormat: 'yy-mm-dd'});
+            $('#startDate').datepicker('setDate', "today");
+        });
+    </script>
+            <tr>
+                <th>입원날짜</th><td><input class="register-td2" type="text" id="startDate"></td>
+            </tr>
+            <tr>
+                <th>퇴원날짜</th><td><input class="register-td2" type="text" readonly></td>
+            </tr>
+            <tr>
+                <th>이미지</th><td><input type="text" readonly></td>
+            </tr>
     </table>
 </section>
 
 
 <aside class="main-aside">
     <table class="table-main-Button">
-        <div class="container">
+        <div class="container-button">
             <tr>
-            <input th:if="${controllDiscountCar}" type="text" th:value="${controllDiscountCar.getDCTimeSum()}+'분'" placeholder="할인적용시간">
-            <input th:unless="${controllDiscountCar}" type="text" value="" placeholder="할인적용시간">
+            <input style="height: 60px; width: 155px; font-size: 20px" class="reg_input2" th:if="${controllDiscountCar}" type="text" th:value="${controllDiscountCar.getDCTimeSum()}+'분'" placeholder="할인적용시간" readonly>
+            <input style="height: 60px; width: 155px; font-size: 20px" class="reg_input2" th:unless="${controllDiscountCar}" type="text" value="" placeholder="할인적용시간" readonly>
             </tr>
+            <br>
             <tr>
-                <td><button class="cancel" data-Type="ac">리셋</button></td>
-                <td><button class="operation" data-Type="operator">취소</button></td>
+                <input style="height: 60px; width: 155px; font-size: 30px" type="text" class="show" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호">
+                <input style="height: 60px; width: 155px; font-size: 30px" type="text" class="show" name="carNumber" th:unless="${carNumber}" value="" placeholder="차량번호">
             </tr>
+            <br>
             <tr>
                 <td><button class="number">7</button></td>
                 <td><button class="number">8</button></td>
@@ -91,23 +142,53 @@
                 <td><button class="number">3</button></td>
             </tr>
             <tr>
+<!--                <td><button class="cancel" data-Type="ac">리셋</button></td>-->
+                <td><button class="operation" data-Type="operator">취소</button></td>
                 <td><button class="number">0</button></td>
+            <form action="searchCarInfo" method="POST">
+            <input  type="hidden" class="show2" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호조회">
+            <input  type="hidden" class="show2" name="carNumber" th:unless="${carNumber}" value="" placeholder="차량번호조회">
+                <td><input class="search_button" type="submit" value="검색"></td>
+            </form>
+
             </tr>
         </div>
     </table>
-    <form action="searchCarInfo" method="POST">
 
-        <input type="text" class="show" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호조회">
-        <input type="text" class="show" name="carNumber" th:unless="${carNumber}" value="" placeholder="차량번호조회">
-        <input type="submit" value="검색">
-    </form>
     <div>
-        검색된 차량 번호:
-        <ul th:if="${carBeans}" th:each="car : ${carBeans}">
-            <a th:href="@{getCarInfo(carNumber=${car.VhlNbr})}"><li th:text="${car.VhlNbr}"></li></a>
-        </ul>
+        <table>
+            <tr>
+                <td><input type="button" value="입차목록"/></td>
+            </tr>
+            <tr th:if="${carBeans}" th:each="car : ${carBeans}">
+                <td><a th:href="@{getCarInfo(carNumber=${car.VhlNbr}, carNumber2=${carNumber})}"><li th:text="${car.VhlNbr}"></li></a></td>
+            </tr>
+            <tr th:unless="${carBeans}">
+                <td><li></li></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <form>
+            <input type="button" value="예약환자 차량등록"/><br>
+            <input type="text"><br>
+            <input type="submit" value="파일선택">
+            <input type="submit" value="등록하기">
+
+        </form>
     </div>
 </aside>
+<script th:inline="javascript">
+
+    let dc_result = [[${dcResult}]];
+    if(dc_result==1){
+        alert("할인등록이 되었습니다.");
+    }else if(dc_result==2){
+        alert("할인등록이 수정되었습니다.")
+    }else{
+
+    }
+</script>
 
 </body>
 </html>

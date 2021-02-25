@@ -29,24 +29,33 @@ public class CarController {
 
 //    차량번호조회 페이지에서 번호를 검색한 후, 나열된 리스트 중 하나의 차량번호를 선택하였을 시 뜨는 페이지
     @GetMapping("getCarInfo")
-    public String getCarInfo(@RequestParam(value = "carNumber") String carNumber, @RequestParam(required = false, value = "result") String result,  Model model) throws ParseException, UnsupportedEncodingException {
-//        테스트 후 없애기
-//        MemberBean memberbean = new MemberBean();
-//        memberbean.setClID("tony");
-//        memberbean.setClPW("1");
-//        MemberBean member_ = memberService.loginMember(memberbean);
-//        sessionBean.setMemberbean(member_);
-//        테스트 후 없애기
+    public String getCarInfo(@RequestParam(required = false, value = "carNumber") String carNumber, //실제 차 넘버
+                             @RequestParam(required = false, value = "result") String result,
+                             @RequestParam(required = false, value = "carNumber2") String carNumber2, // 검색된 창에 차량 넘버
+                             Model model) throws ParseException, UnsupportedEncodingException {
+//        test 끝난 후 제거
+        MemberBean memberBean = new MemberBean();
+        memberBean.setClID("test");
+        memberBean.setClPW("1");
+        MemberBean memberBean1 = memberService.loginMember(memberBean);
+        sessionBean.setMemberbean(memberBean1);
         MemberBean member = sessionBean.getMemberbean();
-        String clName = member.getClName();
-        if (member == null) {
-            return "redirect:/";
-        }
+        String clName = memberBean.getClName();
+        carNumber = "1234";
+//        test 끝난 후 제거 밑에는 주석 풀기
+//        MemberBean member = sessionBean.getMemberbean();
+//        String clName = member.getClName();
+//        if (member == null) {
+//            return "redirect:/";
+//        }
+//        이까지
         CarBean car = new CarBean();
         car.setVhlNbr(carNumber);
 //        검색된 자동차 리스트 중 한개를 선택하여 차량 정보 출력 함, 이때 쿼리문은 이전과 같은 쿼리문을 사용한다.
         List<CarBean> carBeans = carService.selectCarInfo(car);
         CarBean carBean = carBeans.get(0);
+        car.setVhlNbr(carNumber2);
+        List<CarBean> carBeansList = carService.selectCarInfo(car);
 //        경과시간 구하기
         String carEntDyte = carBean.getEntDyTe();
         String year = carEntDyte.substring(0, 4);
@@ -71,13 +80,15 @@ public class CarController {
         long diffSecond = (diffSec % 60);
         String carEnt = diffDays + "일" + diffHour + "시간" + diffMin + "분" + diffSecond + "초";
         ControllDiscountCar controllDiscountCar = carService.selectControllDiscountCar(carBean);
+
         model.addAttribute("formatDateShow", formatDateShow);
-        model.addAttribute("clName", clName);
+        model.addAttribute("carBeans", carBeansList);
         model.addAttribute("carEnt", carEnt);
+        model.addAttribute("member_ClName", member.getClName());
         model.addAttribute("controllDiscountCar", controllDiscountCar);
         model.addAttribute("member", member);
         model.addAttribute("carInfo", carBean);
-        model.addAttribute("carNumber", carNumber);
+        model.addAttribute("carNumber", carNumber2);
         model.addAttribute("dcResult", result);
         return "member/searchCarInfo";
     }
@@ -85,7 +96,9 @@ public class CarController {
     @PostMapping("registerDiscountTime")
     public String discountTime(@RequestParam(value = "discountTime") String time,
                                @RequestParam(value = "idx") String idx,
-                               @RequestParam(value = "carNumber") String encarNumber, Model model) throws UnsupportedEncodingException {
+                               @RequestParam(value = "carNumber") String encarNumber,
+                               @RequestParam(value = "searchCarNumber") String searchCarNumber,
+                               Model model) throws UnsupportedEncodingException {
         ControllDiscountCar discountCar = new ControllDiscountCar();
         MemberBean memberBean = sessionBean.getMemberbean();
 //        if(memberBean==null){
@@ -123,19 +136,32 @@ public class CarController {
 //        - - ?
         discountCar.setActDiv("1");
         carService.Procedure_DiscountCarTime(discountCar);
-        int result = discountCar.getResult();
         String carNumber = URLEncoder.encode(encarNumber, "utf-8");
-        return "redirect:/getCarInfo?carNumber=" + carNumber + "&&result=" +discountCar.getResult();
+        return "redirect:/getCarInfo?carNumber=" + carNumber + "&&result=" +discountCar.getResult() + "&&carNumber2=" + searchCarNumber;
+
     }
 
 
     //차량 번호 조회 페이지, 차량번호 입력 번호판
     @GetMapping("searchCarInfo")
     public String searchCarInfo(Model model) {
-        MemberBean member = sessionBean.getMemberbean();
+//        MemberBean member = sessionBean.getMemberbean();
 //        if (member == null) {
 //            return "redirect:/";
 //        }
+//테스트 끝난 후 제거
+        MemberBean memberBean = new MemberBean();
+        memberBean.setClID("test");
+        memberBean.setClPW("1");
+        MemberBean memberBean1 = memberService.loginMember(memberBean);
+        sessionBean.setMemberbean(memberBean1);
+        MemberBean member = sessionBean.getMemberbean();
+        String clName = memberBean.getClName();
+
+//테스트 끝난 후 제거
+//
+        model.addAttribute("member_ClName", member.getClName());
+        model.addAttribute("member_show", member);
         return "member/searchCarInfo";
     }
 //차량 번호 조회 페이지, 차량 번호가 입력이 되면 POST
@@ -148,6 +174,11 @@ public class CarController {
         CarBean car = new CarBean();
         car.setVhlNbr(carNumber);
         List<CarBean> carBeans = carService.selectCarInfo(car);
+        if(carBeans.size() == 0) {
+            carBeans = null;
+        }
+        model.addAttribute("member_ClName", member.getClName());
+        model.addAttribute("member_show", member);
         model.addAttribute("carNumber", carNumber);
         model.addAttribute("carBeans", carBeans);
         return "member/searchCarInfo";
