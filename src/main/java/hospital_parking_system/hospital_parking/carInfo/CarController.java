@@ -27,33 +27,66 @@ public class CarController {
 
 
 
+// 일반 멤버로 로그인 시 실행되는 페이지, 차량 번호 조회 페이지
+    @GetMapping("searchCarInfo")
+    public String searchCarInfo(Model model) {
+//        세션을 통해 관리자 멤버의 할인처와 할인시간을 표시한다.
+        MemberBean member = sessionBean.getMemberbean();
+        if (member == null) {
+            return "redirect:/";
+        }
+
+        model.addAttribute("member_ClName", member.getClName());
+        model.addAttribute("member_show", member);
+        return "member/searchCarInfo";
+    }
+
+    //차량 번호 조회 페이지, 차량 번호가 입력이 되면 POST
+    @PostMapping("searchCarInfo")
+    public String getCarInfo_Post(@RequestParam(value = "carNumber") String carNumber, Model model) {
+//        parameter값으로 carNumber를 받고 받아온 차량번호를 통하여 차량을 조회한다.
+        MemberBean member = sessionBean.getMemberbean();
+        if (member == null) {
+            return "redirect:/";
+        }
+        CarBean car = new CarBean();
+        car.setVhlNbr(carNumber);
+//        차량 조회
+        List<CarBean> carBeans = carService.selectCarInfo(car);
+
+        if(carBeans.size() == 0) {
+            carBeans = null;
+        }
+
+        model.addAttribute("member_ClName", member.getClName());
+        model.addAttribute("member_show", member);
+        model.addAttribute("carNumber", carNumber);
+        model.addAttribute("carBeans", carBeans);
+        return "member/searchCarInfo";
+    }
+
+
 //    차량번호조회 페이지에서 번호를 검색한 후, 나열된 리스트 중 하나의 차량번호를 선택하였을 시 뜨는 페이지
     @GetMapping("getCarInfo")
+//////////////////////////////////////////////////////////////////result 추후 체크하기
     public String getCarInfo(@RequestParam(required = false, value = "carNumber") String carNumber, //실제 차 넘버
                              @RequestParam(required = false, value = "result") String result,
                              @RequestParam(required = false, value = "carNumber2") String carNumber2, // 검색된 창에 차량 넘버
                              Model model) throws ParseException, UnsupportedEncodingException {
-//        test 끝난 후 제거
-        MemberBean memberBean = new MemberBean();
-        memberBean.setClID("test");
-        memberBean.setClPW("1");
-        MemberBean memberBean1 = memberService.loginMember(memberBean);
-        sessionBean.setMemberbean(memberBean1);
+//      1.  조회 후 나열된 차량번호 중 택1을 하였을 시 구현되는 페이지, 이때 parameter값으로 carNumber(클릭한 차량), carNumber2(검색된 차량)
+//      2.  조회 후 할인등록 시 할인시간을 택하고 submit이 실행되면 이때 parameter값으로 result도 얻는다. 할인권이 등록인지, 수정인지 알기 위함.
         MemberBean member = sessionBean.getMemberbean();
-        String clName = memberBean.getClName();
-        carNumber = "1234";
-//        test 끝난 후 제거 밑에는 주석 풀기
-//        MemberBean member = sessionBean.getMemberbean();
-//        String clName = member.getClName();
-//        if (member == null) {
-//            return "redirect:/";
-//        }
+        String clName = member.getClName();
+        if (member == null) {
+            return "redirect:/";
+        }
 //        이까지
         CarBean car = new CarBean();
+//        검색된 차량 넘버 중 하나를 선택한 full Number
         car.setVhlNbr(carNumber);
-//        검색된 자동차 리스트 중 한개를 선택하여 차량 정보 출력 함, 이때 쿼리문은 이전과 같은 쿼리문을 사용한다.
         List<CarBean> carBeans = carService.selectCarInfo(car);
         CarBean carBean = carBeans.get(0);
+//      검색창에 입력된 부분적인 car Number
         car.setVhlNbr(carNumber2);
         List<CarBean> carBeansList = carService.selectCarInfo(car);
 //        경과시간 구하기
@@ -92,6 +125,8 @@ public class CarController {
         model.addAttribute("dcResult", result);
         return "member/searchCarInfo";
     }
+
+
 //  차량번호조회 페이지에서 번호를 검색한 후, 나열된 리스트 중 하나의 차량번호를 선택하였을 시 뜨는 페이지 그리고 그 차량의 할인시간을 등록시키는 페이지
     @PostMapping("registerDiscountTime")
     public String discountTime(@RequestParam(value = "discountTime") String time,
@@ -101,9 +136,9 @@ public class CarController {
                                Model model) throws UnsupportedEncodingException {
         ControllDiscountCar discountCar = new ControllDiscountCar();
         MemberBean memberBean = sessionBean.getMemberbean();
-//        if(memberBean==null){
-//            return "redirect:/";
-//        }
+        if(memberBean==null){
+            return "redirect:/";
+        }
         if (time.equals(memberBean.getClDCName1())) {
             discountCar.setDCName(memberBean.getClDCName1());
             discountCar.setDCTime(memberBean.getClDCTime1());
@@ -143,54 +178,14 @@ public class CarController {
 
 
     //차량 번호 조회 페이지, 차량번호 입력 번호판
-    @GetMapping("searchCarInfo")
-    public String searchCarInfo(Model model) {
-//        MemberBean member = sessionBean.getMemberbean();
-//        if (member == null) {
-//            return "redirect:/";
-//        }
-//테스트 끝난 후 제거
-        MemberBean memberBean = new MemberBean();
-        memberBean.setClID("test");
-        memberBean.setClPW("1");
-        MemberBean memberBean1 = memberService.loginMember(memberBean);
-        sessionBean.setMemberbean(memberBean1);
-        MemberBean member = sessionBean.getMemberbean();
-        String clName = memberBean.getClName();
-
-//테스트 끝난 후 제거
-//
-        model.addAttribute("member_ClName", member.getClName());
-        model.addAttribute("member_show", member);
-        return "member/searchCarInfo";
-    }
-//차량 번호 조회 페이지, 차량 번호가 입력이 되면 POST
-    @PostMapping("searchCarInfo")
-    public String getCarInfo_Post(@RequestParam(value = "carNumber") String carNumber, Model model) {
-        MemberBean member = sessionBean.getMemberbean();
-//        if (member == null) {
-//            return "redirect:/";
-//        }
-        CarBean car = new CarBean();
-        car.setVhlNbr(carNumber);
-        List<CarBean> carBeans = carService.selectCarInfo(car);
-        if(carBeans.size() == 0) {
-            carBeans = null;
-        }
-        model.addAttribute("member_ClName", member.getClName());
-        model.addAttribute("member_show", member);
-        model.addAttribute("carNumber", carNumber);
-        model.addAttribute("carBeans", carBeans);
-        return "member/searchCarInfo";
-    }
 
 //등록내역 검색 페이지
     @GetMapping("regSearch")
     public String regSearch(Model model) {
         MemberBean member = sessionBean.getMemberbean();
-//        if (member == null) {
-//            return "redirect:/";
-//        }
+        if (member == null) {
+            return "redirect:/";
+        }
         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoList();
         model.addAttribute("discountedCarInfo", discountedCarInfos);
         return "member/regSearch";
@@ -204,9 +199,9 @@ public class CarController {
                                  @RequestParam(value = "checkDivUse") String checkDivUse,
                                  Model model) {
         MemberBean member = sessionBean.getMemberbean();
-//        if (member == null) {
-//            return "redirect:/";
-//        }
+        if (member == null) {
+            return "redirect:/";
+        }
         String[] start = startDate.split("-");
         String s_year = start[0];
         String s_month = start[1];
@@ -224,7 +219,6 @@ public class CarController {
         car.setEndDate(e_date);
         car.setUseDiv(checkDivUse);
         String divUse = (checkDivUse.equals("0") ? "미사용" : "사용포함");
-        //        List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfo(car);
         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoListWithDate_Member(car);
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);

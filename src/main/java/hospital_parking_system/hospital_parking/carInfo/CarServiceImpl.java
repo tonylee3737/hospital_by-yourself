@@ -1,19 +1,15 @@
 package hospital_parking_system.hospital_parking.carInfo;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
 
-    private CarMapper carMapper;
-
-    @Autowired
-    CarServiceImpl(CarMapper carMapper) {
-        this.carMapper = carMapper;
-    }
+    final private CarMapper carMapper;
 
     @Override
     public List<CarBean> selectCarInfo(CarBean bean) {

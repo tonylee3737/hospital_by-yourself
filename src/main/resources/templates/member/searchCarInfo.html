@@ -61,14 +61,16 @@
                     <input th:if="${carInfo}" type="hidden" th:value="${carInfo.getVhlNbr()}" name="carNumber"/>
                     <input type="hidden" th:value="${carNumber}" name="searchCarNumber">
                         <tr th:if="${member}">
-                            <th>할인시간</th>
-                                <input class="dc_button" type="submit"  th:if="${member.getClDCName1()}!=''" th:name="discountTime" th:value="${member.getClDCName1()}" readonly>
-                                <input class="dc_button" type="submit"  th:if="${member.getClDCName2()}!=''" th:name="discountTime" th:value="${member.getClDCName2()}" readonly>
-                                <input class="dc_button" type="submit"  th:if="${member.getClDCName3()}!=''" th:name="discountTime" th:value="${member.getClDCName3()}" readonly><br>
-                                <input class="dc_button" type="submit"  th:if="${member.getClDCName4()}!=''" th:name="discountTime" th:value="${member.getClDCName4()}" readonly>
-                                <input class="dc_button" type="submit"  th:if="${member.getClDCName5()}!=''" th:name="discountTime" th:value="${member.getClDCName5()}" readonly>
-                                <input class="dc_button" type="submit"  th:if="${member.getClDCName6()}!=''" th:name="discountTime" th:value="${member.getClDCName6()}" readonly></tr>
+                            <th>시간할인</th>
+                            <td><input class="dc_button2" type="submit"  th:if="${member.getClDCName1()}!=''" th:name="discountTime" th:value="${member.getClDCName1()}"readonly>
+                                <input class="dc_button2" type="submit"  th:if="${member.getClDCName2()}!=''" th:name="discountTime" th:value="${member.getClDCName2()}"readonly>
+                                <input class="dc_button2" type="submit"  th:if="${member.getClDCName3()}!=''" th:name="discountTime" th:value="${member.getClDCName3()}"readonly><br>
+                                <input class="dc_button2" type="submit"  th:if="${member.getClDCName4()}!=''" th:name="discountTime" th:value="${member.getClDCName4()}"readonly>
+                                <input class="dc_button2" type="submit"  th:if="${member.getClDCName5()}!=''" th:name="discountTime" th:value="${member.getClDCName5()}"readonly>
+                                <input class="dc_button2" type="submit"  th:if="${member.getClDCName6()}!=''" th:name="discountTime" th:value="${member.getClDCName6()}"readonly></td>
+                        </tr>
 
+<!--                    -->
                 </form>
             </div>
             <tr>
@@ -97,11 +99,12 @@
                 dayNamesMin: ['일','월','화','수','목','금','토'],
                 weekHeader: 'Wk',
                 dateFormat: 'yy-mm-dd'});
-            $('#startDate').datepicker('setDate', "today");
+            // $('#startDate').datepicker('setDate', "today");
+            $('#startDate').datepicker('setDate', "");
         });
     </script>
             <tr>
-                <th>입원날짜</th><td><input class="register-td2" type="text" id="startDate"></td>
+                <th>입원날짜</th><td><input class="register-td2" type="text" id="startDate" style="font-size: xx-large"></td>
             </tr>
             <tr>
                 <th>퇴원날짜</th><td><input class="register-td2" type="text" readonly></td>
@@ -110,45 +113,45 @@
                 <th>이미지</th><td><input type="text" readonly></td>
             </tr>
     </table>
-</section>
+
 
 
 <aside class="main-aside">
     <table class="table-main-Button">
         <div class="container-button">
             <tr>
-            <input style="height: 60px; width: 155px; font-size: 20px" class="reg_input2" th:if="${controllDiscountCar}" type="text" th:value="${controllDiscountCar.getDCTimeSum()}+'분'" placeholder="할인적용시간" readonly>
-            <input style="height: 60px; width: 155px; font-size: 20px" class="reg_input2" th:unless="${controllDiscountCar}" type="text" value="" placeholder="할인적용시간" readonly>
+            <input style="height: 60px; width: 240px; font-size: 30px" class="reg_input2" th:if="${controllDiscountCar}" type="text" th:value="${controllDiscountCar.getDCTimeSum()}+'분 할인적용'" placeholder="할인적용시간" readonly>
+            <input style="height: 60px; width: 240px; font-size: 30px" class="reg_input2" th:unless="${controllDiscountCar}" type="text" value="" placeholder="할인적용시간" readonly>
             </tr>
             <br>
             <tr>
-                <input style="height: 60px; width: 155px; font-size: 30px" type="text" class="show" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호">
-                <input style="height: 60px; width: 155px; font-size: 30px" type="text" class="show" name="carNumber" th:unless="${carNumber}" value="" placeholder="차량번호">
+                <input style="height: 60px; width: 240px; font-size: 40px" type="text" class="show" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호">
+                <input style="height: 60px; width: 240px; font-size: 40px" type="text" class="show" name="carNumber" th:unless="${carNumber}" value="" placeholder="차량번호">
             </tr>
             <br>
             <tr>
-                <td><button class="number">7</button></td>
-                <td><button class="number">8</button></td>
-                <td><button class="number">9</button></td>
+                <td><button class="number" style="font-size: xxx-large">7</button></td>
+                <td><button class="number" style="font-size: xxx-large">8</button></td>
+                <td><button class="number" style="font-size: xxx-large">9</button></td>
             </tr>
             <tr>
-                <td><button class="number">4</button></td>
-                <td><button class="number">5</button></td>
-                <td><button class="number">6</button></td>
+                <td><button class="number" style="font-size: xxx-large">4</button></td>
+                <td><button class="number" style="font-size: xxx-large">5</button></td>
+                <td><button class="number" style="font-size: xxx-large">6</button></td>
             </tr>
             <tr>
-                <td><button class="number">1</button></td>
-                <td><button class="number">2</button></td>
-                <td><button class="number">3</button></td>
+                <td><button class="number" style="font-size: xxx-large">1</button></td>
+                <td><button class="number" style="font-size: xxx-large">2</button></td>
+                <td><button class="number" style="font-size: xxx-large">3</button></td>
             </tr>
             <tr>
 <!--                <td><button class="cancel" data-Type="ac">리셋</button></td>-->
-                <td><button class="operation" data-Type="operator">취소</button></td>
-                <td><button class="number">0</button></td>
+                <td><button class="operation" data-Type="operator" style="font-size: large" >취소</button></td>
+                <td><button class="number" style="font-size: xxx-large">0</button></td>
             <form action="searchCarInfo" method="POST">
             <input  type="hidden" class="show2" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호조회">
             <input  type="hidden" class="show2" name="carNumber" th:unless="${carNumber}" value="" placeholder="차량번호조회">
-                <td><input class="search_button" type="submit" value="검색"></td>
+                <td><input class="search_button" type="submit" value="검색" style="font-size: large"></td>
             </form>
 
             </tr>
@@ -156,12 +159,12 @@
     </table>
 
     <div>
-        <table>
+        <table class="table-main-Button">
             <tr>
-                <td><input type="button" value="입차목록"/></td>
+                <td ><input class="main_car_list_입차" type="button" value="입차목록"/></td>
             </tr>
             <tr th:if="${carBeans}" th:each="car : ${carBeans}">
-                <td><a th:href="@{getCarInfo(carNumber=${car.VhlNbr}, carNumber2=${carNumber})}"><li th:text="${car.VhlNbr}"></li></a></td>
+                <td><a class = "main_car_list" th:href="@{getCarInfo(carNumber=${car.VhlNbr}, carNumber2=${carNumber})}"><li th:text="${car.VhlNbr}" style="font-size: x-large; margin-left: 15%;"></li></a></td>
             </tr>
             <tr th:unless="${carBeans}">
                 <td><li></li></td>
@@ -172,12 +175,12 @@
         <form>
             <input type="button" value="예약환자 차량등록"/><br>
             <input type="text"><br>
-            <input type="submit" value="파일선택">
-            <input type="submit" value="등록하기">
-
+            <input type="button" value="파일선택">
+            <input type="button" value="등록하기">
         </form>
     </div>
 </aside>
+</section>
 <script th:inline="javascript">
 
     let dc_result = [[${dcResult}]];

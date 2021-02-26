@@ -18,20 +18,17 @@ public class MemberController {
     private final MemberService memberService;
     private final SessionBean sessionBean;
 
-
+//메인페이지 첫 화면 페이지
     @GetMapping("")
     public String main(Model model) {
         model.addAttribute("loginForm", new loginForm());
         return "main";
-//        MemberBean memberbean = new MemberBean();
-//        memberbean.setClID("tony");
-//        memberbean.setClPW("1");
-//        sessionBean.setMemberbean(memberbean);
-//        return "member/searchCarInfo";
     }
 
+//메인페이지 첫 화면 페이지, 로그인화면 POST
     @PostMapping("")
-    public String main_login(loginForm form, Model model, BindingResult result, HttpServletRequest request) {
+    public String main_login(loginForm form, Model model) {
+//      로그인 폼을 받아와서 데이터를 끄낸다, 아이디와 비밀번호를 각 빈에 저장 후 데이터가 있는지 확인한다.
         MemberBean member = new MemberBean();
         member.setClID(form.getName());
         member.setClPW(form.getPass());
@@ -41,17 +38,18 @@ public class MemberController {
         admin.setAdmPW(form.getPass());
 
         if (memberService.loginMember(member) != null) {
-//            return "로그인 후 일반 회원 차량 조회 페이지로 이동";
+//          처음, 데이터가 널이 아닐 경우, 로그인 허용한다. 이왕 동시에 세션에 로그인 후 얻은 데이터값을 저장한다.
             MemberBean memberBean = memberService.loginMember(member);
             sessionBean.setMemberbean(memberBean);
             return "redirect:/searchCarInfo";
         } else if (memberService.loginAdmin(admin) != null) {
-//            return "로그인 후 관리자 페이지로 이동";
+//            만약 첫번째 검사 시, 널 값이라면 admin 검사 로그인을 실시한다. 위와 같은 로직으로 admin 페이지로 로그인을 허용한다.
+//            세션값도 저장한다.
             AdminBean adminBean = memberService.loginAdmin(admin);
             sessionBean.setAdminbean(adminBean);
             return "redirect:/adminRegSearch";
         } else {
-//            return "로그인 처리 안됨 다시 메인페이지로 이동";
+//          만약 로그인 시 아이디와 비밀번호에 이상이 있다면 에러 메세지를 발생시킨다.
             model.addAttribute("alert", "아이디와 비밀번호를 확인해주세요.");
             return "main";
         }

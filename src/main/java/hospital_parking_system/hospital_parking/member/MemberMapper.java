@@ -10,9 +10,11 @@ public interface MemberMapper {
 
     MemberBean loginMember(MemberBean bean);
 
+    AdminBean loginAdmin(AdminBean bean);
+
+//    이하 사용하지 않음
     MemberBean checkMemberId(MemberBean bean);
 
-    AdminBean loginAdmin(AdminBean bean);
 
     void deleteMember(String ClID);
 }
