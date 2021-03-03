@@ -27,6 +27,8 @@
                 startDate = "-30D";
             }
             $('#startDate').datepicker('setDate', startDate);
+            $('#startDate').datepicker('option', 'maxDate','today');
+
         });
 
         $( function() {
@@ -49,6 +51,8 @@
                 endDate = "today";
             }
             $('#endDate').datepicker('setDate', endDate);
+            $('#endDate').datepicker('option','maxDate', 'today');
+
         } );
 
     </script>
@@ -57,13 +61,14 @@
 <div class ="body-align-with-table">
 
 <form class="reg_form_location" action="adminRegSearch" method="post">
-    <input type="button" value="날짜">
+
+    <th><td>날짜</td></th>
     <input class="reg_date" type="text" name="startDate" id="startDate">
     <input class="reg_date" type="text" name="endDate" id="endDate">
     <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:if="${carNumber}" th:value="${carNumber}">
     <input class="reg_input" placeholder="차량번호입력" type="text" name = "carNumber" th:unless="${carNumber}" value="">
 
-    <input class="reg_dc_button" type="button" value="할인처:">
+    <th>할인처</th>
     <select name ="clName">
         <option th:if="${return_clName}" th:value="${return_clName}" th:utext="${return_clName}"></option>
         <option th:each = "clname:${clNames}"
@@ -86,8 +91,8 @@
         <th>등록일시</th>
         <th>사용</th>
     </tr>
-    <tr th:if="${discountedCarInfo}" th:each="car: ${discountedCarInfo}">
-        <td th:text="${car.getDCiDx()}" ></td>
+    <tr th:if="${discountedCarInfo}" th:each="car, i: ${discountedCarInfo}">
+        <td th:text="${i.count}" ></td>
         <td th:text="${car.getCarNumber()}" ></td>
         <td th:text="${car.getDCName()}" ></td>
         <td th:text="${car.getClName()}" ></td>

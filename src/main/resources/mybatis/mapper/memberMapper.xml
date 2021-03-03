@@ -12,6 +12,10 @@
         SELECT * FROM parking_class WHERE ClID = #{ClID} and ClPW = #{ClPW}
     </select>
 
+    <select id="loginMember_with_idx_pass" parameterType="hospital_parking_system.hospital_parking.member.MemberBean" resultType="hospital_parking_system.hospital_parking.member.MemberBean">
+        SELECT * FROM parking_class WHERE CliDx = #{CliDx} and ClPW = #{ClPW}
+    </select>
+
     <select id="checkMemberId" parameterType="hospital_parking_system.hospital_parking.member.MemberBean" resultType="hospital_parking_system.hospital_parking.member.MemberBean">
         SELECT * FROM parking_class WHERE ClID = #{ClID}
     </select>

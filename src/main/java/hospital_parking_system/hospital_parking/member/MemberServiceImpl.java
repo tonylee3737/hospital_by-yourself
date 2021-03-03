@@ -17,6 +17,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public MemberBean loginMember_with_idx_pass(MemberBean bean) {
+        return memberMapper.loginMember_with_idx_pass(bean);
+    }
+
+    @Override
     public MemberBean checkMemberId(MemberBean bean) {
         return memberMapper.checkMemberId(bean);
     }

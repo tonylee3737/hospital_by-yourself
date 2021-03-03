@@ -15,6 +15,7 @@ public interface MemberMapper {
 //    이하 사용하지 않음
     MemberBean checkMemberId(MemberBean bean);
 
+    MemberBean loginMember_with_idx_pass(MemberBean bean);
 
     void deleteMember(String ClID);
 }

@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +37,32 @@ public class CarController {
         if (member == null) {
             return "redirect:/";
         }
-
+        //  할인명 글자 체크
+        List length_Check = new ArrayList();
+        length_Check.add(member.getClDCName1());
+        length_Check.add(member.getClDCName2());
+        length_Check.add(member.getClDCName3());
+        length_Check.add(member.getClDCName4());
+        length_Check.add(member.getClDCName5());
+        length_Check.add(member.getClDCName6());
+        int max_length = 0;
+        int text_length=0;
+        for(Object li : length_Check){
+            int length = li.toString().getBytes(StandardCharsets.UTF_8).length;
+            if(max_length < length){
+                max_length = length;
+            }
+        }
+        if(max_length<=15){
+            text_length=15;
+        }else if(max_length <=25){
+            text_length=25;
+        }else{
+            text_length=30;
+        }
+        int blank_showing_for_carBeans = 4;
+        model.addAttribute("blank_showing_for_carBeans", blank_showing_for_carBeans);
+        model.addAttribute("text_length", text_length);
         model.addAttribute("member_ClName", member.getClName());
         model.addAttribute("member_show", member);
         return "member/searchCarInfo";
@@ -54,10 +81,47 @@ public class CarController {
 //        차량 조회
         List<CarBean> carBeans = carService.selectCarInfo(car);
 
+//        차량조회 공백 칸 만들기
+        String blank_should_not_show = null;
+        int blank_showing_for_carBeans=0;
+
         if(carBeans.size() == 0) {
             carBeans = null;
+            blank_showing_for_carBeans = 4;
+        }else{
+            blank_showing_for_carBeans = 4-(carBeans.size());
+            if(blank_showing_for_carBeans==0){
+                blank_should_not_show = "do not";
+            }
+        }
+        //  할인명 글자 체크
+        List length_Check = new ArrayList();
+        length_Check.add(member.getClDCName1());
+        length_Check.add(member.getClDCName2());
+        length_Check.add(member.getClDCName3());
+        length_Check.add(member.getClDCName4());
+        length_Check.add(member.getClDCName5());
+        length_Check.add(member.getClDCName6());
+        int max_length = 0;
+        int text_length=0;
+        for(Object li : length_Check){
+            int length = li.toString().getBytes(StandardCharsets.UTF_8).length;
+            if(max_length < length){
+                max_length = length;
+            }
+        }
+        if(max_length<=15){
+            text_length=15;
+        }else if(max_length <=25){
+            text_length=25;
+        }else{
+            text_length=30;
         }
 
+
+        model.addAttribute("blank_should_not_show", blank_should_not_show);
+        model.addAttribute("blank_showing_for_carBeans", blank_showing_for_carBeans);
+        model.addAttribute("text_length", text_length);
         model.addAttribute("member_ClName", member.getClName());
         model.addAttribute("member_show", member);
         model.addAttribute("carNumber", carNumber);
@@ -68,7 +132,6 @@ public class CarController {
 
 //    차량번호조회 페이지에서 번호를 검색한 후, 나열된 리스트 중 하나의 차량번호를 선택하였을 시 뜨는 페이지
     @GetMapping("getCarInfo")
-//////////////////////////////////////////////////////////////////result 추후 체크하기
     public String getCarInfo(@RequestParam(required = false, value = "carNumber") String carNumber, //실제 차 넘버
                              @RequestParam(required = false, value = "result") String result,
                              @RequestParam(required = false, value = "carNumber2") String carNumber2, // 검색된 창에 차량 넘버
@@ -89,6 +152,22 @@ public class CarController {
 //      검색창에 입력된 부분적인 car Number
         car.setVhlNbr(carNumber2);
         List<CarBean> carBeansList = carService.selectCarInfo(car);
+
+        //        차량조회 공백 칸 만들기
+        String blank_should_not_show = null;
+        int blank_showing_for_carBeans=0;
+
+        if(carBeans.size() == 0) {
+            carBeans = null;
+            blank_showing_for_carBeans = 4;
+        }else{
+            blank_showing_for_carBeans = 4-(carBeansList.size());
+            if(blank_showing_for_carBeans==0){
+                blank_should_not_show = "do not";
+            }
+        }
+
+
 //        경과시간 구하기
         String carEntDyte = carBean.getEntDyTe();
         String year = carEntDyte.substring(0, 4);
@@ -114,6 +193,34 @@ public class CarController {
         String carEnt = diffDays + "일" + diffHour + "시간" + diffMin + "분" + diffSecond + "초";
         ControllDiscountCar controllDiscountCar = carService.selectControllDiscountCar(carBean);
 
+
+        //  할인명 글자 체크
+        List length_Check = new ArrayList();
+        length_Check.add(member.getClDCName1());
+        length_Check.add(member.getClDCName2());
+        length_Check.add(member.getClDCName3());
+        length_Check.add(member.getClDCName4());
+        length_Check.add(member.getClDCName5());
+        length_Check.add(member.getClDCName6());
+        int max_length = 0;
+        int text_length=0;
+        for(Object li : length_Check){
+            int length = li.toString().getBytes(StandardCharsets.UTF_8).length;
+            if(max_length < length){
+                max_length = length;
+            }
+        }
+        if(max_length<=15){
+            text_length=15;
+        }else if(max_length <=25){
+            text_length=25;
+        }else{
+            text_length=30;
+        }
+
+        model.addAttribute("blank_should_not_show", blank_should_not_show);
+        model.addAttribute("blank_showing_for_carBeans", blank_showing_for_carBeans);
+        model.addAttribute("text_length", text_length);
         model.addAttribute("formatDateShow", formatDateShow);
         model.addAttribute("carBeans", carBeansList);
         model.addAttribute("carEnt", carEnt);

@@ -21,8 +21,10 @@
 
     <tr>
         <input type="hidden" th:field="*{GrpiDx}">
-        <td>그룹명<input class="register-td" type="text" th:field="*{GrpName}"></td>
-        <td>비고<input class="register-td" type="text" th:field="*{GrpMemo}"></td>
+        <th>그룹명</th><td><input class="register-td" type="text" th:field="*{GrpName}" placeholder="그룹명"></td>
+    </tr>
+    <tr>
+    <th>비고</th><td><input class="register-td" type="text" th:field="*{GrpMemo}" placeholder="메모"></td>
     </tr>
     <tr>
         <td><input class="register-button" type="submit" value="수정"></td>

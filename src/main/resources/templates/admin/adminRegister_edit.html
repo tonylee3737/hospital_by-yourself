@@ -13,69 +13,80 @@
     <table class="register-table" >
 
         <tr th:if="${#fields.hasErrors('ClID')}">
-            <td class="register-alert" th:if="${#fields.hasErrors('ClID')}" th:errors="*{ClID}"></td><br>
+            <p class="register-alert" th:if="${#fields.hasErrors('ClID')}" th:errors="*{ClID}"></p><br>
         </tr>
 
         <tr th:if="${#fields.hasErrors('ClPW')}">
-            <td class="register-alert" th:if="${#fields.hasErrors('ClPW')}" th:errors="*{ClPW}"></td><br>
+            <p class="register-alert" th:if="${#fields.hasErrors('ClPW')}" th:errors="*{ClPW}"></p><br>
         </tr>
 
         <tr th:if="${alert_password_not_match}">
-            <td class="register-alert" th:utext="${alert_password_not_match}"></td>
+            <p class="register-alert" th:utext="${alert_password_not_match}"></p>
+        </tr>
+
+        <tr th:if="${exist_id}">
+            <p class="register-alert" th:utext="${exist_id}"></p>
         </tr>
 
             <input type="hidden" th:field="*{CliDx}">
-<!--        수정 시 아이디는 readonly로 설정하였다. -->
-            <td>아이디<input class="register-td" type="text" th:field="*{ClID}" readonly></td>
-            <td>패스워드<input class="register-td" type="password" th:field="*{ClPW}" placeholder="패스워드"></td>
+        <tr>
+            <th>아이디</th><td><input class="register-td" type="text" th:field="*{ClID}" placeholder="아이디"></td>
         </tr>
         <tr>
-            <td>할인처<input class="register-td" type="text" th:field="*{ClName}" placeholder="할인처"></td>
-            <td>담당자<input class="register-td" type="text" th:field="*{ClUser}"placeholder="담당자"></td>
+            <th>패스워드</th><td><input class="register-td" type="text" th:field="*{ClPW}" placeholder="패스워드"></td>
+        </tr>
+        <tr>
+            <th>할인처</th><td><input class="register-td" type="text" th:field="*{ClName}" placeholder="할인처"></td>
+        </tr>
+        <tr>
+            <th>담당자</th><td><input class="register-td" type="text" th:field="*{ClUser}"placeholder="담당자"></td>
         </tr>
         <tr >
-            <td>연락처<input class="register-td" type="text" th:field="*{ClTel}" placeholder="연락처"></td>
-            <td>메일<input class="register-td" type="text" th:field="*{ClEmail}" placeholder="메일"></td>
+            <th>연락처</th><td><input class="register-td" type="text" th:field="*{ClTel}" placeholder="연락처"></td>
+        </tr>
+        <tr>
+            <th>메일</th><td><input class="register-td" type="text" th:field="*{ClEmail}" placeholder="메일"></td>
         </tr>
         <tr >
-            <td>할인1<input class="register-td" type="text" th:field="*{ClDCName1}" placeholder="할인명">시간</td><td><input class="register-dc" type="text" th:field="*{ClDCTime1}">분</td><td><input class="register-dc" type="text" th:field="*{ClDCRate1}">%</td>
+            <th>할인1</th><td><input class="register-td" type="text" th:field="*{ClDCName1}" placeholder="할인명">시간<input class="register-dc2" type="text" th:field="*{ClDCTime1}" >분<input class="register-dc2" type="text" th:field="*{ClDCRate1}" >%</td>
             <input type="hidden" th:field="*{ClDCCount1}">
         </tr>
         <tr >
-            <td>할인2<input class="register-td" type="text" th:field="*{ClDCName2}">시간</td><td><input class="register-dc" type="text" th:field="*{ClDCTime2}">분</td><td><input class="register-dc" type="text" th:field="*{ClDCRate2}">%</td>
+            <th>할인2</th><td><input class="register-td" type="text" th:field="*{ClDCName2}"  placeholder="할인명">시간<input class="register-dc2" type="text" th:field="*{ClDCTime2}">분<input class="register-dc2" type="text" th:field="*{ClDCRate2}">%</td>
             <input type="hidden" th:field="*{ClDCCount2}">
         </tr>
         <tr >
-            <td>할인3<input class="register-td" type="text" th:field="*{ClDCName3}">시간</td><td><input class="register-dc" type="text" th:field="*{ClDCTime3}">분</td><td><input class="register-dc" type="text" th:field="*{ClDCRate3}">%</td>
+            <th>할인3</th><td><input class="register-td" type="text" th:field="*{ClDCName3}"  placeholder="할인명">시간<input class="register-dc2" type="text" th:field="*{ClDCTime3}">분<input class="register-dc2" type="text" th:field="*{ClDCRate3}">%</td>
             <input type="hidden" th:field="*{ClDCCount3}">
         </tr>
         <tr>
-            <td>할인4<input class="register-td" type="text" th:field="*{ClDCName4}">시간</td><td><input class="register-dc" type="text" th:field="*{ClDCTime4}">분</td><td><input class="register-dc" type="text" th:field="*{ClDCRate4}">%</td>
+            <th>할인4</th><td><input class="register-td" type="text" th:field="*{ClDCName4}"  placeholder="할인명">시간<input class="register-dc2" type="text" th:field="*{ClDCTime4}">분<input class="register-dc2" type="text" th:field="*{ClDCRate4}">%</td>
             <input type="hidden" th:field="*{ClDCCount4}">
         </tr>
         <tr>
-            <td>할인5<input class="register-td" type="text" th:field="*{ClDCName5}">시간</td><td><input class="register-dc" type="text" th:field="*{ClDCTime5}" >분</td><td><input class="register-dc" type="text" th:field="*{ClDCRate5}">%</td>
+            <th>할인5</th><td><input class="register-td" type="text" th:field="*{ClDCName5}"  placeholder="할인명">시간<input class="register-dc2" type="text" th:field="*{ClDCTime5}" >분<input class="register-dc2" type="text" th:field="*{ClDCRate5}">%</td>
             <input type="hidden" th:field="*{ClDCCount5}">
         </tr>
         <tr>
-            <td>할인6<input class="register-td" type="text" th:field="*{ClDCName6}">시간</td><td><input class="register-dc" type="text" th:field="*{ClDCTime6}">분</td><td><input class="register-dc" type="text" th:field="*{ClDCRate6}">%</td>
+            <th>할인6</th><td><input class="register-td" type="text" th:field="*{ClDCName6}"  placeholder="할인명">시간<input class="register-dc2" type="text" th:field="*{ClDCTime6}">분<input class="register-dc2" type="text" th:field="*{ClDCRate6}">%</td>
             <input type="hidden" th:field="*{ClDCCount6}">
         </tr>
         <tr>
-            <td>비고<input class="register-td" type="text" th:field="*{ClMemo}"></td>
+            <th>비고</th><td><input class="register-td" type="text" th:field="*{ClMemo}"  placeholder="메모"></td>
         </tr>
         <tr>
-            <td>사용유무
-                <select class="register-td" th:field="*{ClDCUse}">
-                    <option class="register-td" th:value="1">사용</option>
-                    <option class="register-td" th:value="0">미사용</option>
-                </select>
-            </td>
-            <td>그룹
-                <select class="register-td" th:field="*{ClGrpiDx}" >
-                    <option class="register-td" th:each="group:${groupList}"
-                            th:value="${group.getGrpiDx()}" th:utext="${group.getGrpName()}"></option>
-                </select>
+            <th>사용유무</th>
+            <td><select class="register-td" th:field="*{ClDCUse}">
+                <option class="register-td" th:value="1">사용</option>
+                <option class="register-td" th:value="0">미사용</option>
+            </select></td>
+        </tr>
+        <tr>
+            <th>그룹</th>
+            <td><select class="register-td" th:field="*{ClGrpiDx}" >
+                <option class="register-td" th:each="group:${groupList}"
+                        th:value="${group.getGrpiDx()}" th:utext="${group.getGrpName()}"></option>
+            </select></td>
         </tr>
         <tr>
             <td align="center"><input class="register-button" type="submit" value="수정"></td>

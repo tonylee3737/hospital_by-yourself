@@ -6,14 +6,20 @@
 }
 
 .main_table_with_button{
-    margin-left: 17%;
+    margin-left: 5%;
     margin-right: 5%;
     display: inline-block;
     float: left;
 }
 
 .table-main-Button{
-    width: 180px;
+    width: 240px;
+}
+.table-main-Button th{
+    height: 50px;
+    font-size: x-large;
+    font-weight: normal;
+    background-color: whitesmoke;
 }
 
 .table-main-Button td{
@@ -70,15 +76,15 @@
 }
 
 .dc_button{
-    font-size: large;
+    /*font-size: 16px;*/
     margin: 0.7%;
-    width: 140px;
+    width: 173px;
     height: 65px;
     background-color: whitesmoke;
 }
 .dc_button2{
-    font-size: large;
-    width: 140px;
+    /*font-size: 16px;*/
+    width: 173px;
     height: 65px;
     border-radius: 5%;
     background-color: whitesmoke;
@@ -91,7 +97,7 @@
 }
 .register-td2 {
     font-size: 30px;
-    width: 450px;
+    width: 550px;
     heigth: 70px;
     margin-bottom: 5%;
     border-top: none;
@@ -113,3 +119,4 @@
     height: 50px;
     margin-left: 27%;
 }
+

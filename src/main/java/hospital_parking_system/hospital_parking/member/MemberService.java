@@ -6,6 +6,8 @@ public interface MemberService {
 
     MemberBean loginMember(MemberBean bean);
 
+    MemberBean loginMember_with_idx_pass(MemberBean bean);
+
     MemberBean checkMemberId(MemberBean bean);
 
     AdminBean loginAdmin(AdminBean bean);

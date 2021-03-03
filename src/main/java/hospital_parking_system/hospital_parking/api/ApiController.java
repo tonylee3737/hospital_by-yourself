@@ -36,8 +36,4 @@ public class ApiController {
         }
     }
 
-    @GetMapping("/api/test2")
-    public String ApiTest2(@RequestBody String) {
-        return "hello world";
-    }
 }

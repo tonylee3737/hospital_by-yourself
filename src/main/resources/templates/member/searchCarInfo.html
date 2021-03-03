@@ -12,12 +12,28 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<script>
+<script th:inline="javascript">
+    let text_length = [[${text_length}]]
+    console.log(text_length);
+
     document.addEventListener("DOMContentLoaded", function(){
         init();
+        let list = document.getElementsByClassName("dc_button");
 
+        for (let i = 0; i < list.length; ++i) {
+            if(text_length<=15){
+                list[i].style.fontSize = "26px";
+            }else if(text_length<=25){
+                list[i].style.fontSize = "20px";
+            }else{
+                list[i].style.fontSize = "16px";
+            }
+        }
     });
+
+
 </script>
+
 
 <!--검색된 번호 중 하나를 선택하였을 시 나오는 정보-->
 <section class="main-section">
@@ -25,7 +41,7 @@
 <table class="main_table_with_button">
 <!--        차량 정보 조회-->
         <tr>
-            <th>할인처</th><td><input type="text" class="register-td2" th:value="${member_ClName}" readonly></td>
+            <th>할인처</th><td><input id="dc_store" type="text" class="register-td2" th:value="${member_ClName}" readonly></td>
 
         </tr>
         <tr>
@@ -99,15 +115,33 @@
                 dayNamesMin: ['일','월','화','수','목','금','토'],
                 weekHeader: 'Wk',
                 dateFormat: 'yy-mm-dd'});
-            // $('#startDate').datepicker('setDate', "today");
             $('#startDate').datepicker('setDate', "");
+            $('#startDate').datepicker('option', 'maxDate', 'today');
+
+        });
+        $( function() {
+            $( "#endDate" ).datepicker({ closeText: '닫기',
+                prevText: '이전달',
+                nextText: '다음달',
+                currentText: '오늘',
+                monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+                    '7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+                monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+                    '7월','8월','9월','10월','11월','12월'],
+                dayNames: ['일','월','화','수','목','금','토'],
+                dayNamesShort: ['일','월','화','수','목','금','토'],
+                dayNamesMin: ['일','월','화','수','목','금','토'],
+                weekHeader: 'Wk',
+                dateFormat: 'yy-mm-dd'});
+            $('#endtDate').datepicker('setDate', "");
+
         });
     </script>
             <tr>
                 <th>입원날짜</th><td><input class="register-td2" type="text" id="startDate" style="font-size: xx-large"></td>
             </tr>
             <tr>
-                <th>퇴원날짜</th><td><input class="register-td2" type="text" readonly></td>
+                <th>퇴원날짜</th><td><input class="register-td2" type="text" id="endDate" readonly></td>
             </tr>
             <tr>
                 <th>이미지</th><td><input type="text" readonly></td>
@@ -159,25 +193,39 @@
     </table>
 
     <div>
-        <table class="table-main-Button">
+        <table class="table-main-Button" border="1px">
             <tr>
-                <td ><input class="main_car_list_입차" type="button" value="입차목록"/></td>
+                <th>입차목록</th>
             </tr>
             <tr th:if="${carBeans}" th:each="car : ${carBeans}">
                 <td><a class = "main_car_list" th:href="@{getCarInfo(carNumber=${car.VhlNbr}, carNumber2=${carNumber})}"><li th:text="${car.VhlNbr}" style="font-size: x-large; margin-left: 15%;"></li></a></td>
             </tr>
-            <tr th:unless="${carBeans}">
-                <td><li></li></td>
-            </tr>
+<!--            <tr th:unless="${carBeans}">-->
+<!--                <td><a class = "main_car_list" ><li style="font-size: x-large; margin-left: 15%;"></li></a></td>-->
+<!--            </tr>-->
+                <div th:if="${blank_should_not_show}==null">
+                    <tr th:each="num :${#numbers.sequence(1,blank_showing_for_carBeans)}">
+                        <td><a class = "main_car_list" ><li style="font-size: x-large; margin-left: 15%;"></li></a></td>
+                    </tr>
+                </div>
         </table>
     </div>
     <div>
-        <form>
-            <input type="button" value="예약환자 차량등록"/><br>
-            <input type="text"><br>
-            <input type="button" value="파일선택">
-            <input type="button" value="등록하기">
-        </form>
+        <Table class="table-main-Button" border="1px">
+            <form>
+                <tr>
+                   <th>예약환자 차량등록</th>
+                </tr>
+                <tr>
+                    <td><input type="text" readonly></td>
+                </tr>
+                <tr>
+                    <td><input type="button" value="파일선택">
+                        <input type="button" value="파일등록"></td>
+                </tr>
+
+            </form>
+        </Table>
     </div>
 </aside>
 </section>

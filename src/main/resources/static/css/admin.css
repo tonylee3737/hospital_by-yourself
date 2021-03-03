@@ -69,16 +69,16 @@ section {
 }
 
 section {
-    padding-top: 70px;
+    padding-top: 40px;
 }
 .title-container{
-    margin-top: 3%;
+    padding-top: 10px;
     text-align: center;
     text-align: justify-all;
     justify-content: space-between;
     display: flex;
-    margin-right: 25%;
-    margin-left: 25%;
+    margin-right: 10%;
+    margin-left: 10%;
 
 }
 .mode {

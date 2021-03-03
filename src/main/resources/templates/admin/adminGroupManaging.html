@@ -7,16 +7,27 @@
     <title>Title</title>
 </head>
 <body>
+<!--등록 및 수정 시 alert 뜨게 하는 기능-->
+<script th:inline="javascript">
+    let _form = [[${form}]]
+    if (_form == "form_edit") {
+        alert("수정되었습니다.");
+    }else if(_form == "form_regi"){
+        alert("등록되었습니다.");
+    }
+
+</script>
+
 <div class="body-align-with-table">
-<table class= "table-group" border="1">
+<table class= "table" >
     <tr>
-        <th>번호</th>
-        <th>그룹명</th>
+        <th >번호</th>
+        <th >그룹명</th>
         <th>비고</th>
     </tr>
-    <tr th:each="admin:${groupList}">
-        <td><p th:text="${admin.getGrpiDx()}"/></td>
-        <td><a th:href="@{adminRegister_group_edit(id=${admin.getGrpiDx()})}"><p th:text="${admin.getGrpName()}"/></a></td>
+    <tr th:each="admin, num:${groupList}">
+        <td ><p th:text="${num.count}"/></td>
+        <td ><a th:href="@{adminRegister_group_edit(id=${admin.getGrpiDx()})}"><p th:text="${admin.getGrpName()}"/></a></td>
         <td th:text="${admin.getGrpMemo()}"></td>
     </tr>
 </table>
