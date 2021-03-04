@@ -36,6 +36,7 @@
     /*display: inline-block;*/
 }
 .register-table th{
+    text-align: left;
     border-radius: 10%;
     background-color: whitesmoke;
     font-weight: lighter;
@@ -54,6 +55,14 @@
     width: 250px;
     text-align: center;
 }
+register-td_rest {
+    border-radius: 10%;
+    font-size: large;
+    height: 30px;
+    width: 450px;
+    text-align: center;
+}
+
 .register-dc2{
     border-radius: 10%;
     font-size: large;
@@ -75,8 +84,12 @@
 }
 
 
-.register-button{
+.register-button {
+    text-align: center;
+    background-color: whitesmoke;
+    border-radius: 10%;
     size: 80px;
+
 
 }
 .register-button:hover{

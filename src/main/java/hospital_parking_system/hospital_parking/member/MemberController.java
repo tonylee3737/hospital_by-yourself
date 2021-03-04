@@ -22,8 +22,10 @@ public class MemberController {
     @GetMapping("")
     public String main(Model model) {
         model.addAttribute("loginForm", new loginForm());
-        return "main";
-    }
+        boolean mobile = true;
+            return "main";
+        }
+
 
 //메인페이지 첫 화면 페이지, 로그인화면 POST
     @PostMapping("")
@@ -41,7 +43,9 @@ public class MemberController {
 //          처음, 데이터가 널이 아닐 경우, 로그인 허용한다. 이왕 동시에 세션에 로그인 후 얻은 데이터값을 저장한다.
             MemberBean memberBean = memberService.loginMember(member);
             sessionBean.setMemberbean(memberBean);
+
             return "redirect:/searchCarInfo";
+
         } else if (memberService.loginAdmin(admin) != null) {
 //            만약 첫번째 검사 시, 널 값이라면 admin 검사 로그인을 실시한다. 위와 같은 로직으로 admin 페이지로 로그인을 허용한다.
 //            세션값도 저장한다.

@@ -7,16 +7,27 @@
     <title>Title</title>
 </head>
 <body>
+<script>
+    function check_name() {
+        if(group_form.GrpName.value == "") {
+            alert("ID를 입력해주세요.");
+            group_form.GrpName.focus();
+            return false;
+        }
+        else return true;
+    }
+</script>
 <h2 class="register-title"><그룹 수정하기></h2>
-<form class = "register-form" action="adminRegister_group_edit" method="post" th:object="${adminForm}">
+<div style="text-align: center">
+<form class = "register-form" name="group_form" onsubmit="return check_name()" action="adminRegister_group_edit" method="post" th:object="${adminForm}">
 <table class="register-table">
 
-    <tr th:if="${#fields.hasErrors('GrpName')}">
-        <td class="register-alert" th:if="${#fields.hasErrors('GrpName')}" th:errors="*{GrpName}"></td><br>
-    </tr>
+<!--    <tr th:if="${#fields.hasErrors('GrpName')}">-->
+<!--        <td class="register-alert" th:if="${#fields.hasErrors('GrpName')}" th:errors="*{GrpName}"></td><br>-->
+<!--    </tr>-->
 
     <tr th:if="${alertExistName}">
-        <td class="register-alert" th:if="${alertExistName}" th:utext="${alertExistName}"></td><br>
+        <p class="register-alert" th:if="${alertExistName}" th:utext="${alertExistName}"></p><br>
     </tr>
 
     <tr>
@@ -27,11 +38,12 @@
     <th>비고</th><td><input class="register-td" type="text" th:field="*{GrpMemo}" placeholder="메모"></td>
     </tr>
     <tr>
-        <td><input class="register-button" type="submit" value="수정"></td>
+        <td></td>
+        <td><input class="register-button" type="submit" value="수정"><input class="register-button" type="button" onclick="location.href='adminGroupManaging';" value="취소"></td>
 <!--        <a th:href = "@{adminDeleteGroup(id=*{GrpiDx})}">삭제하기</a>-->
     </tr>
 </table>
 </form>
-
+</div>
 </body>
 </html>

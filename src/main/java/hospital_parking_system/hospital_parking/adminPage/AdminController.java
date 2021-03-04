@@ -9,6 +9,7 @@ import hospital_parking_system.hospital_parking.member.AdminBean;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 import hospital_parking_system.hospital_parking.member.MemberService;
 import hospital_parking_system.hospital_parking.member.SessionBean;
+import jdk.nashorn.internal.parser.JSONParser;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -70,101 +72,29 @@ public class AdminController {
                                       @RequestParam(value = "clName") String clName,
                                       @RequestParam(value = "action") String action,
                                       Model model, HttpServletResponse response) throws IOException {
-
         AdminBean adminBean = sessionBean.getAdminbean();
         if (adminBean == null) {
             return "redirect:/";
         }
-        String[] start = startDate.split("-");
-        String s_year = start[0];
-        String s_month = start[1];
-        String s_day = start[2];
-        String s_date = s_year + s_month + s_day + "000000";
-        String[] end = endDate.split("-");
-        String e_year = end[0];
-        String e_month = end[1];
-        String e_day = end[2];
-        String e_date = e_year + e_month + e_day + "235959";
-
+//       선택한 날짜 안에 차량 조회 테스트 ( 날짜 포맷 Method)
+        String[] dateTime_calculated = adminService.dateTime_calculate(startDate, endDate);
         CarBean car = new CarBean();
-        car.setStartDate(s_date);
-        car.setEndDate(e_date);
+        car.setStartDate(dateTime_calculated[0]);
+        car.setEndDate(dateTime_calculated[1]);
+
         car.setVhlNbr(carNumber);
         if (clName.equals("전체")) {
             car.setClName("");
         } else {
             car.setClName(clName);
         }
-        List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoListWithDate(car);
 
         //       액셀 다운로드
-
+        List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoListWithDate(car);
         if (action.equals("액셀")) {
-            Workbook book = null;
-            XSSFWorkbook xssfWb = null;
-            XSSFSheet xssfSheet = null;
-            XSSFRow xssfRow = null;
-            XSSFCell xssfCell = null;
-            int rowNo = 1;
-            xssfWb = new XSSFWorkbook();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월dd일 HH시 mm분ss초");
-            String format_time = format.format(System.currentTimeMillis());
-            xssfSheet = xssfWb.createSheet("할인차량목록_" + format_time);
-            xssfSheet.setColumnWidth(1, (xssfSheet.getColumnWidth(1)) + (short) 2048);
-            xssfSheet.setColumnWidth(2, (xssfSheet.getColumnWidth(2)) + (short) 2048);
-            xssfSheet.setColumnWidth(3, (xssfSheet.getColumnWidth(3)) + (short) 2048);
-            xssfSheet.setColumnWidth(6, (xssfSheet.getColumnWidth(6)) + (short) 2048);
-            xssfSheet.setColumnWidth(7, (xssfSheet.getColumnWidth(7)) + (short) 3072);
-            xssfRow = xssfSheet.createRow(0);
-            xssfCell = xssfRow.createCell((short) 0);
-            xssfCell.setCellValue("번호");
-            xssfCell = xssfRow.createCell((short) 1);
-            xssfCell.setCellValue("차량번호");
-            xssfCell = xssfRow.createCell((short) 2);
-            xssfCell.setCellValue("할인명");
-            xssfCell = xssfRow.createCell((short) 3);
-            xssfCell.setCellValue("할인처");
-            xssfCell = xssfRow.createCell((short) 4);
-            xssfCell.setCellValue("할인(분)");
-            xssfCell = xssfRow.createCell((short) 5);
-            xssfCell.setCellValue("할인률(%)");
-            xssfCell = xssfRow.createCell((short) 6);
-            xssfCell.setCellValue("비고");
-            xssfCell = xssfRow.createCell((short) 7);
-            xssfCell.setCellValue("등록일시");
-            xssfCell = xssfRow.createCell((short) 8);
-            xssfCell.setCellValue("사용여부");
-            xssfCell = xssfRow.createCell((short) 9);
-            for (int i = 0; i < discountedCarInfos.size(); i++) {
-                xssfRow = xssfSheet.createRow(rowNo++);
-                xssfCell = xssfRow.createCell((short) 0);
-                xssfCell.setCellValue(i + 1);
-                xssfCell = xssfRow.createCell((short) 1);
-                xssfCell.setCellValue(discountedCarInfos.get(i).getCarNumber());
-                xssfCell = xssfRow.createCell((short) 2);
-                xssfCell.setCellValue(discountedCarInfos.get(i).getDCName());
-                xssfCell = xssfRow.createCell((short) 3);
-                xssfCell.setCellValue(discountedCarInfos.get(i).getClName());
-                xssfCell = xssfRow.createCell((short) 4);
-                xssfCell.setCellValue(discountedCarInfos.get(i).getDCTime());
-                xssfCell = xssfRow.createCell((short) 5);
-                xssfCell.setCellValue(discountedCarInfos.get(i).getDCRate());
-                xssfCell = xssfRow.createCell((short) 6);
-                xssfCell.setCellValue(discountedCarInfos.get(i).getDCMemo());
-                xssfCell = xssfRow.createCell((short) 7);
-                xssfCell.setCellValue(discountedCarInfos.get(i).getInsDayTime());
-                xssfCell = xssfRow.createCell((short) 8);
-                String result_Of_DivUse = (discountedCarInfos.get(i).getUseDiv().equals("0")) ? "미사용" : "사용";
-                xssfCell.setCellValue(result_Of_DivUse);
-                xssfCell = xssfRow.createCell((short) 9);
-            }
-            String filename_time = "할인차량목록_" + format_time;
-            response.setContentType("ms-vnd/excel");
-            response.setHeader("Content-Disposition", "attachment; filename=" + new String((filename_time).getBytes("EUC-KR"), "8859_1") + ".xlsx");
-            OutputStream fileOut = response.getOutputStream();
-            xssfWb.write(fileOut);
-            fileOut.close();
+            adminService.excel_down(discountedCarInfos, response);
         }
+
         List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
         ClNameBean re_clName = new ClNameBean();
         re_clName.setClName("전체");
@@ -186,6 +116,7 @@ public class AdminController {
             return "redirect:/";
         }
         List<AdminManagerBean> adminManagerBeans = adminService.selectAdminManager();
+        System.out.println(adminManagerBeans.size());
         model.addAttribute("adminList", adminManagerBeans);
         return "admin/adminManaging";
     }
@@ -202,41 +133,10 @@ public class AdminController {
         MemberBean memberBean = new MemberBean();
         memberBean.setCliDx(idx);
         MemberBean member = adminService.selectOneParking_class(memberBean);
-        MemberForm form = new MemberForm();
-        form.setCliDx(member.getCliDx());
-        form.setClID(member.getClID());
-        form.setClPW(member.getClPW());
-        form.setClName(member.getClName());
-        form.setClUser(member.getClUser());
-        form.setClTel(member.getClTel());
-        form.setClEmail(member.getClEmail());
-        form.setClDCName1(member.getClDCName1());
-        form.setClDCCount1(member.getClDCCount1());
-        form.setClDCTime1(member.getClDCTime1());
-        form.setClDCRate1(member.getClDCRate1());
-        form.setClDCName2(member.getClDCName2());
-        form.setClDCCount2(member.getClDCCount2());
-        form.setClDCTime2(member.getClDCTime2());
-        form.setClDCRate2(member.getClDCRate2());
-        form.setClDCName3(member.getClDCName3());
-        form.setClDCCount3(member.getClDCCount3());
-        form.setClDCTime3(member.getClDCTime3());
-        form.setClDCRate3(member.getClDCRate3());
-        form.setClDCName4(member.getClDCName4());
-        form.setClDCCount4(member.getClDCCount4());
-        form.setClDCTime4(member.getClDCTime4());
-        form.setClDCRate4(member.getClDCRate4());
-        form.setClDCName5(member.getClDCName5());
-        form.setClDCCount5(member.getClDCCount5());
-        form.setClDCTime5(member.getClDCTime5());
-        form.setClDCRate5(member.getClDCRate5());
-        form.setClDCName6(member.getClDCName6());
-        form.setClDCCount6(member.getClDCCount6());
-        form.setClDCTime6(member.getClDCTime6());
-        form.setClDCRate6(member.getClDCRate6());
-        form.setClMemo(member.getClMemo());
-        form.setClDCUse(member.getClDCUse());
-        form.setClGrpiDx(member.getClGrpiDx());
+
+        //idx를 통해 가져온 멤버의 사항을 MemberForm에 주입시키기.
+        MemberForm form = adminService.member_To_Form(member);
+
         model.addAttribute("memberForm", form);
         model.addAttribute("groupList", groupBeans);
         return "admin/adminRegister_edit";
@@ -252,104 +152,22 @@ public class AdminController {
         }
 
         List<GroupBean> groupBeans = adminService.selectGroupList();
-//        수정 중 아이디값과 비밀번호가 값 유효성 검사
+        //수정 중 아이디값과 비밀번호가 값 유효성 검사
         if (result.hasErrors()) {
             model.addAttribute("groupList", groupBeans);
             return "admin/adminRegister_edit";
         }
-        MemberBean member = new MemberBean();
-        member.setCliDx(form.getCliDx());
-        member.setClID(form.getClID());
-        member.setClPW(form.getClPW());
+        // form _ to Member
+        MemberBean member = adminService.form_To_Member(form);
 
-        MemberBean memberBean = memberService.loginMember_with_idx_pass(member);
+
         //        수정 중 비밀번호 유효성 검사
+        MemberBean memberBean = memberService.loginMember_with_idx_pass(member);
         if (memberBean == null) {
             model.addAttribute("groupList", groupBeans);
             model.addAttribute("alert_password_not_match", "비밀번호가 일치하지 않습니다.");
             return "admin/adminRegister_edit";
         }
-
-
-        member.setClName(form.getClName());
-        member.setClUser(form.getClUser());
-        member.setClTel(form.getClTel());
-        member.setClEmail(form.getClEmail());
-        member.setClDCName1(form.getClDCName1());
-        member.setClDCCount1(form.getClDCCount1());
-        if (form.getClDCTime1().equals("")) {
-            member.setClDCTime1("0");
-        } else {
-            member.setClDCTime1(form.getClDCTime1());
-        }
-        if (form.getClDCRate1().equals("")) {
-            member.setClDCRate1("0");
-        } else {
-            member.setClDCRate1(form.getClDCRate1());
-        }
-        member.setClDCName2(form.getClDCName2());
-        member.setClDCCount2(form.getClDCCount2());
-        if (form.getClDCTime2().equals("")) {
-            member.setClDCTime2("0");
-        } else {
-            member.setClDCTime2(form.getClDCTime2());
-        }
-        if (form.getClDCRate2().equals("")) {
-            member.setClDCRate2("0");
-        } else {
-            member.setClDCRate2(form.getClDCRate2());
-        }
-        member.setClDCName3(form.getClDCName3());
-        member.setClDCCount3(form.getClDCCount3());
-        if (form.getClDCTime3().equals("")) {
-            member.setClDCTime3("0");
-        } else {
-            member.setClDCTime3(form.getClDCTime3());
-        }
-        if (form.getClDCRate3().equals("")) {
-            member.setClDCRate3("0");
-        } else {
-            member.setClDCRate3(form.getClDCRate3());
-        }
-        member.setClDCName4(form.getClDCName4());
-        member.setClDCCount4(form.getClDCCount4());
-        if (form.getClDCTime4().equals("")) {
-            member.setClDCTime4("0");
-        } else {
-            member.setClDCTime4(form.getClDCTime4());
-        }
-        if (form.getClDCRate4().equals("")) {
-            member.setClDCRate4("0");
-        } else {
-            member.setClDCRate4(form.getClDCRate4());
-        }
-        member.setClDCName5(form.getClDCName5());
-        member.setClDCCount5(form.getClDCCount5());
-        if (form.getClDCTime5().equals("")) {
-            member.setClDCTime5("0");
-        } else {
-            member.setClDCTime5(form.getClDCTime5());
-        }
-        if (form.getClDCRate5().equals("")) {
-            member.setClDCRate5("0");
-        } else {
-            member.setClDCRate5(form.getClDCRate5());
-        }
-        member.setClDCName6(form.getClDCName6());
-        member.setClDCCount6(form.getClDCCount6());
-        if (form.getClDCTime6().equals("")) {
-            member.setClDCTime6("0");
-        } else {
-            member.setClDCTime6(form.getClDCTime6());
-        }
-        if (form.getClDCRate6().equals("")) {
-            member.setClDCRate6("0");
-        } else {
-            member.setClDCRate6(form.getClDCRate6());
-        }
-        member.setClMemo(form.getClMemo());
-        member.setClDCUse(form.getClDCUse());
-        member.setClGrpiDx(form.getClGrpiDx());
 
         //  수정 중 아이디 유효성 검사
         MemberBean member_id_check = memberService.checkMemberId(member);
@@ -391,52 +209,21 @@ public class AdminController {
         if (adminBean == null) {
             return "redirect:/";
         }
+        List<GroupBean> groupBeans = adminService.selectGroupList();
         if (result.hasErrors()) {
+            model.addAttribute("groupList", groupBeans);
             return "admin/adminRegister";
         }
 
-        MemberBean member = new MemberBean();
-        member.setCliDx("0");
+        MemberBean member = adminService.form_To_Member(form);
 
-        member.setClID(form.getClID());
+
+        // 아이디 유효성 검사
         MemberBean memberBean = memberService.checkMemberId(member);
         if (memberBean != null) {
             model.addAttribute("alert_exist", "이미 존재하는 관리자입니다.");
             return "admin/adminRegister";
         }
-        member.setClPW(form.getClPW());
-        member.setClName(form.getClName());
-        member.setClUser(form.getClUser());
-        member.setClTel(form.getClTel());
-        member.setClEmail(form.getClEmail());
-        member.setClDCName1(form.getClDCName1());
-        member.setClDCCount1(form.getClDCCount1());
-        member.setClDCTime1(form.getClDCTime1());
-        member.setClDCRate1(form.getClDCRate1());
-        member.setClDCName2(form.getClDCName2());
-        member.setClDCCount2(form.getClDCCount2());
-        member.setClDCTime2(form.getClDCTime2());
-        member.setClDCRate2(form.getClDCRate2());
-        member.setClDCName3(form.getClDCName3());
-        member.setClDCCount3(form.getClDCCount3());
-        member.setClDCTime3(form.getClDCTime3());
-        member.setClDCRate3(form.getClDCRate3());
-        member.setClDCName4(form.getClDCName4());
-        member.setClDCCount4(form.getClDCCount4());
-        member.setClDCTime4(form.getClDCTime4());
-        member.setClDCRate4(form.getClDCRate4());
-        member.setClDCName5(form.getClDCName5());
-        member.setClDCCount5(form.getClDCCount5());
-        member.setClDCTime5(form.getClDCTime5());
-        member.setClDCRate5(form.getClDCRate5());
-        member.setClDCName6(form.getClDCName6());
-        member.setClDCCount6(form.getClDCCount6());
-        member.setClDCTime6(form.getClDCTime6());
-        member.setClDCRate6(form.getClDCRate6());
-        member.setClMemo(form.getClMemo());
-        member.setClDCUse(form.getClDCUse());
-        member.setClGrpiDx(form.getClGrpiDx());
-
         adminService.Procedure_registerManager(member);
         redirectAttributes.addFlashAttribute("form", "form_regi");
         return "redirect:/adminManaging";

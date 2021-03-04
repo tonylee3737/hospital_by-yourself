@@ -1,5 +1,10 @@
 package hospital_parking_system.hospital_parking.carInfo;
 
+import hospital_parking_system.hospital_parking.member.MemberBean;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public interface CarService {
@@ -24,4 +29,15 @@ public interface CarService {
     List<DiscountedCarInfo> selectDiscountedCarInfoListWithDate_Member(CarBean bean);
 
     List<ClNameBean> selectClNameFromClidx();
+
+    // 글자 길이 체크
+    int dc_name_length_check(MemberBean member);
+
+    // 차 번호 리스트 공백 만들기
+    Blank_control making_CarList_Blank(List<CarBean> carBeans);
+
+    //경과 시간 구하기
+    Car_Ent_Time get_Car_EntDyte(String carEntDyte);
+
+    ControllDiscountCar set_Dc_Time(String time, MemberBean memberBean, String idx);
 }

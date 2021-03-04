@@ -1,8 +1,10 @@
 package hospital_parking_system.hospital_parking.carInfo;
+import hospital_parking_system.hospital_parking.adminPage.AdminService;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 import hospital_parking_system.hospital_parking.member.MemberService;
 import hospital_parking_system.hospital_parking.member.SessionBean;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,47 +27,36 @@ public class CarController {
 
     private final CarService carService;
     private final MemberService memberService;
+    private final AdminService adminService;
     private final SessionBean sessionBean;
 
 
 
-// 일반 멤버로 로그인 시 실행되는 페이지, 차량 번호 조회 페이지
+    // 일반 멤버로 로그인 시 실행되는 페이지, 차량 번호 조회 페이지
     @GetMapping("searchCarInfo")
     public String searchCarInfo(Model model) {
-//        세션을 통해 관리자 멤버의 할인처와 할인시간을 표시한다.
+    // 세션을 통해 관리자 멤버의 할인처와 할인시간을 표시한다.
         MemberBean member = sessionBean.getMemberbean();
         if (member == null) {
             return "redirect:/";
         }
         //  할인명 글자 체크
-        List length_Check = new ArrayList();
-        length_Check.add(member.getClDCName1());
-        length_Check.add(member.getClDCName2());
-        length_Check.add(member.getClDCName3());
-        length_Check.add(member.getClDCName4());
-        length_Check.add(member.getClDCName5());
-        length_Check.add(member.getClDCName6());
-        int max_length = 0;
-        int text_length=0;
-        for(Object li : length_Check){
-            int length = li.toString().getBytes(StandardCharsets.UTF_8).length;
-            if(max_length < length){
-                max_length = length;
-            }
-        }
-        if(max_length<=15){
-            text_length=15;
-        }else if(max_length <=25){
-            text_length=25;
-        }else{
-            text_length=30;
-        }
+        int text_length = carService.dc_name_length_check(member);
+        //차번호 리스트 공백
+
         int blank_showing_for_carBeans = 4;
+
         model.addAttribute("blank_showing_for_carBeans", blank_showing_for_carBeans);
         model.addAttribute("text_length", text_length);
         model.addAttribute("member_ClName", member.getClName());
         model.addAttribute("member_show", member);
-        return "member/searchCarInfo";
+        boolean check = true;
+        if(check==true){
+            return "member/m_searchCarInfo";
+
+        }else{
+            return "member/searchCarInfo";
+        }
     }
 
     //차량 번호 조회 페이지, 차량 번호가 입력이 되면 POST
@@ -82,51 +73,24 @@ public class CarController {
         List<CarBean> carBeans = carService.selectCarInfo(car);
 
 //        차량조회 공백 칸 만들기
-        String blank_should_not_show = null;
-        int blank_showing_for_carBeans=0;
-
-        if(carBeans.size() == 0) {
-            carBeans = null;
-            blank_showing_for_carBeans = 4;
-        }else{
-            blank_showing_for_carBeans = 4-(carBeans.size());
-            if(blank_showing_for_carBeans==0){
-                blank_should_not_show = "do not";
-            }
-        }
+        Blank_control blank_control = carService.making_CarList_Blank(carBeans);
         //  할인명 글자 체크
-        List length_Check = new ArrayList();
-        length_Check.add(member.getClDCName1());
-        length_Check.add(member.getClDCName2());
-        length_Check.add(member.getClDCName3());
-        length_Check.add(member.getClDCName4());
-        length_Check.add(member.getClDCName5());
-        length_Check.add(member.getClDCName6());
-        int max_length = 0;
-        int text_length=0;
-        for(Object li : length_Check){
-            int length = li.toString().getBytes(StandardCharsets.UTF_8).length;
-            if(max_length < length){
-                max_length = length;
-            }
-        }
-        if(max_length<=15){
-            text_length=15;
-        }else if(max_length <=25){
-            text_length=25;
-        }else{
-            text_length=30;
-        }
+        int text_length = carService.dc_name_length_check(member);
 
-
-        model.addAttribute("blank_should_not_show", blank_should_not_show);
-        model.addAttribute("blank_showing_for_carBeans", blank_showing_for_carBeans);
+        model.addAttribute("blank_should_not_show", blank_control.getBlank_should_not_show());
+        model.addAttribute("blank_showing_for_carBeans", blank_control.getBlank_showing_for_carBeans());
         model.addAttribute("text_length", text_length);
         model.addAttribute("member_ClName", member.getClName());
         model.addAttribute("member_show", member);
         model.addAttribute("carNumber", carNumber);
         model.addAttribute("carBeans", carBeans);
-        return "member/searchCarInfo";
+        boolean check = true;
+        if(check==true){
+            return "member/m_searchCarInfo";
+
+        }else{
+            return "member/searchCarInfo";
+        }
     }
 
 
@@ -145,92 +109,50 @@ public class CarController {
         }
 //        이까지
         CarBean car = new CarBean();
-//        검색된 차량 넘버 중 하나를 선택한 full Number
+
+        //        검색된 차량 넘버 중 하나를 선택한 full Number
         car.setVhlNbr(carNumber);
         List<CarBean> carBeans = carService.selectCarInfo(car);
         CarBean carBean = carBeans.get(0);
-//      검색창에 입력된 부분적인 car Number
+
+        //      검색창에 입력된 부분적인 car Number
         car.setVhlNbr(carNumber2);
         List<CarBean> carBeansList = carService.selectCarInfo(car);
 
-        //        차량조회 공백 칸 만들기
-        String blank_should_not_show = null;
-        int blank_showing_for_carBeans=0;
+        //차량조회 공백 칸 만들기
+        Blank_control blank_control = carService.making_CarList_Blank(carBeansList);
 
-        if(carBeans.size() == 0) {
-            carBeans = null;
-            blank_showing_for_carBeans = 4;
-        }else{
-            blank_showing_for_carBeans = 4-(carBeansList.size());
-            if(blank_showing_for_carBeans==0){
-                blank_should_not_show = "do not";
-            }
-        }
 
 
 //        경과시간 구하기
         String carEntDyte = carBean.getEntDyTe();
-        String year = carEntDyte.substring(0, 4);
-        String month = carEntDyte.substring(4, 6);
-        String day = carEntDyte.substring(6, 8);
-        String hour = carEntDyte.substring(8, 10);
-        String min = carEntDyte.substring(10, 12);
-        String sec = carEntDyte.substring(12, 14);
-        String formatDateShow = year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
-        String formatDate = year + "-" + month + "-" + day + "-" + hour + "-" + min + "-" + sec;
-        Calendar getToday = Calendar.getInstance();
-        getToday.setTime(new Date());//현재시간
-        Date date = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").parse(formatDate);
-        Calendar cmpDate = Calendar.getInstance();
-        cmpDate.setTime(date);// 특정날짜
-        long diffSec = (getToday.getTimeInMillis() - cmpDate.getTimeInMillis()) / 1000;
-        long diffDays = diffSec / (24 * 60 * 60);
-        double resDay = (diffSec / (double) (24 * 60 * 60)) - diffDays;
-        long diffHour = (long) (resDay * 24);
-        double resHour = (resDay * 24) - diffHour;
-        long diffMin = (long) (resHour * 60);
-        long diffSecond = (diffSec % 60);
-        String carEnt = diffDays + "일" + diffHour + "시간" + diffMin + "분" + diffSecond + "초";
+        Car_Ent_Time car_entDyte = carService.get_Car_EntDyte(carEntDyte);
+
+//        할인 리스트
         ControllDiscountCar controllDiscountCar = carService.selectControllDiscountCar(carBean);
 
 
         //  할인명 글자 체크
-        List length_Check = new ArrayList();
-        length_Check.add(member.getClDCName1());
-        length_Check.add(member.getClDCName2());
-        length_Check.add(member.getClDCName3());
-        length_Check.add(member.getClDCName4());
-        length_Check.add(member.getClDCName5());
-        length_Check.add(member.getClDCName6());
-        int max_length = 0;
-        int text_length=0;
-        for(Object li : length_Check){
-            int length = li.toString().getBytes(StandardCharsets.UTF_8).length;
-            if(max_length < length){
-                max_length = length;
-            }
-        }
-        if(max_length<=15){
-            text_length=15;
-        }else if(max_length <=25){
-            text_length=25;
-        }else{
-            text_length=30;
-        }
-
-        model.addAttribute("blank_should_not_show", blank_should_not_show);
-        model.addAttribute("blank_showing_for_carBeans", blank_showing_for_carBeans);
+        int text_length = carService.dc_name_length_check(member);
+        model.addAttribute("blank_should_not_show", blank_control.getBlank_should_not_show());
+        model.addAttribute("blank_showing_for_carBeans", blank_control.getBlank_showing_for_carBeans());
         model.addAttribute("text_length", text_length);
-        model.addAttribute("formatDateShow", formatDateShow);
+        model.addAttribute("formatDateShow", car_entDyte.getFormatDateShow());
         model.addAttribute("carBeans", carBeansList);
-        model.addAttribute("carEnt", carEnt);
+        model.addAttribute("carEnt", car_entDyte.getCarEnt());
         model.addAttribute("member_ClName", member.getClName());
         model.addAttribute("controllDiscountCar", controllDiscountCar);
         model.addAttribute("member", member);
         model.addAttribute("carInfo", carBean);
         model.addAttribute("carNumber", carNumber2);
         model.addAttribute("dcResult", result);
-        return "member/searchCarInfo";
+        boolean check = true;
+        if(check==true){
+            return "member/m_searchCarInfo";
+
+        }else{
+            return "member/searchCarInfo";
+        }
     }
 
 
@@ -241,42 +163,15 @@ public class CarController {
                                @RequestParam(value = "carNumber") String encarNumber,
                                @RequestParam(value = "searchCarNumber") String searchCarNumber,
                                Model model) throws UnsupportedEncodingException {
-        ControllDiscountCar discountCar = new ControllDiscountCar();
         MemberBean memberBean = sessionBean.getMemberbean();
         if(memberBean==null){
             return "redirect:/";
         }
-        if (time.equals(memberBean.getClDCName1())) {
-            discountCar.setDCName(memberBean.getClDCName1());
-            discountCar.setDCTime(memberBean.getClDCTime1());
-            discountCar.setDCRate(memberBean.getClDCRate1());
-        } else if (time.equals(memberBean.getClDCName2())) {
-            discountCar.setDCName(memberBean.getClDCName2());
-            discountCar.setDCTime(memberBean.getClDCTime2());
-            discountCar.setDCRate(memberBean.getClDCRate2());
-        } else if (time.equals(memberBean.getClDCName3())) {
-            discountCar.setDCName(memberBean.getClDCName3());
-            discountCar.setDCTime(memberBean.getClDCTime3());
-            discountCar.setDCRate(memberBean.getClDCRate3());
-        } else if (time.equals(memberBean.getClDCName4())) {
-            discountCar.setDCName(memberBean.getClDCName4());
-            discountCar.setDCTime(memberBean.getClDCTime4());
-            discountCar.setDCRate(memberBean.getClDCRate4());
-        } else if (time.equals(memberBean.getClDCName5())) {
-            discountCar.setDCName(memberBean.getClDCName5());
-            discountCar.setDCTime(memberBean.getClDCTime5());
-            discountCar.setDCRate(memberBean.getClDCRate5());
-        } else if (time.equals(memberBean.getClDCName6())) {
-            discountCar.setDCName(memberBean.getClDCName6());
-            discountCar.setDCTime(memberBean.getClDCTime6());
-            discountCar.setDCRate(memberBean.getClDCRate6());
-        }
-        discountCar.setVhliDx(idx);
-        discountCar.setCliDx(memberBean.getCliDx());
-// 쿠폰 사용 유무
-        discountCar.setUseDiv("0");
-//        - - ?
-        discountCar.setActDiv("1");
+
+        // 차량 할인 등록하기
+        ControllDiscountCar discountCar = carService.set_Dc_Time(time, memberBean, idx);
+
+        
         carService.Procedure_DiscountCarTime(discountCar);
         String carNumber = URLEncoder.encode(encarNumber, "utf-8");
         return "redirect:/getCarInfo?carNumber=" + carNumber + "&&result=" +discountCar.getResult() + "&&carNumber2=" + searchCarNumber;
@@ -309,6 +204,9 @@ public class CarController {
         if (member == null) {
             return "redirect:/";
         }
+
+
+        adminService.dateTime_calculate(startDate, endDate);
         String[] start = startDate.split("-");
         String s_year = start[0];
         String s_month = start[1];
