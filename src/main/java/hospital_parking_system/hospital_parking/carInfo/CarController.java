@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -34,7 +36,7 @@ public class CarController {
 
     // 일반 멤버로 로그인 시 실행되는 페이지, 차량 번호 조회 페이지
     @GetMapping("searchCarInfo")
-    public String searchCarInfo(Model model) {
+    public String searchCarInfo(Model model, HttpServletRequest request) {
     // 세션을 통해 관리자 멤버의 할인처와 할인시간을 표시한다.
         MemberBean member = sessionBean.getMemberbean();
         if (member == null) {
@@ -50,8 +52,11 @@ public class CarController {
         model.addAttribute("text_length", text_length);
         model.addAttribute("member_ClName", member.getClName());
         model.addAttribute("member_show", member);
-        boolean check = true;
-        if(check==true){
+
+        Boolean isthis_Mobile = carService.get_Mobile_Or_Web(request.getHeader("user-agent"));
+
+        if(isthis_Mobile==true){
+//            return "member/test";
             return "member/m_searchCarInfo";
 
         }else{
@@ -61,7 +66,7 @@ public class CarController {
 
     //차량 번호 조회 페이지, 차량 번호가 입력이 되면 POST
     @PostMapping("searchCarInfo")
-    public String getCarInfo_Post(@RequestParam(value = "carNumber") String carNumber, Model model) {
+    public String getCarInfo_Post(@RequestParam(value = "carNumber") String carNumber, Model model, HttpServletRequest request) {
 //        parameter값으로 carNumber를 받고 받아온 차량번호를 통하여 차량을 조회한다.
         MemberBean member = sessionBean.getMemberbean();
         if (member == null) {
@@ -84,9 +89,15 @@ public class CarController {
         model.addAttribute("member_show", member);
         model.addAttribute("carNumber", carNumber);
         model.addAttribute("carBeans", carBeans);
-        boolean check = true;
-        if(check==true){
-            return "member/m_searchCarInfo";
+        Boolean isthis_Mobile = carService.get_Mobile_Or_Web(request.getHeader("user-agent"));
+
+        if(isthis_Mobile==true){
+             if(carBeans.size() == 0){
+                 model.addAttribute("car_List_None", true);
+                 return "member/m_searchCarInfo";
+             }
+//            return "member/m_searchCarInfo";
+            return "member/m_searchCarInfo_list";
 
         }else{
             return "member/searchCarInfo";
@@ -99,7 +110,7 @@ public class CarController {
     public String getCarInfo(@RequestParam(required = false, value = "carNumber") String carNumber, //실제 차 넘버
                              @RequestParam(required = false, value = "result") String result,
                              @RequestParam(required = false, value = "carNumber2") String carNumber2, // 검색된 창에 차량 넘버
-                             Model model) throws ParseException, UnsupportedEncodingException {
+                             Model model, HttpServletRequest request) throws ParseException, UnsupportedEncodingException {
 //      1.  조회 후 나열된 차량번호 중 택1을 하였을 시 구현되는 페이지, 이때 parameter값으로 carNumber(클릭한 차량), carNumber2(검색된 차량)
 //      2.  조회 후 할인등록 시 할인시간을 택하고 submit이 실행되면 이때 parameter값으로 result도 얻는다. 할인권이 등록인지, 수정인지 알기 위함.
         MemberBean member = sessionBean.getMemberbean();
@@ -146,9 +157,71 @@ public class CarController {
         model.addAttribute("carInfo", carBean);
         model.addAttribute("carNumber", carNumber2);
         model.addAttribute("dcResult", result);
-        boolean check = true;
-        if(check==true){
+        Boolean isthis_Mobile = carService.get_Mobile_Or_Web(request.getHeader("user-agent"));
+
+        if(isthis_Mobile==true){
             return "member/m_searchCarInfo";
+
+        }else{
+            return "member/searchCarInfo";
+        }
+    }
+
+    @GetMapping("getCarInfo_m")
+    public String getCarInfo_m(@RequestParam(required = false, value = "carNumber") String carNumber, //실제 차 넘버
+                             @RequestParam(required = false, value = "result") String result,
+                             @RequestParam(required = false, value = "carNumber2") String carNumber2, // 검색된 창에 차량 넘버
+                             Model model, HttpServletRequest request) throws ParseException, UnsupportedEncodingException {
+//      1.  조회 후 나열된 차량번호 중 택1을 하였을 시 구현되는 페이지, 이때 parameter값으로 carNumber(클릭한 차량), carNumber2(검색된 차량)
+//      2.  조회 후 할인등록 시 할인시간을 택하고 submit이 실행되면 이때 parameter값으로 result도 얻는다. 할인권이 등록인지, 수정인지 알기 위함.
+        MemberBean member = sessionBean.getMemberbean();
+        String clName = member.getClName();
+        if (member == null) {
+            return "redirect:/";
+        }
+//        이까지
+        CarBean car = new CarBean();
+
+        //        검색된 차량 넘버 중 하나를 선택한 full Number
+        car.setVhlNbr(carNumber);
+        List<CarBean> carBeans = carService.selectCarInfo(car);
+        CarBean carBean = carBeans.get(0);
+
+        //      검색창에 입력된 부분적인 car Number
+        car.setVhlNbr(carNumber2);
+        List<CarBean> carBeansList = carService.selectCarInfo(car);
+
+        //차량조회 공백 칸 만들기
+        Blank_control blank_control = carService.making_CarList_Blank(carBeansList);
+
+
+
+//        경과시간 구하기
+        String carEntDyte = carBean.getEntDyTe();
+        Car_Ent_Time car_entDyte = carService.get_Car_EntDyte(carEntDyte);
+
+//        할인 리스트
+        ControllDiscountCar controllDiscountCar = carService.selectControllDiscountCar(carBean);
+
+
+        //  할인명 글자 체크
+        int text_length = carService.dc_name_length_check(member);
+        model.addAttribute("blank_should_not_show", blank_control.getBlank_should_not_show());
+        model.addAttribute("blank_showing_for_carBeans", blank_control.getBlank_showing_for_carBeans());
+        model.addAttribute("text_length", text_length);
+        model.addAttribute("formatDateShow", car_entDyte.getFormatDateShow());
+        model.addAttribute("carBeans", carBeansList);
+        model.addAttribute("carEnt", car_entDyte.getCarEnt());
+        model.addAttribute("member_ClName", member.getClName());
+        model.addAttribute("controllDiscountCar", controllDiscountCar);
+        model.addAttribute("member", member);
+        model.addAttribute("carInfo", carBean);
+        model.addAttribute("carNumber", carNumber2);
+        model.addAttribute("dcResult", result);
+        Boolean isthis_Mobile = carService.get_Mobile_Or_Web(request.getHeader("user-agent"));
+
+        if(isthis_Mobile==true){
+            return "member/m_searchCarInfo_info";
 
         }else{
             return "member/searchCarInfo";

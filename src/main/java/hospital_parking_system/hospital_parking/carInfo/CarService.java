@@ -40,4 +40,6 @@ public interface CarService {
     Car_Ent_Time get_Car_EntDyte(String carEntDyte);
 
     ControllDiscountCar set_Dc_Time(String time, MemberBean memberBean, String idx);
+
+    Boolean get_Mobile_Or_Web(String userAgent);
 }

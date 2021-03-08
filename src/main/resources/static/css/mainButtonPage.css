@@ -29,7 +29,16 @@
 
 .table-main-Button button {
     height:75px;
-    width: 75px ;
+    width: 75px;
+}
+
+.table-main-Button_m button {
+    height:35px;
+    width: 35px;
+    border-radius: 0px;
+    /*appearance:none;*/
+    -webkit-appearance:none;
+    font-size: xx-large;
 }
 
 .search_button{
@@ -74,11 +83,15 @@
     font-weight: bold;
     margin-right: 3%;
 }
+.main_table_with_button_m {
+    width: 100%;
+}
 
 .main_table_with_button_m th{
-    font-size: 15px;
+    background-color: whitesmoke;
+    font-size: 20px;
     font-weight: bold;
-    margin-right: 3%;
+    width: 25%;
 }
 
 .dc_button{
@@ -90,9 +103,9 @@
 }
 .dc_button2{
     /*font-size: 16px;*/
-    width: 173px;
+    width: 175px;
     height: 65px;
-    border-radius: 5%;
+    /*border-radius: 5%;*/
     background-color: whitesmoke;
     margin: 0.7%;
 }
@@ -114,10 +127,9 @@
 }
 
 .register-td2_m{
-    font-size: 20px;
-    width: 250px;
-    heigth: 40px;
-    margin-bottom: 5%;
+    font-size: 25px;
+    width: 90%;
+    /*margin-bottom: 5%;*/
     border-top: none;
     border-left: none;
     border-right: none;
@@ -138,3 +150,87 @@
     margin-left: 27%;
 }
 
+.title-container_m{
+    /*padding-top: 3px;*/
+    /*text-align: center;*/
+    /*text-align: justify-all;*/
+    justify-content: space-between;
+    display: flex;
+    /*margin-right: 25%;*/
+    /*margin-left: 25%;*/
+
+}
+.mode {
+    text-align: right;
+    margin-right: 3%;
+}
+.maintitle1{
+    /*margin-left: 7%;*/
+    font-weight: bold;
+    font-size: 1.4em;
+    color: antiquewhite;
+
+}
+.maintitle1 a:hover {
+    color: #2186c4;
+    cursor: pointer;
+}
+
+.maintitle2{
+    margin-left: 7%;
+    font-weight: bold;
+    font-size: 1.4em;
+    color: antiquewhite;
+}
+.maintitle2 a:hover {
+    color: #2186c4;
+    cursor: pointer;
+}
+
+.maintitle3{
+    margin-left: 7%;
+    font-weight: bold;
+    font-size: 1.4em;
+    color: antiquewhite;
+}
+
+.maintitle3 a:hover {
+    color: #2186c4;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.title-mark{
+    /*justify-content: space-between;*/
+    color: #2186c4;
+}
+.maintitle3 a  {
+    text-decoration: none;
+}
+.maintitle2 a {
+    text-decoration: none;
+}
+.maintitle1 a {
+    text-decoration: none;
+}
+
+.magnifying {
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.magnifying_font {
+    text-decoration: none;
+    font-size: 35px;
+
+}
+
+.table-main-Button_m_test button{
+    width: 100%;
+    height: 110px;
+
+
+}
+.table-main-Button_m_test td {
+    width: 33.3%;
+}

@@ -1,0 +1,78 @@
+    <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head th:replace="member/m_memberController :: header">
+    <meta charset="UTF-8">
+    <title>: :근로복지공단대구병원: </title>
+</head>
+<script src="app.js"></script>
+<body>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<aside class="main-aside">
+<form action="searchCarInfo" name="m_button_number_form" onsubmit="return button_number_form_check()" method="POST">
+    <table class="table-main-Button_m_test" width="100%">
+            <tr>
+                <input style="height: 50px; width: 100%; font-size: 40px" type="text" class="show" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호">
+                <input style="height: 50px; width: 100%; font-size: 40px" type="text" class="show" name="carNumber" th:unless="${carNumber}" value="" placeholder="차량번호">
+            </tr>
+            <tr width="100%">
+                <td><button type="button" class="number" >7</button></td>
+                <td><button type="button" class="number" >8</button></td>
+                <td><button type="button" class="number" >9</button></td>
+            </tr>
+            <tr width="100%">
+                <td><button type="button" class="number" >4</button></td>
+                <td><button type="button" class="number" >5</button></td>
+                <td><button type="button" class="number" >6</button></td>
+            </tr>
+            <tr width="100%">
+                <td><button type="button" class="number" >1</button></td>
+                <td><button type="button" class="number" >2</button></td>
+                <td><button type="button" class="number" >3</button></td>
+            </tr>
+            <tr width="100%">
+                <td><button type="button" class="number" >취소</button></td>
+                <td><button type="button" class="number" >0</button></td>
+                <td><button type="button" class="number" >검색</button></td>
+            </tr>
+    </table>
+</form>
+</aside>
+
+<!--검색된 번호 중 하나를 선택하였을 시 나오는 정보-->
+<!--<section class="main-section">-->
+
+
+<script th:inline="javascript">
+    let car_List_None = [[${car_List_None}]];
+    if(car_List_None == true){
+        alert("차량번호를 확인해주세요.");
+    }
+
+    function button_number_form_check(){
+        if(m_button_number_form.carNumber.value ==''){
+            alert("차량번호를 확인해주세요.");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        init();
+        });
+        let dc_result = [[${dcResult}]];
+        if (dc_result == 1) {
+            alert("할인등록이 되었습니다.");
+        } else if (dc_result == 2) {
+            alert("할인등록이 수정되었습니다.")
+        } else {
+
+        }
+</script>
+
+
+</body>
+</html>

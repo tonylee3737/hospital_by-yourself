@@ -69,16 +69,16 @@ section {
 }
 
 section {
-    padding-top: 40px;
+    padding-top: 50px;
 }
 .title-container{
-    padding-top: 10px;
-    text-align: center;
-    text-align: justify-all;
+    /*padding-top: 3px;*/
+    /*text-align: center;*/
+    /*text-align: justify-all;*/
     justify-content: space-between;
     display: flex;
-    margin-right: 10%;
-    margin-left: 10%;
+    margin-right: 25%;
+    margin-left: 25%;
 
 }
 .mode {
@@ -86,7 +86,7 @@ section {
     margin-right: 3%;
 }
 .maintitle1{
-    margin-left: 7%;
+    /*margin-left: 7%;*/
     font-weight: bold;
     font-size: 1.4em;
     color: antiquewhite;

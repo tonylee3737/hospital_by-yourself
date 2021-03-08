@@ -63,26 +63,27 @@ header {
         max-width: 100%;
     }
 }
+
 section {
     width: 100%;
     background-color: #fff;
-    position: relative;
+    /*position: relative;*/
 }
 
 section {
     padding-top: 70px;
 }
 .title-container{
-    text-align: center;
-    text-align: justify-all;
-    justify-content: space-between;
-    display: flex;
-    margin-right: 25%;
-    margin-left: 25%;
-
+    /*text-align: center;*/
+    /*text-align: justify-all;*/
+    /*justify-content: space-between;*/
+    /*display: flex;*/
+    /*margin-right: 25%;*/
+    /*margin-left: 25%;*/
 }
+
 .maintitle1{
-    margin-left: 7%;
+    /*margin-left: 7%;*/
     font-weight: bold;
     font-size: 1.4em;
     color: antiquewhite;
@@ -94,7 +95,7 @@ section {
 }
 
 .maintitle2{
-    margin-left: 7%;
+    /*margin-left: 7%;*/
     font-weight: bold;
     font-size: 1.4em;
     color: antiquewhite;
@@ -105,7 +106,7 @@ section {
 }
 
 .maintitle3{
-    margin-left: 7%;
+    /*margin-left: 7%;*/
     font-weight: bold;
     font-size: 1.4em;
     color: antiquewhite;

@@ -194,5 +194,20 @@ public class CarServiceImpl implements CarService {
         return discountCar;
     }
 
+    @Override
+    public Boolean get_Mobile_Or_Web(String userAgent) {
+        boolean mobile1 = userAgent.matches( ".*(iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson).*");
+        boolean mobile2 = userAgent.matches(".*(LG|SAMSUNG|Samsung).*");
+        boolean isthis_Mobile = false;
 
+//        test
+
+
+        if (mobile1 || mobile2) {
+            isthis_Mobile = true;
+        } else {
+            isthis_Mobile = true;
+        }
+        return isthis_Mobile;
+    }
 }
