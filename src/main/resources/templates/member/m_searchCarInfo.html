@@ -13,9 +13,8 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <aside class="main-aside">
-<form action="searchCarInfo" name="m_button_number_form" onsubmit="return button_number_form_check(this)" method="POST">
     <table class="table-main-Button_m" width="100%">
-    <div class="container-button">
+        <div class="container-button">
             <tr>
             <div style="text-align: center">
                 <input style="height: 50px; width: 100%; font-size: 40px" type="text" class="show" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호">
@@ -45,19 +44,19 @@
                 </div>
             </tr>
             <tr width="100%">
-<!--                <td><button class="cancel" data-Type="ac">리셋</button></td>-->
                 <div style="text-align: center">
-                <td><button type="button" class="operation" data-Type="operator" style="font-size: x-large; height: 110px; width: 120px;" >취소</button></td>
-                <td><button type="button" class="number" style="font-size: xxx-large; height: 110px; width: 120px;">0</button></td>
-                <td><input class="search_button_m" type="submit" value="검색" style="font-size: x-large; height: 110px; width: 120px;"></td>
+                <td width="33.3%"><button type="button" class="operation" data-Type="operator" style="font-size: x-large; height: 110px; width: 100%;" >취소</button></td>
+                <td width="33.3%"><button type="button" class="number" style="font-size: xxx-large; height: 110px; width: 100%;">0</button></td>
                 </div>
+            <form action="searchCarInfo" name="m_button_number_form" onsubmit="return button_number_form_check()" method="POST">
+                <td width="33.3%"><input class="search_button_m" type="submit" value="검색" style="font-size: x-large; height: 110px; width: 100%;"></td>
+                <input  type="hidden" class="show2" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호조회">
+                <input  type="hidden" class="show2" name="carNumber" th:unless="${carNumber}" value="" placeholder="차량번호조회">
+            </form>
 
             </tr>
         </div>
     </table>
-<input  type="hidden" class="show2" name="carNumber" th:if="${carNumber}" th:value="${carNumber}" placeholder="차량번호조회">
-<input  type="hidden" class="show2" name="carNumber" th:unless="${carNumber}" value="" placeholder="차량번호조회">
-</form>
 </aside>
 
 <!--검색된 번호 중 하나를 선택하였을 시 나오는 정보-->
@@ -70,10 +69,8 @@
         alert("차량번호를 확인해주세요.");
     }
 
-    function button_number_form_check(fs){
-
-        // if(m_button_number_form.carNumber.value ==''){
-        if(fs.carNumber[0].value ==''){
+    function button_number_form_check(){
+        if(m_button_number_form.carNumber.value ==''){
             alert("차량번호를 확인해주세요.");
             return false;
         }else{
