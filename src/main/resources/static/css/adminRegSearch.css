@@ -51,7 +51,7 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 3px solid darkseagreen;
+    border-bottom: 3px solid whitesmoke;
     text-decoration: none;
 }
 #reg_submit {
@@ -61,7 +61,7 @@
     border-left: none;
     border-right: none;
     border-radius: 10%;
-    border-bottom: 3px solid darkseagreen;
+    border-bottom: 3px solid whitesmoke;
 }
 
 
@@ -81,7 +81,7 @@
     border-left: none;
     border-right: none;
     border-radius: 10%;
-    border-bottom: 3px solid darkseagreen;
+    border-bottom: 3px solid whitesmoke;
 }
 .reg_print{
     width: 50px;
@@ -90,7 +90,7 @@
     border-left: none;
     border-right: none;
     border-radius: 10%;
-    border-bottom: 3px solid darkseagreen;
+    border-bottom: 3px solid whitesmoke;
 }
 .reg_print:hover{
     background-color: wheat;

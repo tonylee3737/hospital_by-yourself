@@ -10,6 +10,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Tuple;
@@ -18,7 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -318,5 +320,15 @@ public class AdminServiceImpl implements AdminService{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Paging get_Paging(List<DiscountedCarInfo> discountedCarInfos) {
+        Paging page_list = new Paging();
+
+        for(int i=0; i<discountedCarInfos.size(); i++){
+            System.out.println(discountedCarInfos.get(i).getCarNumber());
+        }
+        return page_list;
     }
 }

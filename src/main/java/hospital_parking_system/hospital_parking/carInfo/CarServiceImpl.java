@@ -206,7 +206,7 @@ public class CarServiceImpl implements CarService {
         if (mobile1 || mobile2) {
             isthis_Mobile = true;
         } else {
-            isthis_Mobile = true;
+            isthis_Mobile = false;
         }
         return isthis_Mobile;
     }

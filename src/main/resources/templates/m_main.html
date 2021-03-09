@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>: :근로복지공단대구병원: :</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="Tony Lee" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <!-- user-scalable 을 사용하지 않는 디바이스를 위해, maximun-scale/minimum-scale 설정을 하는 것입니다-->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- CSS Reset(1), 아이콘 폰트, 웹페이지 사용폰트, main.css -->
+    <link rel="stylesheet" href="/css/nomalize.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+
+</head>
+
+<body>
+<script th:inline="javascript">
+    let check_login = [[${alert}]];
+    console.log(check_login);
+
+    if(check_login!=null){
+        alert(check_login);
+    }
+
+    function check_login_m() {
+        if(login_form.name.value == "") {
+            alert("ID를 입력해주세요.");
+            login_form.name.focus();
+            return false;
+        }else if(login_form.pass.value == ""){
+            alert("PASSWORD를 확인해주세요.");
+            login_form.pass.focus();
+            return false;
+        }else {
+            return true;
+        }
+    }
+</script>
+<div style="text-align: center;" >
+    <img src="img/itro_login_back.png" style="width: 100%; height: 70px;">
+
+    <img src="img/itro_login.png" style="width: 200px; height: 120px; border-radius: 5%; margin-top: 25%">
+    <form name="login_form" onsubmit="return check_login_m()" action="" method="post" th:object="${loginForm}">
+        <table class="register-table_m">
+            <tr>
+                <th>아이디</th><td><input class="register-td" type="text" th:field="*{name}" placeholder="아이디"></td>
+            </tr>
+            <tr>
+                <th>비밀번호</th><td><input class="register-td" type="password" th:field="*{pass}" placeholder="비밀번호"></td>
+            </tr>
+            <tr>
+                <div style="text-align: center">
+                <td class="register-button_m" colspan="2"><input  type="submit" value="Login"></td>
+                </div>
+            </tr>
+        </table>
+    </form>
+
+</body>
+</html>

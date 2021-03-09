@@ -40,7 +40,11 @@
     -webkit-appearance:none;
     font-size: xx-large;
 }
-
+.search_button_m{
+    border-radius: 0px;
+    /*appearance:none;*/
+    -webkit-appearance:none;
+}
 .search_button{
     height:75px;
     width: 75px ;
@@ -49,10 +53,10 @@
 .show{
     width: 150px;
     heigth: 500px;
-    border-top: 1px solid darkseagreen;
-    border-left: 1px solid darkseagreen;
-    border-right: 1px solid darkseagreen;
-    border-bottom: 3px solid darkseagreen;
+    border-top: 1px solid gray;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-bottom: 3px solid gray ;
     text-decoration: none;
     text-align: center;
 }
@@ -60,10 +64,10 @@
 .reg_input2 {
     width: 150px;
     heigth: 300px;
-    border-top: 1px solid darkseagreen;
-    border-left: 1px solid darkseagreen;
-    border-right: 1px solid darkseagreen;
-    border-bottom: 3px solid darkseagreen;
+    border-top: 1px solid whitesmoke;
+    border-left: 1px solid whitesmoke;
+    border-right: 1px solid whitesmoke;
+    border-bottom: 3px solid whitesmoke;
     text-decoration: none;
     text-align: center;
 }
@@ -75,7 +79,7 @@
     border-left: none;
     border-right: none;
     border-radius: 10%;
-    border-bottom: 3px solid darkseagreen;
+    border-bottom: 3px solid whitesmoke;
 }
 
 .main_table_with_button th{
@@ -83,31 +87,47 @@
     font-weight: bold;
     margin-right: 3%;
 }
+
 .main_table_with_button_m {
     width: 100%;
 }
-
-.main_table_with_button_m th{
-    background-color: whitesmoke;
-    font-size: 20px;
-    font-weight: bold;
-    width: 25%;
+.main_table_with_button_m tr{
 }
 
+.main_table_with_button_m th{
+    height: 50px;
+    font-size: 1.4em;
+    background-color: whitesmoke;
+    font-weight: bold;
+    /*width: 30%;*/
+}
+
+.main_table_with_button_m td {
+    height: 50px;
+    font-size: 1.4em;
+    background-color: whitesmoke;
+    font-weight: bold;
+    /*width: 100%;*/
+    text-align: left;
+
+}
+
+
+
 .dc_button{
-    /*font-size: 16px;*/
+    border-radius: 0%;
     margin: 0.7%;
     width: 173px;
     height: 65px;
     background-color: whitesmoke;
+
 }
 .dc_button2{
-    /*font-size: 16px;*/
-    width: 175px;
-    height: 65px;
-    /*border-radius: 5%;*/
-    background-color: whitesmoke;
+    border-radius: 10%;
     margin: 0.7%;
+    width: 173px;
+    height: 65px;
+    background-color: whitesmoke;
 }
 .register-table td{
     display: inline-block;
@@ -122,18 +142,18 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 3px solid darkseagreen;
+    border-bottom: 3px solid whitesmoke;
     text-align: center;
 }
 
 .register-td2_m{
     font-size: 25px;
-    width: 90%;
+    width: 100%;
     /*margin-bottom: 5%;*/
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 3px solid darkseagreen;
+    border-bottom: 3px solid whitesmoke;
     text-align: center;
 }
 
@@ -216,12 +236,16 @@
 
 .magnifying {
     text-align: center;
-    margin-bottom: 5%;
+    margin-bottom: 3%;
 }
 
 .magnifying_font {
     text-decoration: none;
-    font-size: 35px;
+    font-size: 20px;
+
+}
+
+.magnifying_button {
 
 }
 
@@ -234,3 +258,21 @@
 .table-main-Button_m_test td {
     width: 33.3%;
 }
+
+.dc_form_m{
+    width: 100%;
+}
+
+.dc_form_m tr {
+    width: 100%;
+}
+
+.dc_form_m td{
+    height: 75px;
+    width: 50%;
+}
+
+.dc_form_m input {
+    width: 100%;
+}
+

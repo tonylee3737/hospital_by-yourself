@@ -1,6 +1,7 @@
 package hospital_parking_system.hospital_parking.member;
 
 
+import hospital_parking_system.hospital_parking.carInfo.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,19 +18,23 @@ public class MemberController {
 
     private final MemberService memberService;
     private final SessionBean sessionBean;
-
+    private final CarService carService;
 //메인페이지 첫 화면 페이지
     @GetMapping("")
-    public String main(Model model) {
+    public String main(Model model, HttpServletRequest request) {
         model.addAttribute("loginForm", new loginForm());
-        boolean mobile = true;
+        Boolean mobile_or_web = carService.get_Mobile_Or_Web(request.getHeader("user-agent"));
+        if(mobile_or_web==true){
+            return "m_main";
+        }else{
             return "main";
+        }
         }
 
 
 //메인페이지 첫 화면 페이지, 로그인화면 POST
     @PostMapping("")
-    public String main_login(loginForm form, Model model) {
+    public String main_login(loginForm form, Model model, HttpServletRequest request) {
 //      로그인 폼을 받아와서 데이터를 끄낸다, 아이디와 비밀번호를 각 빈에 저장 후 데이터가 있는지 확인한다.
         MemberBean member = new MemberBean();
         member.setClID(form.getName());
@@ -55,7 +60,12 @@ public class MemberController {
         } else {
 //          만약 로그인 시 아이디와 비밀번호에 이상이 있다면 에러 메세지를 발생시킨다.
             model.addAttribute("alert", "아이디와 비밀번호를 확인해주세요.");
-            return "main";
+            Boolean mobile_or_web = carService.get_Mobile_Or_Web(request.getHeader("user-agent"));
+            if(mobile_or_web==true){
+                return "m_main";
+            }else{
+                return "main";
+            }
         }
     }
 

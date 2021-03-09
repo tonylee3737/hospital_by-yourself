@@ -52,6 +52,13 @@ public class AdminController {
             return "redirect:/";
         }
         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoList();
+        Paging paging = adminService.get_Paging(discountedCarInfos);
+//        System.out.println(paging.list_Of_Page.size());
+//        System.out.println(paging.list_Of_Page.get(0).getCarNumber());
+//        System.out.println(paging.list_Of_Paging.size());
+//        System.out.println(paging.list_Of_Paging.get(0).list_Of_Page.size());
+
+
         List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
 
         ClNameBean re_clName = new ClNameBean();

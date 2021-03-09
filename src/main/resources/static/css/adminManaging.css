@@ -16,14 +16,14 @@
     border-left: none;
     border-right: none;
     border-radius: 10%;
-    border-bottom: 3px solid darkseagreen;
+    border-bottom: 3px solid darksea;
 }
 .admin-register-button:hover{
     background-color: wheat;
 
 }
 .register-title{
-    color: darkseagreen;
+    color: darksea;
     margin-top: 1%;
     text-align: center;
 }

@@ -16,22 +16,14 @@
 <!--글자 폰트 조절하기 -->
 
     <div class = "magnifying">
-        <a href = "/searchCarInfo" class="magnifying_font"><img src="img/Magnifying_glass_Icon.png" style="width: 30px; height: 30px;">검색</a>
+        <button class="magnifying_button"><a href = "/searchCarInfo" class="magnifying_font">처음으로</a></button>
     </div>
-    <div>
-        <table class="table-main-Button" border="1px" style="width: 370px">
-            <tr>
-                <th>입차목록</th>
-            </tr>
+    <div style="text-align: center">
+        <table class="table-main-Button" style="width: 100%">
             <tr th:if="${carBeans}" th:each="car : ${carBeans}">
-                <td><a class = "main_car_list" th:href="@{getCarInfo_m(carNumber=${car.VhlNbr}, carNumber2=${carNumber})}"><li th:text="${car.VhlNbr}" style="font-size: xx-large; margin-left: 15%;"></li></a></td>
+                <td><img th:src="${car.getImgPth()}" onerror="this.src='img/car_Number.png';" style="width: 100%; height: 150px;"></td>
+                <td style="text-align: center; font-size: xx-large; font-weight: bold; background-color: whitesmoke"><a class = "main_car_list" th:href="@{getCarInfo_m(carNumber=${car.VhlNbr}, carNumber2=${carNumber})}">[[${car.VhlNbr}]]</a></td>
             </tr>
-            <div th:if="${blank_should_not_show}==null">
-                <tr th:each="num :${#numbers.sequence(1,blank_showing_for_carBeans)}">
-                    <td><a class = "main_car_list" ><li style="font-size: x-large; margin-left: 15%;"></li></a></td>
-
-                </tr>
-            </div>
         </table>
     </div>
 

@@ -45,4 +45,8 @@ public interface AdminService {
 
 //    액셀 다운로드 Method
     void excel_down(List<DiscountedCarInfo> discountedCarInfos, HttpServletResponse response) throws UnsupportedEncodingException;
+
+// 페이징 처리 Method
+    Paging get_Paging(List<DiscountedCarInfo> discountedCarInfos);
+
 }

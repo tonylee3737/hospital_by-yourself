@@ -56,7 +56,6 @@ public class CarController {
         Boolean isthis_Mobile = carService.get_Mobile_Or_Web(request.getHeader("user-agent"));
 
         if(isthis_Mobile==true){
-//            return "member/test";
             return "member/m_searchCarInfo";
 
         }else{
@@ -95,9 +94,10 @@ public class CarController {
              if(carBeans.size() == 0){
                  model.addAttribute("car_List_None", true);
                  return "member/m_searchCarInfo";
+             }else{
+                return "member/m_searchCarInfo_list";
+
              }
-//            return "member/m_searchCarInfo";
-            return "member/m_searchCarInfo_list";
 
         }else{
             return "member/searchCarInfo";
@@ -147,7 +147,7 @@ public class CarController {
         int text_length = carService.dc_name_length_check(member);
         model.addAttribute("blank_should_not_show", blank_control.getBlank_should_not_show());
         model.addAttribute("blank_showing_for_carBeans", blank_control.getBlank_showing_for_carBeans());
-        model.addAttribute("text_length", text_length);
+        model.addAttribute("text_length_button2", text_length);
         model.addAttribute("formatDateShow", car_entDyte.getFormatDateShow());
         model.addAttribute("carBeans", carBeansList);
         model.addAttribute("carEnt", car_entDyte.getCarEnt());

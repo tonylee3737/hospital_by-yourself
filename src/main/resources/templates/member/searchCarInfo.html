@@ -14,7 +14,24 @@
 
 <script th:inline="javascript">
     let text_length = [[${text_length}]]
-    console.log(text_length);
+    let text_length_button2 = [[${text_length_button2}]]
+
+    if(text_length_button2 != null){
+        document.addEventListener("DOMContentLoaded", function() {
+            let list = document.getElementsByClassName("dc_button2");
+            for (let i = 0; i < list.length; ++i) {
+                if(text_length_button2<=15){
+                    list[i].style.fontSize = "26px";
+                }else if(text_length_button2<=25){
+                    list[i].style.fontSize = "20px";
+                }else{
+                    list[i].style.fontSize = "16px";
+                }
+            }
+        });
+    }
+
+
 
     document.addEventListener("DOMContentLoaded", function(){
         init();

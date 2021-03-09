@@ -1,5 +1,7 @@
 package hospital_parking_system.hospital_parking.adminPage;
 
+import hospital_parking_system.hospital_parking.carInfo.CarService;
+import hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 import hospital_parking_system.hospital_parking.member.MemberService;
 import org.assertj.core.api.Assertions;
@@ -10,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 //0으로 하면 등록, 그외는 수정
 //먼저 관리자 그룹 테이블에서 그룹inx와 이름을 가져온다(빈으로가져오자), 폼에 데이터 뿌리기, name: idx값 value: GrpName, 사용미사용은 0, 1 -> post로 폼 받고 insert parking_clss하기.
@@ -25,7 +28,8 @@ public class AdminControllerTest {
     @Autowired
     private MemberService memberService;
 
-
+    @Autowired
+    private CarService carService;
 
     @Test
     public void 할인부서조회테스트() {
@@ -156,5 +160,23 @@ public class AdminControllerTest {
         System.out.println(bean.getResult());
 
      //then
+     }
+     @Test
+     public void 페이징테스트(){
+     //Given
+         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoList();
+             List<DiscountedCarInfo> list_1 = new ArrayList<>();
+             List<DiscountedCarInfo> list_2 = new ArrayList<>();
+
+         for(int i=0; i<10; i++){
+             list_1.add(discountedCarInfos.get(i));
+         }
+         for(int i=10; i<discountedCarInfos.size(); i++){
+             list_2.add(discountedCarInfos.get(i));
+         }
+     //When
+         System.out.println(list_1.size());
+         System.out.println(list_2.size());
+     //Then
      }
 }
