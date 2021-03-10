@@ -20,14 +20,14 @@
 
     if(text_length_button2 != null){
         document.addEventListener("DOMContentLoaded", function() {
-            let list = document.getElementsByClassName("dc_button2_m");
+            let list = document.getElementsByClassName("dc_button2");
             for (let i = 0; i < list.length; ++i) {
                 if(text_length_button2<=15){
                     list[i].style.fontSize = "26px";
                 }else if(text_length_button2<=25){
-                    list[i].style.fontSize = "23px";
+                    list[i].style.fontSize = "20px";
                 }else{
-                    list[i].style.fontSize = "19px";
+                    list[i].style.fontSize = "16px";
                 }
             }
         });
@@ -35,15 +35,15 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         init();
-        let list = document.getElementsByClassName("dc_button2_m");
+        let list = document.getElementsByClassName("dc_button2");
 
         for (let i = 0; i < list.length; ++i) {
             if (text_length <= 15) {
                 list[i].style.fontSize = "26px";
             } else if (text_length <= 25) {
-                list[i].style.fontSize = "23px";
+                list[i].style.fontSize = "20px";
             } else {
-                list[i].style.fontSize = "19px";
+                list[i].style.fontSize = "16px";
             }
         }
     });
@@ -51,11 +51,9 @@
 
 <!--검색된 번호 중 하나를 선택하였을 시 나오는 정보-->
 <!--<section class="main-section">-->
-<table class="magnifying">
-    <tr>
-        <td><a href = "/searchCarInfo" class="magnifying_font">처음으로</a></td>
-    </tr>
-</table>
+<div class="magnifying">
+    <<a href = "/searchCarInfo" class="magnifying_font"><button class="magnifying_button">처음으로</button></a>
+</div>
 <table class="main_table_with_button_m">
     <tr>
         <th>할 인 처</th>
@@ -84,29 +82,23 @@
             <input type="hidden" th:value="${carNumber}" name="searchCarNumber">
 
             <tr>
-                <td><input class="dc_button2_m" type="submit" th:if="${member.getClDCName1()}!=''" th:name="discountTime"
+                <td><input class="dc_button2" type="submit" th:if="${member.getClDCName1()}!=''" th:name="discountTime"
                            th:value="${member.getClDCName1()}" readonly></td>
-            </tr>
-            <tr>
-                <td><input class="dc_button2_m" type="submit" th:if="${member.getClDCName2()}!=''" th:name="discountTime"
+                <td><input width="100%" class="dc_button2" type="submit" th:if="${member.getClDCName2()}!=''" th:name="discountTime"
                            th:value="${member.getClDCName2()}" readonly></td>
             </tr>
 
             <tr>
-                <td><input class="dc_button2_m" type="submit" th:if="${member.getClDCName3()}!=''" th:name="discountTime"
+                <td><input class="dc_button2" type="submit" th:if="${member.getClDCName3()}!=''" th:name="discountTime"
                            th:value="${member.getClDCName3()}" readonly></td>
-            </tr>
-            <tr>
-                <td><input class="dc_button2_m" type="submit" th:if="${member.getClDCName4()}!=''" th:name="discountTime"
+                <td><input class="dc_button2" type="submit" th:if="${member.getClDCName4()}!=''" th:name="discountTime"
                            th:value="${member.getClDCName4()}" readonly></td>
             </tr>
 
             <tr>
-                <td><input class="dc_button2_m" type="submit" th:if="${member.getClDCName5()}!=''" th:name="discountTime"
+                <td><input class="dc_button2" type="submit" th:if="${member.getClDCName5()}!=''" th:name="discountTime"
                            th:value="${member.getClDCName5()}" readonly></td>
-            </tr>
-            <tr>
-                <td><input class="dc_button2_m" type="submit" th:if="${member.getClDCName6()}!=''" th:name="discountTime"
+                <td><input class="dc_button2" type="submit" th:if="${member.getClDCName6()}!=''" th:name="discountTime"
                            th:value="${member.getClDCName6()}" readonly></td>
             </tr>
         </div>

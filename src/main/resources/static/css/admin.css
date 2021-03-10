@@ -122,7 +122,7 @@ section {
 }
 
 .title-mark{
-    /*justify-content: space-between;*/
+    justify-content: space-between;
     color: #2186c4;
 }
 .maintitle3 a  {

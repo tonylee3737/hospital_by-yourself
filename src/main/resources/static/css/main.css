@@ -43,8 +43,8 @@ a:hover {
 header {
   width: 100%;
   height: 60px;
-  background-color: #fff;
   position: fixed;
+  background-color: #fff;
   top: 0;
   left: 0;
   z-index: 1000;
@@ -184,32 +184,41 @@ input[type="password"]{
   width: 100%;
 
 }
+.register-table_form_m {
+  padding: 0;
+  margin-top: 50%;
+  border-radius: 0%;
+}
+.register-table_m {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .register-table_m tr{
   width: 100%;
-  height: 50px;
+}
+.register-table_m td{
+  box-sizing: border-box;
+  width: 300px;
+  margin:0%
 }
 .register-table_m input{
-  font-size: 1em;
-  height: 40px;
-  border-radius: 10%;
-}
-
-.register-table_m th {
-  height: 30px;
-  font-size: 1em;
-  width: 40%;
-  /*background-color: whitesmoke;*/
-}
-.register-table_m td {
-  height: 30px;
-  font-size: 1em;
-  width: 100%;
-  /*background-color: whitesmoke;*/
+  box-sizing: border-box;
   text-align: center;
+  height: 40px;
+  width: 100%;
+  background-color: whitesmoke;
 }
-
+.register-button_submit {
+  margin-top: 5%;
+  font-size: small;
+  background-color: darkorange;
+}
 .register-button_m{
-  background-color: white;
-  border-radius: 10%;
-  font-size: 1.5em;
+  width: 100%;
+  box-sizing: border-box;
+  margin-left: 0%;
+  background-color: darkorange;
+  margin-top: 3%;
+  height: 40px;
 }

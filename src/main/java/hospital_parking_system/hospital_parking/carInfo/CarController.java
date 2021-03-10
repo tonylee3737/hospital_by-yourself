@@ -1,4 +1,5 @@
 package hospital_parking_system.hospital_parking.carInfo;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import hospital_parking_system.hospital_parking.adminPage.AdminService;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 import hospital_parking_system.hospital_parking.member.MemberService;
@@ -87,6 +88,7 @@ public class CarController {
         model.addAttribute("member_ClName", member.getClName());
         model.addAttribute("member_show", member);
         model.addAttribute("carNumber", carNumber);
+        model.addAttribute("carNumber2", carNumber);
         model.addAttribute("carBeans", carBeans);
         Boolean isthis_Mobile = carService.get_Mobile_Or_Web(request.getHeader("user-agent"));
 
@@ -94,9 +96,12 @@ public class CarController {
              if(carBeans.size() == 0){
                  model.addAttribute("car_List_None", true);
                  return "member/m_searchCarInfo";
-             }else{
+             }else if(carBeans.size() == 1){
+
                 return "member/m_searchCarInfo_list";
 
+             }else{
+                 return "member/m_searchCarInfo_lists";
              }
 
         }else{
@@ -227,6 +232,29 @@ public class CarController {
             return "member/searchCarInfo";
         }
     }
+
+    @GetMapping("getCarInfo_pic_m")
+    public String getCarInfo_pic_m(@RequestParam(value = "carNumber") String carNumber,
+                                   @RequestParam(value = "carNumber2") String carNumber2,
+                                   Model model){
+        CarBean car = new CarBean();
+        car.setVhlNbr(carNumber);
+        List<CarBean> carBean = carService.selectCarInfo(car);
+        String imgPth = carBean.get(0).getImgPth();
+
+        car.setVhlNbr(carNumber2);
+        List<CarBean> carBeans = carService.selectCarInfo(car);
+        Boolean notice = true;
+        System.out.println(carNumber);
+        System.out.println(carNumber2);
+
+        model.addAttribute("car_Img", imgPth);
+        model.addAttribute("carBeans", carBeans);
+        model.addAttribute("carNumber2", carNumber2);
+        model.addAttribute("carNumber", carNumber);
+        model.addAttribute("notice", notice);
+        return "member/m_searchCarInfo_lists";
+        }
 
 
 //  차량번호조회 페이지에서 번호를 검색한 후, 나열된 리스트 중 하나의 차량번호를 선택하였을 시 뜨는 페이지 그리고 그 차량의 할인시간을 등록시키는 페이지

@@ -41,24 +41,24 @@
     }
 </script>
 <div style="text-align: center;" >
-    <img src="img/itro_login_back.png" style="width: 100%; height: 70px;">
+    <img src="img/second_version_itro.png" style="width: 300px; height: 165px; margin-top: 40%; box-sizing: border-box">
+</div>
 
-    <img src="img/itro_login.png" style="width: 200px; height: 120px; border-radius: 5%; margin-top: 25%">
-    <form name="login_form" onsubmit="return check_login_m()" action="" method="post" th:object="${loginForm}">
+    <form class = "register-table_form_m" name="login_form" onsubmit="return check_login_m()" action="" method="post" th:object="${loginForm}" >
         <table class="register-table_m">
+
             <tr>
-                <th>아이디</th><td><input class="register-td" type="text" th:field="*{name}" placeholder="아이디"></td>
+                <td><input style="box-sizing: border-box" class="register-td" type="text" th:field="*{name}" placeholder="아이디"></td>
             </tr>
             <tr>
-                <th>비밀번호</th><td><input class="register-td" type="password" th:field="*{pass}" placeholder="비밀번호"></td>
+                <td><input class="register-td" type="password" th:field="*{pass}" placeholder="비밀번호"></td>
             </tr>
             <tr>
                 <div style="text-align: center">
-                <td class="register-button_m" colspan="2"><input  type="submit" value="Login"></td>
+                    <td class="register-button_m_td" colspan="2"><button class="register-button_m" type="submit">로그인</button></td>
                 </div>
             </tr>
         </table>
     </form>
-
 </body>
 </html>

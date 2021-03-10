@@ -167,7 +167,8 @@ public class AdminControllerTest {
          List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoList();
              List<DiscountedCarInfo> list_1 = new ArrayList<>();
              List<DiscountedCarInfo> list_2 = new ArrayList<>();
-
+         System.out.println(discountedCarInfos.size()/10);
+         System.out.println(discountedCarInfos.size()%10);
          for(int i=0; i<10; i++){
              list_1.add(discountedCarInfos.get(i));
          }
