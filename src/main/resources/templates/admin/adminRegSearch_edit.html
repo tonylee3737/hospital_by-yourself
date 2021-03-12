@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head th:replace="admin/adminController :: header">
+    <meta charset="UTF-8">
+    <title>: :근로복지공단대구병원: :</title>
+
+</head>
+<body>
+<script>
+    function edit_check(text){
+        let rate = parseInt(document.getElementById("rate").value);
+        let time = parseInt(document.getElementById("time").value);
+        let check = text;
+        let number_check =  /^[0-9]*$/
+        if(!number_check.test(time)){
+            alert("시간할인은 숫자만 입력가능합니다.")
+            return false;
+        }
+        else if(!number_check.test(rate)){
+            alert("할인률은 숫자만 입력가능합니다.")
+            return false;
+        }
+        if(check=="수정"){
+            if(confirm("수정하시겠습니까?")==true){
+                document.getElementById("h_action").value = check;
+                document.getElementById('form').submit();
+                return true;
+            }
+        }else{
+            return false;
+        }
+    }
+    function del_check(text){
+        let rate = parseInt(document.getElementById("rate").value);
+        let time = parseInt(document.getElementById("time").value);
+        let check = text;
+        let number_check =  /^[0-9]*$/
+        if(!number_check.test(time)){
+            alert("시간할인은 숫자만 입력가능합니다.")
+            return false;
+        }
+        else if(!number_check.test(rate)){
+            alert("할인률은 숫자만 입력가능합니다.")
+            return false;
+        }
+        if(check=="삭제"){
+            if(confirm("삭제하시겠습니까?")==true){
+                document.getElementById("h_action").value = check;
+                document.getElementById('form').submit();
+                return true;
+            }
+        }else{
+            return false;
+        }
+    }
+
+</script>
+<div style="text-align: center">
+    <form class="register-form" name="regi_form"  id="form" action = "adminRegSearch_edit" method = "POST" th:object="${form}" border="1">
+<!--        onsubmit="return check_Edit_Or_Delete()"-->
+        <table class="register-table">
+            <tr>
+                <th>할인처</th>
+                <td><select class="register-td" style="width: 100%" th:field="*{ClName}">
+                    <option class="register-td" style="width: 100%" th:each="clname:${clNameList}"
+                                    th:value="${clname.getClName()}" th:utext="${clname.getClName()}"></option>
+                    </select></td>
+            </tr>
+            <tr>
+                <th>차량번호</th><td><input class="register-td" style="width: 100%"type="text" th:field="*{CarNumber}" readonly></td>
+            </tr>
+            <tr>
+                <th>할인명</th><td><input class="register-td" style="width: 100%" type="tel" th:field="*{DCName}"></td>
+            </tr>
+            <tr>
+                <th>시간할인</th><td><input class="register-td" id="time" style="width: 100%" type="tel" th:field="*{DCTime}"></td>
+            </tr>
+            <tr>
+                <th>할인율</th><td><input class="register-td" id="rate" style="width: 100%"type="text" th:field="*{DCRate}"></td>
+            </tr>
+            <tr>
+                <th>사용여부</th>
+                <td><select class="register-td" style="width: 100%"th:field="*{UseDiv}">
+                    <option class="register-td" style="width: 100%" th:value="0">미사용</option>
+                    <option class="register-td" style="width: 100%" th:value="1">사용</option>
+                    </select></td>
+
+            <tr>
+                <th>비고</th><td><input class="register-td" style="width: 100%"type="text" th:field="*{DCMemo}"></td>
+                <input type="hidden" th:field="*{DCiDx}">
+                <input type="hidden" th:field="*{VhliDx}">
+                <input type="hidden" th:field="*{CliDx}">
+                <input type="hidden" id= "h_action" name="h_action" value="">
+            </tr>
+            <tr>
+                <td></td>
+                <td><input class="register-button"  onclick="edit_check('수정')" type="button" value="수정">
+                    <input class="register-button"  onclick="del_check('삭제')" type="button" value="삭제">
+<!--                    <input class="register-button" type="button" onclick="location.href='adminManaging';" value="취소"></td>-->
+            </tr>
+        </table>
+    </form>
+</div>
+
+</body>
+</html>

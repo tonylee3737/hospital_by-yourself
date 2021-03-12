@@ -45,24 +45,24 @@
 
             <input type="hidden" th:field="*{CliDx}">
         <tr>
-            <th>아이디</th><td><input class="register-td" style="width: 410px" type="text" th:field="*{ClID}" placeholder="아이디"></td>
+            <th>아이디</th><td><input class="register-td" style="width: 100%" type="text" th:field="*{ClID}" placeholder="아이디"></td>
         </tr>
         <tr>
-            <th>패스워드</th><td><input class="register-td" style="width: 410px"type="text" th:field="*{ClPW}" placeholder="패스워드"></td>
+            <th>패스워드</th><td><input class="register-td" style="width: 100%"type="text" th:field="*{ClPW}" placeholder="패스워드"></td>
         </tr>
         <tr>
-            <th>할인처</th><td><input class="register-td" style="width: 410px"type="text" th:field="*{ClName}" placeholder="할인처"></td>
+            <th>할인처</th><td><input class="register-td" style="width: 100%"type="text" th:field="*{ClName}" placeholder="할인처"></td>
         </tr>
         <tr>
-            <th>담당자</th><td><input class="register-td" style="width: 410px"type="text" th:field="*{ClUser}"placeholder="담당자"></td>
+            <th>담당자</th><td><input class="register-td" style="width: 100%"type="text" th:field="*{ClUser}"placeholder="담당자"></td>
         </tr>
         <tr >
-            <th>연락처</th><td><input class="register-td" style="width: 410px"type="text" th:field="*{ClTel}" placeholder="연락처"></td>
+            <th>연락처</th><td><input class="register-td" style="width: 100%"type="text" th:field="*{ClTel}" placeholder="연락처"></td>
         </tr>
         <tr>
-            <th>메일</th><td><input class="register-td" style="width: 410px"type="text" th:field="*{ClEmail}" placeholder="메일"></td>
+            <th>메일</th><td><input class="register-td" style="width: 100%"type="text" th:field="*{ClEmail}" placeholder="메일"></td>
         </tr>
-        <tr >
+        <tr>
             <th>할인1</th><td><input class="register-td" type="text" th:field="*{ClDCName1}" placeholder="할인명">시간<input class="register-dc2" type="text" th:field="*{ClDCTime1}" >분<input class="register-dc2" type="text" th:field="*{ClDCRate1}" >%</td>
             <input type="hidden" th:field="*{ClDCCount1}">
         </tr>
@@ -87,25 +87,25 @@
             <input type="hidden" th:field="*{ClDCCount6}">
         </tr>
         <tr>
-            <th>비고</th><td><input class="register-td" type="text" style="width: 410px"th:field="*{ClMemo}"  placeholder="메모"></td>
+            <th>비고</th><td><input class="register-td" type="text" style="width: 100%"th:field="*{ClMemo}"  placeholder="메모"></td>
         </tr>
         <tr>
             <th>사용유무</th>
-            <td><select class="register-td" style="width: 420px"th:field="*{ClDCUse}">
-                <option class="register-td" style="width: 420px"th:value="1">사용</option>
-                <option class="register-td" style="width: 420px"th:value="0">미사용</option>
+            <td><select class="register-td" style="width: 100%"th:field="*{ClDCUse}">
+                <option class="register-td" style="width: 100%"th:value="1">사용</option>
+                <option class="register-td" style="width: 100%"th:value="0">미사용</option>
             </select></td>
         </tr>
         <tr>
             <th>그룹</th>
-            <td><select class="register-td" th:field="*{ClGrpiDx}"style="width: 420px" >
+            <td><select class="register-td" th:field="*{ClGrpiDx}"style="width: 100%" >
                 <option class="register-td" th:each="group:${groupList}"
-                        th:value="${group.getGrpiDx()}" th:utext="${group.getGrpName()}"style="width: 420px"></option>
+                        th:value="${group.getGrpiDx()}" th:utext="${group.getGrpName()}"style="width: 100%"></option>
             </select></td>
         </tr>
         <tr>
             <td></td>
-            <td><input class="register-button" type="submit" value="등록"><input class="register-button" type="button" onclick="location.href='adminManaging';" value="취소"></td>
+            <td><input class="register-button" type="submit" value="수정"><input class="register-button" type="button" onclick="location.href='adminManaging';" value="취소"></td>
         </tr>
         </div>
     </table>

@@ -176,14 +176,5 @@ public class CarControllerTest {
         //then
     }
 
-    @Test
-    public void idxnameTest() {
-        //given
-        List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
-        //when
-        ClNameBean clNameBean = clNameBeans.get(0);
-        //then
-        System.out.println(clNameBean.getClName());
-    }
 
 }

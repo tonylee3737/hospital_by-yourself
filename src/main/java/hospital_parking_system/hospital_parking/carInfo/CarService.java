@@ -2,9 +2,6 @@ package hospital_parking_system.hospital_parking.carInfo;
 
 import hospital_parking_system.hospital_parking.member.MemberBean;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public interface CarService {
@@ -28,7 +25,7 @@ public interface CarService {
 
     List<DiscountedCarInfo> selectDiscountedCarInfoListWithDate_Member(CarBean bean);
 
-    List<ClNameBean> selectClNameFromClidx();
+    List<ClNameBean> selectClName();
 
     // 글자 길이 체크
     int dc_name_length_check(MemberBean member);

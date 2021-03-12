@@ -245,8 +245,6 @@ public class CarController {
         car.setVhlNbr(carNumber2);
         List<CarBean> carBeans = carService.selectCarInfo(car);
         Boolean notice = true;
-        System.out.println(carNumber);
-        System.out.println(carNumber2);
 
         model.addAttribute("car_Img", imgPth);
         model.addAttribute("carBeans", carBeans);

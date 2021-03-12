@@ -58,7 +58,7 @@
 <table class="main_table_with_button">
 <!--        차량 정보 조회-->
         <tr>
-            <th>할인처</th><td><input id="dc_store" type="text" class="register-td2" th:value="${member_ClName}" readonly></td>
+            <th>할인처</th><td><input id="dc_store" type="text" class="register-td2" style="box-sizing: border-box" th:value="${member_ClName}" readonly></td>
 
         </tr>
         <tr>
@@ -215,14 +215,16 @@
                 <th>입차목록</th>
             </tr>
             <tr th:if="${carBeans}" th:each="car : ${carBeans}">
-                <td><a class = "main_car_list" th:href="@{getCarInfo(carNumber=${car.VhlNbr}, carNumber2=${carNumber})}"><li th:text="${car.VhlNbr}" style="font-size: x-large; margin-left: 15%;"></li></a></td>
+<!--                <td><a class = "main_car_list" th:href="@{getCarInfo(carNumber=${car.VhlNbr}, carNumber2=${carNumber})}"><li th:text="${car.VhlNbr}" style="font-size: x-large; margin-left: 15%;"></li></a></td>-->
+                <td style="font-size: x-large; text-align: center;"><a class = "main_car_list" th:href="@{getCarInfo(carNumber=${car.VhlNbr}, carNumber2=${carNumber})}">[[${car.VhlNbr}]]</a></td>
             </tr>
 <!--            <tr th:unless="${carBeans}">-->
 <!--                <td><a class = "main_car_list" ><li style="font-size: x-large; margin-left: 15%;"></li></a></td>-->
 <!--            </tr>-->
                 <div th:if="${blank_should_not_show}==null">
                     <tr th:each="num :${#numbers.sequence(1,blank_showing_for_carBeans)}">
-                        <td><a class = "main_car_list" ><li style="font-size: x-large; margin-left: 15%;"></li></a></td>
+<!--                        <td><a class = "main_car_list" ><li style="font-size: x-large; margin-left: 15%;"></li></a></td>-->
+                        <td style="font-size: x-large; margin-left: 15%;"><a class = "main_car_list" ></a></td>
                     </tr>
                 </div>
         </table>

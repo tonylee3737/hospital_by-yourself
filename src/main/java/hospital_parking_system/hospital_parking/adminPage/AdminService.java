@@ -1,5 +1,6 @@
 package hospital_parking_system.hospital_parking.adminPage;
 
+import hospital_parking_system.hospital_parking.carInfo.ClNameBean;
 import hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 
@@ -32,6 +33,10 @@ public interface AdminService {
     void deleteOneGroup(GroupBean groupBean);
 
     MemberBean Procedure_registerManager(MemberBean bean);
+
+    DiscountedCarInfo Procedure_parking_class_discount(DiscountedCarInfo discountedCarInfo);
+    // select ClNameNotIn
+    List<ClNameBean> selectClNameNotIn(ClNameBean clNameBean);
 
 //    member to Form
     MemberForm member_To_Form(MemberBean member);

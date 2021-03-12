@@ -16,26 +16,38 @@
         <link rel="stylesheet" href="/css/adminRegSearch.css" />
         <link rel="stylesheet" href="/css/adminManaging.css" />
         <link rel="stylesheet" href="/css/mainButtonPage.css" />
+        <link rel="stylesheet" href="/css/member.css" />
 
 
     </head>
+    <body>
     <header>
-        <div class="inner">
-            <div class="head-container">
-                <div class="head-brand"></div>
-                <div class="head-blog"><a href="logout">로그아웃</a></div>
-            </div>
-        </div>
-    </header>
-<!--    <section class="section_m">-->
-<!--       <ul class = "title-container_m">-->
-<!--&lt;!&ndash;        <div class="maintitle1"><li class="title-mark"><a href = "searchCarInfo">차량번호조회</a></li></div>&ndash;&gt;-->
-<!--&lt;!&ndash;        <div class="maintitle2"><li class ="title-mark"><a href = "#">입퇴원 검색</a></li></div>&ndash;&gt;-->
-<!--&lt;!&ndash;        <div class="maintitle3"><li class ="title-mark"><a href = "regSearch" onclick="window.open('regSearch','window','location=no, directories=no,resizable=no,status=no,toolbar=no,menubar=no, width=700,height=1100,left=0, top=0, scrollbars=yes');return false">등록내역검색</a></li></div>&ndash;&gt;-->
-<!--       </ul>-->
-<!--    </section>-->
-</div>
-<body>
+        <nav class="inner_m">
+            <div class="head-container_m">
+               <div class="head-home_m"><a href="/searchCarInfo"><img class="home_img" src="img/home.png"></a></div>
+                <div class="head-brand_m"></div>
+                <div class="head-info_m"><button class="button" onclick="drop_info()"><img class="home_menu" src="img/menu.png"></button>
+                                         <div style="display:none;" id="drop-content">
+                                             <a href="#">사용내역</a>
+                                             <a href="/logout">로그아웃</a>
+                                         </div>
+                </div>
 
+            </div>
+        </nav>
+    </header>
+
+<script>
+    function drop_info(){
+        let click = document.getElementById("drop-content");
+        if(click.style.display === "none"){
+            click.style.display = "block";
+
+        }else{
+            click.style.display = "none";
+        }
+    }
+</script>
 </body>
+</div>
 </html>

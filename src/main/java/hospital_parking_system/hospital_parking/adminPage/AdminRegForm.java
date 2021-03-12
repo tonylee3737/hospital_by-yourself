@@ -1,12 +1,11 @@
-package hospital_parking_system.hospital_parking.carInfo;
+package hospital_parking_system.hospital_parking.adminPage;
+
 
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter @Setter
-public class DiscountedCarInfo {
+public class AdminRegForm {
     private String DCiDx;
     private String VhliDx;
     private String CarNumber;
@@ -18,6 +17,5 @@ public class DiscountedCarInfo {
     private String UseDiv;
     private String ActDiv;
     private String ClName;
-    private String InsDayTime;
-    private int Result;
+    private String Result;
 }

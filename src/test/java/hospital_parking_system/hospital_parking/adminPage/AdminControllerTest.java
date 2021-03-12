@@ -180,4 +180,27 @@ public class AdminControllerTest {
          System.out.println(list_2.size());
      //Then
      }
+
+     @Test
+     public void Procedure_parking_class_test(){
+         DiscountedCarInfo discountedCarInfo = new DiscountedCarInfo();
+
+         discountedCarInfo.setDCiDx("76");
+         discountedCarInfo.setVhliDx("299");
+         discountedCarInfo.setDCName("관호할인");
+         discountedCarInfo.setDCRate("100");
+         discountedCarInfo.setDCTime("100");
+         discountedCarInfo.setDCMemo("관호");
+         discountedCarInfo.setCliDx("92");
+         discountedCarInfo.setUseDiv("0");
+         discountedCarInfo.setActDiv("3");
+         adminService.Procedure_parking_class_discount(discountedCarInfo);
+
+         System.out.println(discountedCarInfo.getResult());
+     //Given
+
+     //When
+
+     //Then
+     }
 }

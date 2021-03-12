@@ -7,7 +7,12 @@
 
 </head>
     <script th:inline="javascript">
-
+        let result = [[${result}]];
+        if(result=="2"){
+            alert("수정되었습니다.");
+        }else if(result=="3"){
+            alert("삭제되었습니다.");
+        }
         $( function() {
             $( "#startDate" ).datepicker({ closeText: '닫기',
                 prevText: '이전달',
@@ -93,7 +98,7 @@
     </tr>
     <tr th:if="${discountedCarInfo}" th:each="car, i: ${discountedCarInfo}">
         <td th:text="${i.count}" ></td>
-        <td th:text="${car.getCarNumber()}" ></td>
+        <td><a th:href="@{/adminRegSearch_edit(carNumber=${car.getCarNumber()})}">[[${car.getCarNumber()}]]</a></td>
         <td th:text="${car.getDCName()}" ></td>
         <td th:text="${car.getClName()}" ></td>
         <td th:text="${car.getDCTime()}+'분'" ></td>

@@ -1,5 +1,7 @@
 package hospital_parking_system.hospital_parking.adminPage;
 
+import hospital_parking_system.hospital_parking.carInfo.ClNameBean;
+import hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -30,6 +32,9 @@ public interface AdminMapper {
 
     void updateGroup(GroupBean groupBean);
 
+    List<ClNameBean> selectClNameNotIn(ClNameBean clNameBean);
 
     MemberBean Procedure_registerManager(MemberBean bean);
+
+    DiscountedCarInfo Procedure_parking_class_discount(DiscountedCarInfo discountedCarInfo);
 }

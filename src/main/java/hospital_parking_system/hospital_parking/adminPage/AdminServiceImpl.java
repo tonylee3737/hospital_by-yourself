@@ -1,6 +1,7 @@
 package hospital_parking_system.hospital_parking.adminPage;
 
 
+import hospital_parking_system.hospital_parking.carInfo.ClNameBean;
 import hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 import hospital_parking_system.hospital_parking.member.MemberMapper;
@@ -93,6 +94,16 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public MemberBean Procedure_registerManager(MemberBean bean) {
         return adminMapper.Procedure_registerManager(bean);
+    }
+
+    @Override
+    public DiscountedCarInfo Procedure_parking_class_discount(DiscountedCarInfo discountedCarInfo) {
+        return adminMapper.Procedure_parking_class_discount(discountedCarInfo);
+    }
+
+    @Override
+    public List<ClNameBean> selectClNameNotIn(ClNameBean clNameBean) {
+        return adminMapper.selectClNameNotIn(clNameBean);
     }
 
     @Override
@@ -326,9 +337,6 @@ public class AdminServiceImpl implements AdminService{
     public Paging get_Paging(List<DiscountedCarInfo> discountedCarInfos) {
         Paging page_list = new Paging();
 
-        for(int i=0; i<discountedCarInfos.size(); i++){
-            System.out.println(discountedCarInfos.get(i).getCarNumber());
-        }
         return page_list;
     }
 }

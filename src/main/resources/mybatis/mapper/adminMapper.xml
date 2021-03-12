@@ -29,13 +29,30 @@
         WHERE GrpName = #{GrpName};
     </select>
 
-
+    <select id="selectClNameNotIn" parameterType="hospital_parking_system.hospital_parking.carInfo.ClNameBean" resultType="hospital_parking_system.hospital_parking.carInfo.ClNameBean">
+        SELECT ClName FROM parking_class WHERE ClName NOT IN (#{ClName});
+    </select>
 
     <delete id="deleteOneGroup" parameterType="hospital_parking_system.hospital_parking.adminPage.GroupBean">
         DELETE
         FROM parking_class_group
         WHERE GrpiDx = #{GrpiDx};
     </delete>
+
+    <select id="Procedure_parking_class_discount" statementType="CALLABLE" parameterType="hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo">
+        { CALL sp_parking_class_discount(
+            #{DCiDx},
+            #{VhliDx},
+            #{DCName},
+            #{DCRate},
+            #{DCTime},
+            #{DCMemo},
+            #{CliDx},
+            #{UseDiv},
+            #{ActDiv},
+            #{Result, mode=OUT, jdbcType=INTEGER, javaType=int})
+            }
+    </select>
 
     <select id="Procedure_registerManager" statementType="CALLABLE" parameterType="hospital_parking_system.hospital_parking.member.MemberBean">
         { CALL sp_parking_class(
@@ -102,46 +119,3 @@
     </update>
 
 </mapper>
-
-        <!--    <update id="updateMember" parameterType="hospital_parking_system.hospital_parking.member.MemberBean">-->
-        <!--        UPDATE parking_class-->
-        <!--        SET ClID=#{ClID},-->
-        <!--            ClPW=#{ClPW},-->
-        <!--            ClName=#{ClName},-->
-        <!--            ClUser=#{ClUser},-->
-        <!--            ClTel=#{ClTel},-->
-        <!--            ClEmail=#{ClEmail},-->
-        <!--            ClDCName1=#{ClDCName1},-->
-        <!--            ClDCTime1=#{ClDCTime1},-->
-        <!--            ClDCRate1=#{ClDCRate1},-->
-        <!--            ClDCName2=#{ClDCName2},-->
-        <!--            ClDCTime2=#{ClDCTime2},-->
-        <!--            ClDCRate2=#{ClDCRate2},-->
-        <!--            ClDCName3=#{ClDCName3},-->
-        <!--            ClDCTime3=#{ClDCTime3},-->
-        <!--            ClDCRate3=#{ClDCRate3},-->
-        <!--            ClDCName4=#{ClDCName4},-->
-        <!--            ClDCTime4=#{ClDCTime4},-->
-        <!--            ClDCRate4=#{ClDCRate4},-->
-        <!--            ClDCName5=#{ClDCName5},-->
-        <!--            ClDCTime5=#{ClDCTime5},-->
-        <!--            ClDCRate5=#{ClDCRate5},-->
-        <!--            ClDCName6=#{ClDCName6},-->
-        <!--            ClDCTime6=#{ClDCTime6},-->
-        <!--            ClDCRate6=#{ClDCRate6},-->
-        <!--            ClDCUse=#{ClDCUse},-->
-        <!--            ClMemo=#{ClMemo},-->
-        <!--            ClGrpiDx=#{ClGrpiDx}-->
-        <!--        where CliDx = #{CliDx};-->
-
-        <!--    </update>-->
-        <!--    <insert id="insertMember" parameterType="hospital_parking_system.hospital_parking.member.MemberBean">-->
-        <!--        INSERT INTO parking_class (ClID, ClPW, ClName, ClUser, ClTel, ClEmail, ClDCName1, ClDCTime1, ClDCRate1,-->
-        <!--                                   ClDCName2, ClDCTime2, ClDCRate2, ClDCName3, ClDCTime3, ClDCRate3, ClDCName4,-->
-        <!--                                   ClDCTime4, ClDCRate4, ClDCName5, ClDCTime5, ClDCRate5, ClDCName6, ClDCTime6,-->
-        <!--                                   ClDCRate6, ClDCUse, ClMemo, ClGrpiDx)-->
-        <!--        VALUES (#{ClID}, #{ClPW}, #{ClName}, #{ClUser}, #{ClTel}, #{ClEmail}, #{ClDCName1}, #{ClDCTime1}, #{ClDCRate1},-->
-        <!--                #{ClDCName2}, #{ClDCTime2}, #{ClDCRate2}, #{ClDCName3}, #{ClDCTime3}, #{ClDCRate3}, #{ClDCName4},-->
-        <!--                #{ClDCTime4}, #{ClDCRate4}, #{ClDCName5}, #{ClDCTime5}, #{ClDCRate5}, #{ClDCName6}, #{ClDCTime6},-->
-        <!--                #{ClDCRate6}, #{ClDCUse}, #{ClMemo}, #{ClGrpiDx});-->
-        <!--    </insert>-->

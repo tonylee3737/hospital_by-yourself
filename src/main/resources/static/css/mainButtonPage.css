@@ -2,7 +2,7 @@
 
 }
 .main-aside_m{
-    padding-top: 63px;
+    padding-top: 65px;
 }
 
 .main_table_with_button{
@@ -38,12 +38,22 @@
     border-radius: 0px;
     /*appearance:none;*/
     -webkit-appearance:none;
+    background-color: whitesmoke;
     font-size: xx-large;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
 }
 .search_button_m{
     border-radius: 0px;
     /*appearance:none;*/
     -webkit-appearance:none;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+    background-color: whitesmoke;
 }
 .search_button{
     height:75px;
@@ -53,12 +63,13 @@
 .show{
     width: 150px;
     heigth: 500px;
-    border-top: 1px solid gray;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
-    border-bottom: 3px solid gray ;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
     text-decoration: none;
     text-align: center;
+    background-color: whitesmoke;
 }
 
 .reg_input2 {
@@ -116,17 +127,16 @@
 
 
 .dc_button{
-    border-radius: 0%;
-    margin: 0.7%;
+    border-radius: 10px;
+    margin: 10px;
     width: 173px;
     height: 65px;
     background-color: whitesmoke;
 
 }
 .dc_button2{
-    border-radius: 10%;
-    /*border-radius: 0%;*/
-    margin: 0.7%;
+    border-radius: 10px;
+    margin: 10px;
     width: 173px;
     height: 65px;
     background-color: whitesmoke;
@@ -178,7 +188,7 @@
     color: black;
 }
 .main_car_list:hover{
-    color: darkseagreen;
+    color: #0B3861;
 }
 .main_car_list_입차{
     width: 100px;
@@ -208,7 +218,7 @@
 
 }
 .maintitle1 a:hover {
-    color: #2186c4;
+    color: #0B3861;
     cursor: pointer;
 }
 
@@ -219,7 +229,7 @@
     color: antiquewhite;
 }
 .maintitle2 a:hover {
-    color: #2186c4;
+    color: #0B3861;
     cursor: pointer;
 }
 
@@ -231,14 +241,14 @@
 }
 
 .maintitle3 a:hover {
-    color: #2186c4;
+    color: #0B3861;
     cursor: pointer;
     text-decoration: none;
 }
 
 .title-mark{
     /*justify-content: space-between;*/
-    color: #2186c4;
+    color: #0B3861;
 }
 .maintitle3 a  {
     text-decoration: none;
@@ -253,7 +263,7 @@
 .magnifying {
     width: 100%;
     text-align: center;
-    padding-top: 60px;
+    padding-top: 62px;
 }
 
 .magnifying tr {
@@ -261,6 +271,16 @@
 }
 
 .magnifying_font {
+    font-weight: bold;
+    height: 50px;
+    -webkit-appearance:none;
+    font-size: 1.5em;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+    background-color: whitesmoke;
+    width: 100%;
     text-decoration: none;
 }
 
@@ -268,12 +288,14 @@
     background-color: whitesmoke;
     height: 30px;
     width: 100%;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
     font-size: large;
+    font-weight: bold;
 }
+
 
 .table-main-Button_m_test button{
     width: 100%;
@@ -307,6 +329,15 @@
     color: #2186c4;
 }
 .check_car_button{
+    border-radius: 10px;
+    width: 80px;
+    height: 30px;
     -webkit-appearance:none;
-    font-size: 1.5em;
+    font-size: 1em;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+    color: white;
+    background-color: #0B3861;
 }

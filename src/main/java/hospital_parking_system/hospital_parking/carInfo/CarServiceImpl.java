@@ -2,7 +2,6 @@ package hospital_parking_system.hospital_parking.carInfo;
 
 import hospital_parking_system.hospital_parking.member.MemberBean;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -71,8 +70,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<ClNameBean> selectClNameFromClidx() {
-        return carMapper.selectClNameFromClidx();
+    public List<ClNameBean> selectClName() {
+        return carMapper.selectClName();
     }
 
     @Override

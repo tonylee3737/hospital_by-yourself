@@ -8,6 +8,12 @@
     background-color: wheat;
 }
 
+.inner_m{
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
 header {
     width: 100%;
     height: 60px;
@@ -25,6 +31,75 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+.head-container_m {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.head-home_m{
+    /*margin-left: 3%;*/
+    /*margin-top: 3%;*/
+}
+.home_img{
+    width: 40px;
+    height: auto;
+}
+.head-brand_m {
+    background-image: url("/img/ITRO_top_back.png");
+    width: 140px;
+    height: auto;
+    /*margin-left: 3.5%;*/
+    /*background-repeat: no-repeat;*/
+    background-size: cover;
+}
+.head-info_m{
+    /*margin-right: 3%;*/
+    /*margin-top: 3%;*/
+    /*position: relative;*/
+    /*display: inline-block;*/
+}
+.button {
+    /*-webkit-appearance:none;*/
+    /*border-bottom: none;*/
+    /*border-left: none;*/
+    /*border-right: none;*/
+    /*border-top: none;*/
+    /*width: 100%;*/
+    /*height: auto;*/
+    background-color: white;
+    overflow: hidden;
+    /*position: absolute;*/
+    /*top: 0;*/
+    left: 0;
+    /*right: 0;*/
+    /*width: 0;*/
+
+    /*height: 0;*/
+    /*visibility: hidden;*/
+
+}
+#drop-content{
+    position: absolute;
+    z-index: 1;
+}
+#drop-content a{
+    display:block;
+    font-size: 15px;
+    background-color: orange;
+    color: white;
+    text-decoration: none;
+    padding: 10px 36px;
+    /*padding: 20px 30px;*/
+
+    margin: 2px 0px 0px 0px;
+}
+
+.home_menu{
+    width: 40px;
+    height: auto;
+}
 
 /* 필요시 세부 설정을 위해, 상단 좌측 브랜드만을 별도로 클래스로 정의 */
 .head-container .head-brand {
@@ -34,12 +109,12 @@ header {
     background-repeat: no-repeat;
     background-size: cover;
     margin-left: 1.5%;
-
 }
 
 
+
 .head-container .head-brand a:hover {
-    color: #2186c4;
+    color: #0B3861;
     cursor: pointer;
 }
 
@@ -52,7 +127,7 @@ header {
 }
 
 .head-container .head-blog a:hover {
-    color: #2186c4;
+    color: #0B3861;
     cursor: pointer;
 }
 .head-blog a {
@@ -90,7 +165,7 @@ section {
 
 }
 .maintitle1 a:hover {
-    color: #2186c4;
+    color: #0B3861;
     cursor: pointer;
 }
 
@@ -101,7 +176,7 @@ section {
     color: antiquewhite;
 }
 .maintitle2 a:hover {
-    color: #2186c4;
+    color: #0B3861;
     cursor: pointer;
 }
 
@@ -113,14 +188,14 @@ section {
 }
 
 .maintitle3 a:hover {
-    color: #2186c4;
+    color: #0B3861;
     cursor: pointer;
     text-decoration: none;
 }
 
 .title-mark{
     /*justify-content: space-between;*/
-    color: #2186c4;
+    color: #0B3861;
 }
 .maintitle3 a  {
     text-decoration: none;

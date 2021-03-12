@@ -19,6 +19,7 @@
     </select>
 
 
+
     <select id="selectDiscountedCarInfoList" resultType="hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo">
         select parking_class_discount.*, parking_class.*, parking_vehicle_history.CarNumber from parking_class_discount inner join parking_class on parking_class_discount.CliDx=parking_class.CliDx inner join parking_vehicle_history on parking_class_discount.VhliDx = parking_vehicle_history.VHiDx
     </select>
@@ -78,7 +79,7 @@
 
 
 
-    <select id="selectClNameFromClidx" resultType="hospital_parking_system.hospital_parking.carInfo.ClNameBean">
+    <select id="selectClName" resultType="hospital_parking_system.hospital_parking.carInfo.ClNameBean">
         select ClName
         from parking_class
 

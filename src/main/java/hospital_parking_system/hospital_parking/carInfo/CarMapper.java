@@ -28,5 +28,5 @@ public interface CarMapper {
 
     List<DiscountedCarInfo> selectDiscountedCarInfoListWithDate_Member(CarBean bean);
 
-    List<ClNameBean> selectClNameFromClidx();
+    List<ClNameBean> selectClName();
 }

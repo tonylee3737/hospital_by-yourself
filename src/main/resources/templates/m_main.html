@@ -40,25 +40,30 @@
         }
     }
 </script>
-<div style="text-align: center;" >
-    <img src="img/second_version_itro.png" style="width: 300px; height: 165px; margin-top: 40%; box-sizing: border-box">
+
+<div class="login_img">
+    <img src="img/BrandMark_top.png" style="margin-top: 65%; max-width: 100%; height: auto;">
+<!--    <img src="img/BrandMark_bottom.png" style="max-width: 25%; height: auto; float:right;">-->
 </div>
 
     <form class = "register-table_form_m" name="login_form" onsubmit="return check_login_m()" action="" method="post" th:object="${loginForm}" >
         <table class="register-table_m">
 
             <tr>
-                <td><input style="box-sizing: border-box" class="register-td" type="text" th:field="*{name}" placeholder="아이디"></td>
+                <td><input style="box-sizing: border-box" class="register-td_id" type="text" th:field="*{name}" placeholder="아이디"></td>
             </tr>
             <tr>
-                <td><input class="register-td" type="password" th:field="*{pass}" placeholder="비밀번호"></td>
+                <td><input class="register-td_pass" type="password" th:field="*{pass}" placeholder="비밀번호"></td>
             </tr>
             <tr>
-                <div style="text-align: center">
                     <td class="register-button_m_td" colspan="2"><button class="register-button_m" type="submit">로그인</button></td>
-                </div>
             </tr>
         </table>
     </form>
 </body>
+
+
+<div class="login_img_bottom">
+    ©ITRO 2020 All Right Reserved
+</div>
 </html>

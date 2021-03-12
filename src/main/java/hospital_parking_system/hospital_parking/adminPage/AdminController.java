@@ -9,28 +9,17 @@ import hospital_parking_system.hospital_parking.member.AdminBean;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 import hospital_parking_system.hospital_parking.member.MemberService;
 import hospital_parking_system.hospital_parking.member.SessionBean;
-import jdk.nashorn.internal.parser.JSONParser;
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
 
@@ -52,14 +41,8 @@ public class AdminController {
             return "redirect:/";
         }
         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfoList();
-        Paging paging = adminService.get_Paging(discountedCarInfos);
-//        System.out.println(paging.list_Of_Page.size());
-//        System.out.println(paging.list_Of_Page.get(0).getCarNumber());
-//        System.out.println(paging.list_Of_Paging.size());
-//        System.out.println(paging.list_Of_Paging.get(0).list_Of_Page.size());
 
-
-        List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
+        List<ClNameBean> clNameBeans = carService.selectClName();
 
         ClNameBean re_clName = new ClNameBean();
         re_clName.setClName("전체");
@@ -102,7 +85,7 @@ public class AdminController {
             adminService.excel_down(discountedCarInfos, response);
         }
 
-        List<ClNameBean> clNameBeans = carService.selectClNameFromClidx();
+        List<ClNameBean> clNameBeans = carService.selectClName();
         ClNameBean re_clName = new ClNameBean();
         re_clName.setClName("전체");
         clNameBeans.add(re_clName);
@@ -115,6 +98,51 @@ public class AdminController {
         return "admin/adminRegSearch";
     }
 
+    @GetMapping("/adminRegSearch_edit")
+    public String adminRegSearch_edit_get(Model model, @RequestParam(value = "carNumber") String carNumber, AdminRegForm form){
+        CarBean car = new CarBean();
+        car.setVhlNbr(carNumber);
+        List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfo(car);
+        DiscountedCarInfo discountedCarInfo = discountedCarInfos.get(0);
+        form.setClName(discountedCarInfo.getClName());
+        form.setCarNumber(discountedCarInfo.getCarNumber());
+        form.setDCName(discountedCarInfo.getDCName());
+        form.setDCTime(discountedCarInfo.getDCTime());
+        form.setDCRate(discountedCarInfo.getDCRate());
+        form.setUseDiv(discountedCarInfo.getUseDiv());
+        form.setDCMemo(discountedCarInfo.getDCMemo());
+        form.setDCiDx(discountedCarInfo.getDCiDx());
+        form.setVhliDx(discountedCarInfo.getVhliDx());
+        form.setCliDx(discountedCarInfo.getCliDx());
+        form.setUseDiv(discountedCarInfo.getUseDiv());
+        ClNameBean clname = new ClNameBean();
+        clname.setClName(discountedCarInfo.getDCName());
+        List<ClNameBean> clNameBeans = adminService.selectClNameNotIn(clname);
+        model.addAttribute("clNameList", clNameBeans);
+        model.addAttribute("form", form);
+        model.addAttribute("carNumber", carNumber);
+        return "admin/adminRegSearch_edit";
+    }
+    @PostMapping("/adminRegSearch_edit")
+    public String adminRegSearch_edit_post(AdminRegForm form, @RequestParam(value = "h_action") String action,
+                                           Model model,RedirectAttributes redirectAttributes){
+        DiscountedCarInfo discountedCarInfo = new DiscountedCarInfo();
+        discountedCarInfo.setDCiDx (form.getDCiDx());
+        discountedCarInfo.setVhliDx(form.getVhliDx());
+        discountedCarInfo.setDCName(form.getDCName());
+        discountedCarInfo.setDCRate(form.getDCRate());
+        discountedCarInfo.setDCTime(form.getDCTime());
+        discountedCarInfo.setDCMemo(form.getDCMemo());
+        discountedCarInfo.setCliDx (form.getCliDx());
+        discountedCarInfo.setUseDiv(form.getUseDiv());
+        String actDiv = (action.equals("수정")) ? "2" : "3";
+        discountedCarInfo.setActDiv(actDiv);
+
+        adminService.Procedure_parking_class_discount(discountedCarInfo);
+        int result = discountedCarInfo.getResult();
+        redirectAttributes.addFlashAttribute("result", result);
+        return "redirect:/adminRegSearch";
+    }
     //    관리자 페이지 할인 부서 조회 및 등록
     @GetMapping("/adminManaging")
     public String adminManaging(Model model) {
@@ -123,7 +151,6 @@ public class AdminController {
             return "redirect:/";
         }
         List<AdminManagerBean> adminManagerBeans = adminService.selectAdminManager();
-        System.out.println(adminManagerBeans.size());
         model.addAttribute("adminList", adminManagerBeans);
         return "admin/adminManaging";
     }

@@ -14,26 +14,28 @@
 
 
 <!--글자 폰트 조절하기 -->
-<table class="magnifying">
-    <tr>
-        <td><a href = "/searchCarInfo" class="magnifying_font">처음으로</a></td>
-    </tr>
-</table>
+
+<!--    <div class="magnifying">-->
+<!--        <button class="magnifying_font" onclick="location.href='/searchCarInfo'">처음으로</button>-->
+<!--    </div>-->
+<aside class="main-aside_m">
     <div style="text-align: center">
         <table class="table-main-Button" style="width: 100%">
-            <tr>
-                <td><img th:src="${carBeans.get(0).getImgPth()}" onerror="this.src='img/car_Number.png';" style="width: 100%; height: 250px;"></td>
+            <tr th:unless="${carBeans.get(0).getImgPth()}">
+                <th style="height: 300px"><img src="img/no_car.jpg"></th>
+            </tr>
+            <tr th:if="${carBeans.get(0).getImgPth()}">
+                <th style="height: 300px">[[${carBeans.get(0).getImgPth()}]]</th>
             </tr>
             <tr th:if="${carBeans}" th:each="car : ${carBeans}">
-                <td style="text-align: center; font-size: xx-large; font-weight: bold; background-color: whitesmoke"><a class = "main_car_list" th:href="@{getCarInfo_m(carNumber=${car.VhlNbr}, carNumber2=${carNumber2})}">[[${car.VhlNbr}]]</a></td>
+                <td style="text-align: center; font-size: xx-large; font-weight: bold; background-color: whitesmoke">[[${car.VhlNbr}]]</td>
             </tr>
         </table>
-        <div style="text-align: center">
+        <div style="text-align: center; margin-top: 10%">
             <p class="check_car_p">위에 차량이 맞으시면 확인을 눌러주세요.</p>
-            <button class="check_car_button" th:onclick="'location.href = \'' + @{/getCarInfo_m(carNumber=${carNumber})} + '\''">확인</button>
+            <button class="check_car_button" th:onclick="'location.href = \'' + @{/getCarInfo_m(carNumber=${carNumber})} + '\''">확 인</button>
         </div>
     </div>
-
-<!--</section>-->
+</aside>
 </body>
 </html>

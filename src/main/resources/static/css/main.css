@@ -186,8 +186,10 @@ input[type="password"]{
 }
 .register-table_form_m {
   padding: 0;
-  margin-top: 50%;
+  margin-top: 60%;
   border-radius: 0%;
+  box-sizing: border-box;
+  width: 100%;
 }
 .register-table_m {
   margin-left: auto;
@@ -195,7 +197,7 @@ input[type="password"]{
 }
 
 .register-table_m tr{
-  width: 100%;
+  width: 90%;
 }
 .register-table_m td{
   box-sizing: border-box;
@@ -205,20 +207,62 @@ input[type="password"]{
 .register-table_m input{
   box-sizing: border-box;
   text-align: center;
-  height: 40px;
+  height: 50px;
   width: 100%;
   background-color: whitesmoke;
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 10px;
 }
 .register-button_submit {
   margin-top: 5%;
   font-size: small;
-  background-color: darkorange;
 }
 .register-button_m{
   width: 100%;
   box-sizing: border-box;
   margin-left: 0%;
-  background-color: darkorange;
+  background-color: #0B3861;
+  color: white;
+  font-size: small;
   margin-top: 3%;
-  height: 40px;
+  height: 50px;
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 10px;
+
+}
+.register-button_m_td {
+  color: white;
+}
+.login_img {
+  width: 60%;
+  /*-webkit-transform: translate(10%);*/
+  /*-ms-transform: translate(10%);*/
+  transform: translate(33%);
+}
+
+.login_img_bottom {
+  position: fixed;
+  bottom: 15px;
+  left: 53%;
+  margin-left: -100px;
+  color: #0B3861;
+  font-size: small;
+}
+
+.register-td_id{
+  background-image: url("/img/profile_16.png");
+  background-position: 5px center;
+  background-repeat: no-repeat;
+}
+
+.register-td_pass {
+  background-image: url("/img/lock_16.png");
+  background-position: 5px center;
+  background-repeat: no-repeat;
 }
