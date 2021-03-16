@@ -20,6 +20,16 @@
         SELECT * FROM parking_class WHERE ClID = #{ClID}
     </select>
 
+    <update id="updateMemberInfo" parameterType="hospital_parking_system.hospital_parking.member.MemberBean">
+        UPDATE parking_class
+        SET ClID=#{ClID},
+            ClPW=#{ClPW},
+            ClTel=#{ClTel},
+            ClEmail=#{ClEmail},
+            ClMemo=#{ClMemo}
+        where CliDx = #{CliDx};
+
+    </update>
 
     <delete id="deleteMember" parameterType="String">
             DELETE FROM parking_class WHERE ClID = #{ClId}

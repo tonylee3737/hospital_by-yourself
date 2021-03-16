@@ -14,5 +14,6 @@ public interface MemberService {
 
     void deleteMember(String ClID);
 
+    void updateMemberInfo(MemberBean bean);
 
 }

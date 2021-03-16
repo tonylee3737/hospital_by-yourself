@@ -18,4 +18,6 @@ public interface MemberMapper {
     MemberBean loginMember_with_idx_pass(MemberBean bean);
 
     void deleteMember(String ClID);
+
+    void updateMemberInfo(MemberBean bean);
 }

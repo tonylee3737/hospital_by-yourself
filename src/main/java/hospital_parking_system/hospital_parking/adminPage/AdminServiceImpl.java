@@ -3,6 +3,7 @@ package hospital_parking_system.hospital_parking.adminPage;
 
 import hospital_parking_system.hospital_parking.carInfo.ClNameBean;
 import hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo;
+import hospital_parking_system.hospital_parking.member.M_MemberForm;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 import hospital_parking_system.hospital_parking.member.MemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -339,4 +340,65 @@ public class AdminServiceImpl implements AdminService{
 
         return page_list;
     }
+
+    @Override
+    public MemberBean m_memberFrom_To_MemberBean(M_MemberForm form) {
+        MemberBean member = new MemberBean();
+        member.setCliDx(form.getCliDx());
+        member.setClID(form.getClID());
+        member.setClPW(form.getClPW());
+        member.setClTel(form.getClTel());
+        member.setClEmail(form.getClEmail());
+        member.setClMemo(form.getClMemo());
+        return member;
+    }
+
+    @Override
+    public List<DcInfo> dcInfo_list(MemberBean memberBean) {
+        List<DcInfo> dcInfos = new ArrayList<>();
+        if(memberBean.getClDCName1().length()>1){
+            DcInfo dcinfo = new DcInfo();
+            dcinfo.setDcName(memberBean.getClDCName1());
+            dcinfo.setDcTime(memberBean.getClDCTime1());
+            dcinfo.setDcRate(memberBean.getClDCRate1());
+            dcInfos.add(dcinfo);
+        }
+        if(memberBean.getClDCName2().length()>1){
+            DcInfo dcinfo = new DcInfo();
+            dcinfo.setDcName(memberBean.getClDCName2());
+            dcinfo.setDcTime(memberBean.getClDCTime2());
+            dcinfo.setDcRate(memberBean.getClDCRate2());
+            dcInfos.add(dcinfo);
+        }
+        if(memberBean.getClDCName3().length()>1){
+            DcInfo dcinfo = new DcInfo();
+            dcinfo.setDcName(memberBean.getClDCName3());
+            dcinfo.setDcTime(memberBean.getClDCTime3());
+            dcinfo.setDcRate(memberBean.getClDCRate3());
+            dcInfos.add(dcinfo);
+        }
+        if(memberBean.getClDCName4().length()>1){
+            DcInfo dcinfo = new DcInfo();
+            dcinfo.setDcName(memberBean.getClDCName4());
+            dcinfo.setDcTime(memberBean.getClDCTime4());
+            dcinfo.setDcRate(memberBean.getClDCRate4());
+            dcInfos.add(dcinfo);
+        }
+        if(memberBean.getClDCName5().length()>1){
+            DcInfo dcinfo = new DcInfo();
+            dcinfo.setDcName(memberBean.getClDCName5());
+            dcinfo.setDcTime(memberBean.getClDCTime5());
+            dcinfo.setDcRate(memberBean.getClDCRate5());
+            dcInfos.add(dcinfo);
+        }
+        if(memberBean.getClDCName6().length()>1){
+            DcInfo dcinfo = new DcInfo();
+            dcinfo.setDcName(memberBean.getClDCName6());
+            dcinfo.setDcTime(memberBean.getClDCTime6());
+            dcinfo.setDcRate(memberBean.getClDCRate6());
+            dcInfos.add(dcinfo);
+        }
+        return dcInfos;
+    }
+
 }

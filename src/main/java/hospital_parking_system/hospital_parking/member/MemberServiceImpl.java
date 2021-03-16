@@ -36,4 +36,9 @@ public class MemberServiceImpl implements MemberService {
         memberMapper.deleteMember(ClID);
     }
 
+    @Override
+    public void updateMemberInfo(MemberBean bean) {
+        memberMapper.updateMemberInfo(bean);
+    }
+
 }

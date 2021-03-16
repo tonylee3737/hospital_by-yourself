@@ -31,7 +31,7 @@
                 <td style="text-align: center; font-size: xx-large; font-weight: bold; background-color: whitesmoke">[[${car.VhlNbr}]]</td>
             </tr>
         </table>
-        <div style="text-align: center; margin-top: 10%">
+        <div class="check_car_info" style="text-align: center; ">
             <p class="check_car_p">위에 차량이 맞으시면 확인을 눌러주세요.</p>
             <button class="check_car_button" th:onclick="'location.href = \'' + @{/getCarInfo_m(carNumber=${carNumber})} + '\''">확 인</button>
         </div>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,6 +58,7 @@ public class CarController {
         Boolean isthis_Mobile = carService.get_Mobile_Or_Web(request.getHeader("user-agent"));
 
         if(isthis_Mobile==true){
+            model.addAttribute("idx", member.getCliDx());
             return "member/m_searchCarInfo";
 
         }else{
@@ -234,6 +236,7 @@ public class CarController {
     }
 
     @GetMapping("getCarInfo_pic_m")
+//    @RequestMapping(value = "getCarInfo_pic_m", method = {RequestMethod.GET, RequestMethod.POST})
     public String getCarInfo_pic_m(@RequestParam(value = "carNumber") String carNumber,
                                    @RequestParam(value = "carNumber2") String carNumber2,
                                    Model model){

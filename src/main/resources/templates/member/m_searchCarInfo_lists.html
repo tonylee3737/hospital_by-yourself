@@ -27,10 +27,11 @@
                 <th style="height: 300px">[[${car_Img}]]</th>
             </tr>
             <tr th:if="${carBeans}" th:each="car : ${carBeans}">
-                <td style="text-align: center; font-size: xx-large; font-weight: bold; background-color: whitesmoke"><a class = "main_car_list" th:href="@{getCarInfo_pic_m(carNumber=${car.VhlNbr}, carNumber2=${carNumber2})}">[[${car.VhlNbr}]]</a></td>
+                <td style="width:100%; font-size: xx-large; font-weight: bold;"><button style=" font-weight:bold; width: 100%; border-top: 0; border-bottom: none; border-right: none; border-left: none; background-color: whitesmoke; height: 50px" class="main_car_list" th:onclick="'location.href = \'' + @{/getCarInfo_pic_m(carNumber=${car.VhlNbr}, carNumber2=${carNumber2})} + '\''">[[${car.VhlNbr}]]</button></td>
+                <!--                <td style="text-align: center; font-size: xx-large; font-weight: bold; background-color: whitesmoke"><a class = "main_car_list" th:href="@{getCarInfo_pic_m(carNumber=${car.VhlNbr}, carNumber2=${carNumber2})}">[[${car.VhlNbr}]]</a></td>-->
             </tr>
         </table>
-        <div th:if="${notice}" style="text-align: center; margin-top: 10%">
+        <div class="check_car_info" th:if="${notice}" style="text-align: center;">
             <p class="check_car_p">위에 차량이 맞으시면 확인을 눌러주세요.</p>
             <button class="check_car_button" th:onclick="'location.href = \'' + @{/getCarInfo_m(carNumber=${carNumber})} + '\''">확인</button>
         </div>

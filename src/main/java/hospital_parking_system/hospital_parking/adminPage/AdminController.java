@@ -5,10 +5,7 @@ import hospital_parking_system.hospital_parking.carInfo.CarBean;
 import hospital_parking_system.hospital_parking.carInfo.CarService;
 import hospital_parking_system.hospital_parking.carInfo.ClNameBean;
 import hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo;
-import hospital_parking_system.hospital_parking.member.AdminBean;
-import hospital_parking_system.hospital_parking.member.MemberBean;
-import hospital_parking_system.hospital_parking.member.MemberService;
-import hospital_parking_system.hospital_parking.member.SessionBean;
+import hospital_parking_system.hospital_parking.member.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +28,6 @@ public class AdminController {
     private final CarService carService;
     private final SessionBean sessionBean;
     private final MemberService memberService;
-
 
     //    관리자 페이지, 등록된 할인 차량 리스트 보여주는 페이지,
     @GetMapping("/adminRegSearch")
@@ -99,7 +95,7 @@ public class AdminController {
     }
 
     @GetMapping("/adminRegSearch_edit")
-    public String adminRegSearch_edit_get(Model model, @RequestParam(value = "carNumber") String carNumber, AdminRegForm form){
+    public String adminRegSearch_edit_get(Model model, @RequestParam(value = "carNumber") String carNumber, AdminRegForm form) {
         CarBean car = new CarBean();
         car.setVhlNbr(carNumber);
         List<DiscountedCarInfo> discountedCarInfos = carService.selectDiscountedCarInfo(car);
@@ -123,17 +119,18 @@ public class AdminController {
         model.addAttribute("carNumber", carNumber);
         return "admin/adminRegSearch_edit";
     }
+
     @PostMapping("/adminRegSearch_edit")
     public String adminRegSearch_edit_post(AdminRegForm form, @RequestParam(value = "h_action") String action,
-                                           Model model,RedirectAttributes redirectAttributes){
+                                           Model model, RedirectAttributes redirectAttributes) {
         DiscountedCarInfo discountedCarInfo = new DiscountedCarInfo();
-        discountedCarInfo.setDCiDx (form.getDCiDx());
+        discountedCarInfo.setDCiDx(form.getDCiDx());
         discountedCarInfo.setVhliDx(form.getVhliDx());
         discountedCarInfo.setDCName(form.getDCName());
         discountedCarInfo.setDCRate(form.getDCRate());
         discountedCarInfo.setDCTime(form.getDCTime());
         discountedCarInfo.setDCMemo(form.getDCMemo());
-        discountedCarInfo.setCliDx (form.getCliDx());
+        discountedCarInfo.setCliDx(form.getCliDx());
         discountedCarInfo.setUseDiv(form.getUseDiv());
         String actDiv = (action.equals("수정")) ? "2" : "3";
         discountedCarInfo.setActDiv(actDiv);
@@ -143,6 +140,7 @@ public class AdminController {
         redirectAttributes.addFlashAttribute("result", result);
         return "redirect:/adminRegSearch";
     }
+
     //    관리자 페이지 할인 부서 조회 및 등록
     @GetMapping("/adminManaging")
     public String adminManaging(Model model) {
@@ -172,6 +170,7 @@ public class AdminController {
         MemberForm form = adminService.member_To_Form(member);
 
         model.addAttribute("memberForm", form);
+
         model.addAttribute("groupList", groupBeans);
         return "admin/adminRegister_edit";
     }
@@ -205,14 +204,14 @@ public class AdminController {
 
         //  수정 중 아이디 유효성 검사
         MemberBean member_id_check = memberService.checkMemberId(member);
-        if(member_id_check != null){
+        if (member_id_check != null) {
             //아이디가 존재합니다.
             //존재하는 아이디의 idx와 form의 idx가 일치하면 수정 가능.
             if (member_id_check.getCliDx().equals(form.getCliDx())) {
                 adminService.Procedure_registerManager(member);
                 redirectAttributes.addFlashAttribute("form", "form_edit");
                 return "redirect:/adminManaging";
-            }else{
+            } else {
                 model.addAttribute("exist_id", "중복된 아이디가 존재합니다.");
                 return "admin/adminRegister_edit";
             }
@@ -349,7 +348,6 @@ public class AdminController {
         if (result.hasErrors()) {
             return "admin/adminRegister_group_edit";
         }
-
         GroupBean group = new GroupBean();
         group.setGrpiDx(form.getGrpiDx());
         group.setGrpName(form.getGrpName());
@@ -370,7 +368,98 @@ public class AdminController {
         redirectAttributes.addFlashAttribute("form", "form_edit");
         return "redirect:adminGroupManaging";
     }
-}
+
+//    @GetMapping("m_userInfo_checking")
+//    public String member_info_m_get(Model model) {
+//
+//        //테스팅 끝나고 수정하기
+//
+//        // 이까지 수정하기
+//        MemberBean memberbean = sessionBean.getMemberbean();
+//        LoginForm form = new LoginForm();
+//        form.setName(memberbean.getClID());
+//        model.addAttribute("loginForm", form);
+//        return "member/m_userInfo_checking";
+//    }
+
+    @PostMapping("m_userInfo_checking")
+    public String member_info_m_post(LoginForm form, Model model) {
+        //테스팅 끝나고 수정하기
+
+        // 이까지 수정하기
+        MemberBean member = new MemberBean();
+        member.setClID(form.getName());
+        member.setClPW(form.getPass());
+        MemberBean memberBean = memberService.loginMember(member);
+        if (memberBean == null) {
+            model.addAttribute("alert", "비밀번호를 확인해주세요.");
+            return "member/m_userInfo_checking";
+        } else {
+            M_MemberForm m_member_form = new M_MemberForm();
+            m_member_form.setClID(memberBean.getClID());
+            m_member_form.setClTel(memberBean.getClTel());
+            m_member_form.setClEmail(memberBean.getClEmail());
+            m_member_form.setCliDx(memberBean.getCliDx());
+            m_member_form.setClMemo(memberBean.getClMemo());
+            m_member_form.setClPW(memberBean.getClPW());
+            model.addAttribute("form", m_member_form);
+            return "member/m_userInfo_edit";
+        }
+    }
+
+    @PostMapping("m_userInfo_edit")
+    public String m_userInfo_edit_post(M_MemberForm m_memberForm, Model model, @RequestParam(required = false, value = "action") String edit_pass, RedirectAttributes redirectAttributes) {
+
+
+        MemberBean memberBean = adminService.m_memberFrom_To_MemberBean(m_memberForm);
+        if (edit_pass != null) {
+            model.addAttribute("form", m_memberForm);
+            return "member/m_password_edit";
+        } else {
+            memberService.updateMemberInfo(memberBean);
+            redirectAttributes.addFlashAttribute("alert", "정보가 수정되었습니다.");
+            return "redirect:m_userInfo_checking";
+        }
+    }
+    @PostMapping("m_password_edit")
+    public String m_password_edit_post(M_MemberForm m_memberForm, Model model, RedirectAttributes redirectAttributes) {
+        MemberBean member = new MemberBean();
+        MemberBean memberBean = adminService.m_memberFrom_To_MemberBean(m_memberForm);
+        memberBean.setClPW(m_memberForm.getPass1());
+        MemberBean member_exist = memberService.loginMember(memberBean);
+        if (member_exist != null) {
+            memberBean.setClPW(m_memberForm.getPass2());
+            memberService.updateMemberInfo(memberBean);
+            redirectAttributes.addFlashAttribute("alert", "비밀번호가 변경되었습니다.");
+            return "redirect:/searchCarInfo";
+        } else {
+            model.addAttribute("alert", "비밀번호를 확인해주세요.");
+            model.addAttribute("form", m_memberForm);
+            return "member/m_password_edit";
+        }
+    }
+    @GetMapping("m_dc_info")
+    public String m_dc_info_get(Model model){
+        MemberBean memberbean = sessionBean.getMemberbean();
+        if(memberbean==null){
+            return "redirect:/";
+        }else{
+            List<DcInfo> dcInfos = adminService.dcInfo_list(memberbean);
+            model.addAttribute("dc_infos", dcInfos);
+            return "member/m_dc_info";
+        }
+    }
+    @GetMapping("m_userInfo_checking")
+    public String test(Model model){
+        model.addAttribute("form", new M_MemberForm());
+        return "member/m_userInfo_edit";
+    }
+
+    }
+
+
+
+
     //    그룹 삭제 페이지인데 사용하진 않음.
 //    @GetMapping("adminDeleteGroup")
 //    public String adminDeleteGroup(@RequestParam(value = "id") String idx) {
@@ -383,4 +472,5 @@ public class AdminController {
 //        adminService.deleteOneGroup(groupBean);
 //        return "redirect:/adminGroupManaging";
 //    }
+
 

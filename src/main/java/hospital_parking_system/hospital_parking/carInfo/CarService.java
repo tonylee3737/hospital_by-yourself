@@ -39,4 +39,7 @@ public interface CarService {
     ControllDiscountCar set_Dc_Time(String time, MemberBean memberBean, String idx);
 
     Boolean get_Mobile_Or_Web(String userAgent);
+
+    //dc할인이름 리스트에 넣기
+
 }

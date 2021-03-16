@@ -2,6 +2,7 @@ package hospital_parking_system.hospital_parking.adminPage;
 
 import hospital_parking_system.hospital_parking.carInfo.ClNameBean;
 import hospital_parking_system.hospital_parking.carInfo.DiscountedCarInfo;
+import hospital_parking_system.hospital_parking.member.M_MemberForm;
 import hospital_parking_system.hospital_parking.member.MemberBean;
 
 import javax.persistence.Tuple;
@@ -54,4 +55,7 @@ public interface AdminService {
 // 페이징 처리 Method
     Paging get_Paging(List<DiscountedCarInfo> discountedCarInfos);
 
+    MemberBean m_memberFrom_To_MemberBean(M_MemberForm form);
+
+    List<DcInfo> dcInfo_list(MemberBean memberBean);
 }

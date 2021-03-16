@@ -203,4 +203,61 @@ public class AdminControllerTest {
 
      //Then
      }
+     @Test
+     public void dc_info_test(){
+     //Given
+         MemberBean member = new MemberBean();
+         member.setClID("test");
+         member.setClPW("1");
+         MemberBean memberBean = memberService.loginMember(member);
+         List<DcInfo> dcInfos = new ArrayList<>();
+         if(memberBean.getClDCName1()!=null){
+         DcInfo dcinfo = new DcInfo();
+         dcinfo.setDcName(memberBean.getClDCName1());
+         dcinfo.setDcTime(memberBean.getClDCTime1());
+         dcinfo.setDcRate(memberBean.getClDCRate1());
+             dcInfos.add(dcinfo);
+         }
+         if(memberBean.getClDCName2()!=null){
+            DcInfo dcinfo = new DcInfo();
+             dcinfo.setDcName(memberBean.getClDCName2());
+             dcinfo.setDcTime(memberBean.getClDCTime2());
+             dcinfo.setDcRate(memberBean.getClDCRate2());
+             dcInfos.add(dcinfo);
+         }
+         if(memberBean.getClDCName3()!=null){
+            DcInfo dcinfo = new DcInfo();
+             dcinfo.setDcName(memberBean.getClDCName3());
+             dcinfo.setDcTime(memberBean.getClDCTime3());
+             dcinfo.setDcRate(memberBean.getClDCRate3());
+             dcInfos.add(dcinfo);
+         }
+         if(memberBean.getClDCName4()!=null){
+             DcInfo dcinfo = new DcInfo();
+             dcinfo.setDcName(memberBean.getClDCName4());
+             dcinfo.setDcTime(memberBean.getClDCTime4());
+             dcinfo.setDcRate(memberBean.getClDCRate4());
+             dcInfos.add(dcinfo);
+         }
+         if(memberBean.getClDCName5()!=null){
+             DcInfo dcinfo = new DcInfo();
+             dcinfo.setDcName(memberBean.getClDCName5());
+             dcinfo.setDcTime(memberBean.getClDCTime5());
+             dcinfo.setDcRate(memberBean.getClDCRate5());
+             dcInfos.add(dcinfo);
+         }
+         if(memberBean.getClDCName6()!=null){
+             DcInfo dcinfo = new DcInfo();
+             dcinfo.setDcName(memberBean.getClDCName6());
+             dcinfo.setDcTime(memberBean.getClDCTime6());
+             dcinfo.setDcRate(memberBean.getClDCRate6());
+             dcInfos.add(dcinfo);
+         }
+
+
+
+         //When
+
+     //Then
+     }
 }

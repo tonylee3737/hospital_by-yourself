@@ -88,7 +88,23 @@ public class MemberControllerTest {
         Assertions.assertThat(adminBean.getAdmID()).isEqualTo("admin");
 
     }
-
+    @Test
+    @Rollback(value = false)
+    public void updateMemberTest(){
+    //Given
+        MemberBean member = new MemberBean();
+        member.setClID("test");
+        member.setClPW("1");
+        member.setCliDx("95");
+        member.setClEmail("tony@gmail.com");
+        member.setClTel("0");
+        member.setClMemo("없음");
+        memberService.updateMemberInfo(member);
+    //When
+        MemberBean memberBean = memberService.loginMember(member);
+        //Then
+        Assertions.assertThat(memberBean.getClPW()).isEqualTo(member.getClPW());
+    }
 
 
 }

@@ -97,3 +97,26 @@ register-td_rest {
 .register-button:hover{
     background-color: gray;
 }
+
+.dc_info_table_m{
+    width: 100%;
+    text-align: center;
+}
+.dc_info_table_m th{
+    height: 50px;
+    font-size: 20px;
+    background-color: whitesmoke;
+    color: black;
+}
+.dc_info_table_m td{
+    text-align: center;
+    padding: 10px 4px;
+    height: 70px;
+    font-size: 20px;
+    background-color: white;
+    color: slategrey;
+    font-weight: bold;
+}
+
+
+

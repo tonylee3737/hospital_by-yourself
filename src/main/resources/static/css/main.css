@@ -241,8 +241,6 @@ input[type="password"]{
 }
 .login_img {
   width: 60%;
-  /*-webkit-transform: translate(10%);*/
-  /*-ms-transform: translate(10%);*/
   transform: translate(33%);
 }
 
@@ -265,4 +263,6 @@ input[type="password"]{
   background-image: url("/img/lock_16.png");
   background-position: 5px center;
   background-repeat: no-repeat;
+  background-repeat: no-repeat;
 }
+
