@@ -347,9 +347,9 @@ public class AdminServiceImpl implements AdminService{
         member.setCliDx(form.getCliDx());
         member.setClID(form.getClID());
         member.setClPW(form.getClPW());
-        member.setClTel(form.getClTel());
-        member.setClEmail(form.getClEmail());
-        member.setClMemo(form.getClMemo());
+//        member.setClTel(form.getClTel());
+//        member.setClEmail(form.getClEmail());
+//        member.setClMemo(form.getClMemo());
         return member;
     }
 
@@ -397,6 +397,13 @@ public class AdminServiceImpl implements AdminService{
             dcinfo.setDcTime(memberBean.getClDCTime6());
             dcinfo.setDcRate(memberBean.getClDCRate6());
             dcInfos.add(dcinfo);
+        }
+        for(DcInfo info : dcInfos){
+            if((info.getDcRate().equals("0") || info.getDcTime().equals("0"))){
+                info.setDcResult(info.getDcRate().equals("0") ? (info.getDcTime() +"시간") : (info.getDcRate()) + "%");
+            }else{
+                info.setDcResult(info.getDcTime() + "시간/" + (info.getDcRate()) + "%");
+            }
         }
         return dcInfos;
     }

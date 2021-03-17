@@ -4,6 +4,9 @@ package hospital_parking_system.hospital_parking.member;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Member;
+import java.util.List;
+
 @Repository
 @Mapper
 public interface MemberMapper {
@@ -20,4 +23,8 @@ public interface MemberMapper {
     void deleteMember(String ClID);
 
     void updateMemberInfo(MemberBean bean);
+
+    void updateMemberPass(MemberBean bean);
+
+    List<DcNameInfo> selectAllDcNameFromCliDx(MemberBean memberBean);
 }

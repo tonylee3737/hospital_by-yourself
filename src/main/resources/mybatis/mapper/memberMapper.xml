@@ -20,13 +20,19 @@
         SELECT * FROM parking_class WHERE ClID = #{ClID}
     </select>
 
+    <select id="selectAllDcNameFromCliDx" parameterType="hospital_parking_system.hospital_parking.member.MemberBean" resultType="hospital_parking_system.hospital_parking.member.DcNameInfo">
+        select DCName
+        from parking_class_discount
+        where CliDx = #{CliDx};
+    </select>
+
+
     <update id="updateMemberInfo" parameterType="hospital_parking_system.hospital_parking.member.MemberBean">
         UPDATE parking_class
         SET ClID=#{ClID},
-            ClPW=#{ClPW},
+            ClPW=#{ClPW}
             ClTel=#{ClTel},
             ClEmail=#{ClEmail},
-            ClMemo=#{ClMemo}
         where CliDx = #{CliDx};
 
     </update>
@@ -43,6 +49,14 @@
     <select id="selectCarNum" parameterType="hospital_parking_system.hospital_parking.member.MemberBean" resultType="hospital_parking_system.hospital_parking.member.MemberBean">
         SELECT * FROM parking_entvhl_list WHERE VhlNbr like CONCAT('%', #{VhlNbr}, '%')
     </select>
+<!--비밀번호 업데이트-->
+    <update id="updateMemberPass" parameterType="hospital_parking_system.hospital_parking.member.MemberBean">
+        UPDATE parking_class
+        SET ClID=#{ClID},
+            ClPW=#{ClPW}
+        where CliDx = #{CliDx};
+
+    </update>
 
 
 </mapper>

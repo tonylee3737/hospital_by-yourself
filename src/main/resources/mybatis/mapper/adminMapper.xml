@@ -9,7 +9,6 @@
         from parking_class
                  inner join parking_class_group on parking_class.ClGrpiDx = parking_class_group.GrpiDx
         order by CliDx;
-
     </select>
 
     <select id="selectGroupList" resultType="hospital_parking_system.hospital_parking.adminPage.GroupBean">

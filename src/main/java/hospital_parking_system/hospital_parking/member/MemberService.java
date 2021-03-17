@@ -1,6 +1,8 @@
 package hospital_parking_system.hospital_parking.member;
 
 
+import java.util.List;
+
 public interface MemberService {
 
 
@@ -15,5 +17,11 @@ public interface MemberService {
     void deleteMember(String ClID);
 
     void updateMemberInfo(MemberBean bean);
+
+    void updateMemberPass(MemberBean bean);
+
+    List<DcNameInfo> selectAllDcNameFromCliDx(MemberBean memberBean);
+
+    List<DcNameInfo> countDcName(List<DcNameInfo> dcNameInfos);
 
 }

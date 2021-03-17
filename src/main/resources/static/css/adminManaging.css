@@ -97,25 +97,30 @@ register-td_rest {
 .register-button:hover{
     background-color: gray;
 }
-
-.dc_info_table_m{
-    width: 100%;
+.dc_info_div {
     text-align: center;
+}
+.dc_info_table_m{
+    width: 90%;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
 }
 .dc_info_table_m th{
     height: 50px;
-    font-size: 20px;
+    font-size: 15px;
     background-color: whitesmoke;
     color: black;
 }
 .dc_info_table_m td{
+    border-bottom: 1px solid whitesmoke;
     text-align: center;
-    padding: 10px 4px;
+    padding: 5px 4px;
     height: 70px;
-    font-size: 20px;
+    font-size: 17px;
     background-color: white;
-    color: slategrey;
-    font-weight: bold;
+    color: black;
+    font-weight: lighter;
 }
 
 

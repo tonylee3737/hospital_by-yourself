@@ -11,6 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Member;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -54,8 +56,8 @@ public class MemberControllerTest {
     }
 
     @Test(expected = IllegalStateException.class)
-     public void 중복회원테스트() {
-     //given
+    public void 중복회원테스트() {
+        //given
         MemberBean bean1 = new MemberBean();
         MemberBean bean2 = new MemberBean();
         bean1.setClID("tony");
@@ -63,16 +65,17 @@ public class MemberControllerTest {
         bean2.setClID("tony");
         bean2.setClPW("tony");
 
-     //when
+        //when
         adminService.insertMember(bean1);
         adminService.insertMember(bean2);
 
-     //then
+        //then
         fail("에외가 발생해야한다.");
     }
+
     @Test
-     public void 로그인테스트() {
-     //given
+    public void 로그인테스트() {
+        //given
         MemberBean member = new MemberBean();
         member.setClID("test");
         member.setClPW("1");
@@ -80,7 +83,7 @@ public class MemberControllerTest {
         adminMember.setAdmID("admin");
         adminMember.setAdmPW("1");
 
-     //when
+        //when
         MemberBean memberBean = memberService.loginMember(member);
         AdminBean adminBean = memberService.loginAdmin(adminMember);
         //then
@@ -88,10 +91,11 @@ public class MemberControllerTest {
         Assertions.assertThat(adminBean.getAdmID()).isEqualTo("admin");
 
     }
+
     @Test
     @Rollback(value = false)
-    public void updateMemberTest(){
-    //Given
+    public void updateMemberTest() {
+        //Given
         MemberBean member = new MemberBean();
         member.setClID("test");
         member.setClPW("1");
@@ -100,11 +104,51 @@ public class MemberControllerTest {
         member.setClTel("0");
         member.setClMemo("없음");
         memberService.updateMemberInfo(member);
-    //When
+        //When
         MemberBean memberBean = memberService.loginMember(member);
         //Then
         Assertions.assertThat(memberBean.getClPW()).isEqualTo(member.getClPW());
     }
 
+    @Test
+    public void selectDcName() {
+        //Given
+        MemberBean memberBean = new MemberBean();
+        memberBean.setClID("test");
+        memberBean.setClPW("1");
+        MemberBean memberBean1 = memberService.loginMember(memberBean);
+        List<DcNameInfo> o_dcNameInfos = memberService.selectAllDcNameFromCliDx(memberBean1);
+        List<DcNameInfo> n_dcNameInfos = new ArrayList<>();
+        //When
+//        int[] count = new int[3];
+//        String[] dcName_list = {"관호특별할인", "장애인할인용", "아이트로특별할인"};
+//
+//        for (DcNameInfo dcNameInfo : o_dcNameInfos) {
+//            String dcName = dcNameInfo.getDcName();
+//            for(int i=0; i<count.length; i++){
+//                if(dcName.equals(dcName_list[i])){
+//                    count[i]++;
+//                }
+//            }
+//        }
+        boolean t = true;
+        for (DcNameInfo dcNameInfo : o_dcNameInfos) {
+            String dcName = dcNameInfo.getDcName();
 
+            if(n_dcNameInfos.size()==0){
+                n_dcNameInfos.add(dcNameInfo);
+            }
+            if(t==false){
+                n_dcNameInfos.add(dcNameInfo);
+            }
+            for (int i = 0; i < n_dcNameInfos.size(); i++) {
+                if (dcName.equals(n_dcNameInfos.get(i).getDcName())) {
+                    System.out.println("일치한다");
+                    t = true;
+                }else{
+                    t = false;
+                }
+            }
+        }
+    }
 }

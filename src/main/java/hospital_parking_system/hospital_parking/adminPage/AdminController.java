@@ -369,7 +369,7 @@ public class AdminController {
         return "redirect:adminGroupManaging";
     }
 
-//    @GetMapping("m_userInfo_checking")
+    //    @GetMapping("m_userInfo_checking")
 //    public String member_info_m_get(Model model) {
 //
 //        //테스팅 끝나고 수정하기
@@ -381,7 +381,26 @@ public class AdminController {
 //        model.addAttribute("loginForm", form);
 //        return "member/m_userInfo_checking";
 //    }
+//    테스트 끝나면 위에 Get 주석 풀기
+    @GetMapping("m_userInfo_checking")
+    public String member_info_m_get(Model model) {
+        MemberBean member = new MemberBean();
+        member.setClID("test");
+        member.setClPW("1");
+        MemberBean memberBean = memberService.loginMember(member);
+        sessionBean.setMemberbean(memberBean);
+        MemberBean memberbean = sessionBean.getMemberbean();
+        M_MemberForm m_member_form = new M_MemberForm();
+        m_member_form.setClID(memberbean.getClID());
+        m_member_form.setClTel(memberbean.getClTel());
+        m_member_form.setClEmail(memberbean.getClEmail());
+        m_member_form.setCliDx(memberbean.getCliDx());
+        m_member_form.setClPW(memberbean.getClPW());
+        model.addAttribute("form", m_member_form);
+        return "member/m_password_edit";
+    }
 
+    //여기 삭제
     @PostMapping("m_userInfo_checking")
     public String member_info_m_post(LoginForm form, Model model) {
         //테스팅 끝나고 수정하기
@@ -400,27 +419,12 @@ public class AdminController {
             m_member_form.setClTel(memberBean.getClTel());
             m_member_form.setClEmail(memberBean.getClEmail());
             m_member_form.setCliDx(memberBean.getCliDx());
-            m_member_form.setClMemo(memberBean.getClMemo());
             m_member_form.setClPW(memberBean.getClPW());
             model.addAttribute("form", m_member_form);
-            return "member/m_userInfo_edit";
-        }
-    }
-
-    @PostMapping("m_userInfo_edit")
-    public String m_userInfo_edit_post(M_MemberForm m_memberForm, Model model, @RequestParam(required = false, value = "action") String edit_pass, RedirectAttributes redirectAttributes) {
-
-
-        MemberBean memberBean = adminService.m_memberFrom_To_MemberBean(m_memberForm);
-        if (edit_pass != null) {
-            model.addAttribute("form", m_memberForm);
             return "member/m_password_edit";
-        } else {
-            memberService.updateMemberInfo(memberBean);
-            redirectAttributes.addFlashAttribute("alert", "정보가 수정되었습니다.");
-            return "redirect:m_userInfo_checking";
         }
     }
+
     @PostMapping("m_password_edit")
     public String m_password_edit_post(M_MemberForm m_memberForm, Model model, RedirectAttributes redirectAttributes) {
         MemberBean member = new MemberBean();
@@ -429,7 +433,7 @@ public class AdminController {
         MemberBean member_exist = memberService.loginMember(memberBean);
         if (member_exist != null) {
             memberBean.setClPW(m_memberForm.getPass2());
-            memberService.updateMemberInfo(memberBean);
+            memberService.updateMemberPass(memberBean);
             redirectAttributes.addFlashAttribute("alert", "비밀번호가 변경되었습니다.");
             return "redirect:/searchCarInfo";
         } else {
@@ -438,24 +442,37 @@ public class AdminController {
             return "member/m_password_edit";
         }
     }
+
     @GetMapping("m_dc_info")
-    public String m_dc_info_get(Model model){
+    public String m_dc_info_get(Model model) {
         MemberBean memberbean = sessionBean.getMemberbean();
-        if(memberbean==null){
+        if (memberbean == null) {
             return "redirect:/";
-        }else{
+        } else {
+//        테스트 끝난 후 주석 풀기
+//        MemberBean memberBean = new MemberBean();
+//        memberBean.setClID("test");
+//        memberBean.setClPW("1");
+//        MemberBean memberBean1 = memberService.loginMember(memberBean);
+// 이까지 삭제하기
             List<DcInfo> dcInfos = adminService.dcInfo_list(memberbean);
             model.addAttribute("dc_infos", dcInfos);
             return "member/m_dc_info";
+//        }
         }
     }
-    @GetMapping("m_userInfo_checking")
-    public String test(Model model){
-        model.addAttribute("form", new M_MemberForm());
-        return "member/m_userInfo_edit";
+    @GetMapping("m_usage_history")
+    public String usage_histroy_get(Model model){
+        MemberBean memberbean = sessionBean.getMemberbean();
+//        memberService.selectAllDcNameFromCliDx(memberbean)
+
+        return "member/m_usage_history";
     }
 
-    }
+}
+
+
+
 
 
 
